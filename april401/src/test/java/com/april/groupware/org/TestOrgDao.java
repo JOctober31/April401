@@ -22,6 +22,8 @@ package com.april.groupware.org;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -34,8 +36,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.april.groupware.cmn.SearchVO;
 import com.april.groupware.org.service.OrgService;
 import com.april.groupware.org.service.OrgVO;
+
 /**
  * @author JUHEE
  */
@@ -54,6 +59,21 @@ public class TestOrgDao {
 	
 	OrgVO insertUser;
 	OrgVO updateUser;
+	
+	
+	@Test
+	public void doRetrieve() {
+		//1.전체 삭제
+		//2.추가:3건
+		//3.목록조회:3건
+		SearchVO  searchVO=new SearchVO(10,1,"10","kimjh");
+		List<OrgVO> list =   (List<OrgVO>) dao.doRetrieve(searchVO);
+		assertThat(list.size(), is(4));
+		for(OrgVO vo: list) {
+			LOG.debug("doRetrieve:"+vo.toString());
+		}
+				
+	}
 	
 	/**
 	 * Method Name:setUp
@@ -93,12 +113,11 @@ public class TestOrgDao {
 				"15",
 				"test_U",
 				"1234_U"
-				
 				);
 	}
 
 	@Test
-
+	@Ignore
 	public void doUpdate() {
 		
 		int flag = dao.doUpdate(updateUser);
@@ -131,7 +150,7 @@ public class TestOrgDao {
 		
 		//3.단건 조회
 		OrgVO OrgVO = (OrgVO) dao.doSelectOne(insertUser);
-		LOG.debug(OrgVO.toString());
+		LOG.debug("단건:"+OrgVO.toString());
 	}
 	
 	/**

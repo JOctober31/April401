@@ -3,36 +3,60 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.april.groupware.org">
 
-    <!-- 공통 컬럼 -->
-    <sql id="orgColumns">
-            id,
-		    password,
-		    dept_nm as deptNm,
-		    dept_cd as deptCd,
-		    parent_dept_cd as parentDeptCd,
-		    auth,
-		    name,
-		    position,
-		    mobile,
-		    email,
-		    address,
-		    hire_date as hiredate,
-		    birth,
-		    vacation_cnt as vacationCnt,
-		    military_yn as militaryYN,
-		    dspsn_yn as dspsnYN,
-		    grade,
-		    org_file_nm as orgFileName,
-		    mod_file_nm as modFileName,
-		    img_path as imgPath,
-		    ext,
-		    file_size as fileSize,
-		    reg_id as regId,
-		    TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI:SS') as regDate, 
-		    mod_id as modId,
-		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') as modDate
+
+ <sql id="baseCondition">
+        <choose>
+            <when test="'10' == searchDiv">
+                AND id like '%' || #{searchWord} || '%'
+            </when>
+            <when test="'20' == searchDiv">
+                AND contents like '%' || #{searchWord} || '%'
+            </when>
+            <when test="'30' == searchDiv">
+                AND reg_id like '%' || #{searchWord} || '%'
+            </when>                     
+        </choose>
     </sql>
-   
+    
+	<!-- 목록조회 -->
+    <select id="doRetrieve" parameterType="SearchVO" resultType="OrgVO">
+		SELECT T1.*,T2.* 
+		FROM(
+		    SELECT B.id,
+		           B.dept_nm as deptNm,
+		           B.position,
+		           B.name,
+		           B.REG_ID   as regId,
+		           CASE TO_CHAR(B.reg_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+		                                               THEN TO_CHAR(SYSDATE,'HH24:MI') 
+		           ELSE TO_CHAR(B.reg_date,'YYYY/MM/DD') END regDate,
+		           B.rnum as num
+		    FROM(
+		        SELECT ROWNUM AS rnum,a.*
+		        FROM (
+		            SELECT *
+		            FROM organization
+		            WHERE 1=1
+		            --검색조건
+		            <include refid="baseCondition"/>
+		            ORDER BY reg_date desc
+		        )A
+		        WHERE ROWNUM  <![CDATA[ <= ]]> (#{pageSize} *(#{pageNum} - 1)+#{pageSize})
+		    )B
+		    WHERE rnum <![CDATA[ >= ]]> (#{pageSize}*(#{pageNum}-1)+1) 
+		)T1
+		NATURAL JOIN
+		(
+		    SELECT COUNT(*) totalCnt
+		    FROM organization
+		    WHERE 1=1
+		    --검색조건
+		    <include refid="baseCondition"/>
+		)T2
+    
+    </select>
+
+ 
     
 	<!-- 등록 : namespace+id = com.sist.ehr.board.doInsert -->
 	<insert id="doInsert" parameterType="OrgVO">
@@ -117,7 +141,32 @@
     <!-- 단건조회 -->
     <select id="doSelectOne" parameterType="OrgVO" resultType="OrgVO">
 		SELECT
-		    <include refid="orgColumns"/>
+		    id,
+		    password,
+		    dept_nm as deptNm,
+		    dept_cd as deptCd,
+		    parent_dept_cd as parentDeptCd,
+		    auth,
+		    name,
+		    position,
+		    mobile,
+		    email,
+		    address,
+		    hire_date as hiredate,
+		    birth,
+		    vacation_cnt as vacationCnt,
+		    military_yn as militaryYN,
+		    dspsn_yn as dspsnYN,
+		    grade,
+		    org_file_nm as orgFileName,
+		    mod_file_nm as modFileName,
+		    img_path as imgPath,
+		    ext,
+		    file_size as fileSize,
+		    reg_id as regId,
+		    TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI:SS') as regDate, 
+		    mod_id as modId,
+		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') as modDate
 		FROM organization
 		WHERE id = #{id}  
     </select>
