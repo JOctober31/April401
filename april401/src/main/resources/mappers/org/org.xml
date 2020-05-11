@@ -4,17 +4,20 @@
 <mapper namespace="com.april.groupware.org">
 
 
- <sql id="baseCondition">
+ 	<sql id="baseCondition">
         <choose>
             <when test="'10' == searchDiv">
                 AND id like '%' || #{searchWord} || '%'
             </when>
             <when test="'20' == searchDiv">
-                AND contents like '%' || #{searchWord} || '%'
+                AND dept_nm like '%' || #{searchWord} || '%'
             </when>
             <when test="'30' == searchDiv">
-                AND reg_id like '%' || #{searchWord} || '%'
-            </when>                     
+                AND name like '%' || #{searchWord} || '%'
+            </when>
+            <when test="'40' == searchDiv">
+                AND position like '%' || #{searchWord} || '%'
+            </when>                            
         </choose>
     </sql>
     
@@ -24,11 +27,13 @@
 		FROM(
 		    SELECT B.id,
 		           B.dept_nm as deptNm,
-		           B.position,
 		           B.name,
+		           B.position,
+		           B.hire_date as hireDate,
+		           B.vacation_cnt as vacationCnt,
 		           B.REG_ID   as regId,
 		           CASE TO_CHAR(B.reg_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
-		                                               THEN TO_CHAR(SYSDATE,'HH24:MI') 
+		                                                 THEN TO_CHAR(SYSDATE,'HH24:MI') 
 		           ELSE TO_CHAR(B.reg_date,'YYYY/MM/DD') END regDate,
 		           B.rnum as num
 		    FROM(
