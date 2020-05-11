@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.april.groupware.attendance.service">
+	
+	<!-- Insert : 등록 -->
+	<!-- Dao(namespace+id) : com.sist.ehr.board.doInsert -->
+	<insert id="doInsert" parameterType="AttendanceVO">
+		INSERT INTO attendance (
+		    seq,                
+		    id,                 
+		    attend_time,        
+		    attend_yn,          
+		    lv_ffc_yn,          
+		    work_time,          
+		    reg_id,
+		    mod_id,
+		    reg_date,
+		    mod_date
+		) VALUES (              
+		    #{seq},                  
+		    #{id},                  
+		    sysdate,                  
+		    #{attendYN},                  
+		    #{leaveYN},                  
+		    #{workTime},                  
+		    #{regId},                  
+		    #{modId},                  
+		    sysdate,
+		    sysdate             
+		)
+	</insert>
+	
+	<!-- Update : 수정 -->
+	<update id="doUpdate" parameterType="AttendanceVO">
+		UPDATE attendance	
+		SET attend_time = 	sysdate,
+		    lv_ffc_time = 	sysdate,
+		    attend_yn = 	#{attendYN},  
+		    lv_ffc_yn = 	#{leaveYN},  
+		    state = 		#{state},   	
+		    work_time = 	#{workTime},  
+		    mod_id = 		#{modId},     
+		    mod_date = 		sysdate    
+		WHERE id = 			#{id}        
+	</update>
+	
+	<!-- leaveUpdate : 퇴근 -->
+	<update id="leaveUpdate" parameterType="AttendanceVO">
+		UPDATE attendance	
+		SET lv_ffc_time = 	sysdate, 
+		    lv_ffc_yn = 	#{leaveYN},   
+		    state = 		#{state},   	
+		    work_time = 	#{workTime},   
+		    mod_id = 		#{modId},      
+		    mod_date = 		sysdate     
+		WHERE id = 			#{id}         
+	</update>
+	
+	<!-- Delete : 삭제 -->
+	<!-- Dao(namespace+id) : com.sist.ehr.board.doDelete -->
+	<delete id="doDelete" parameterType="AttendanceVO">
+		DELETE FROM attendance
+		WHERE seq = #{seq}
+		AND id = #{id}
+	</delete>
+	
+	<!-- SelectOne : 상세 조회 -->
+	<select id="doSelectOne" parameterType="AttendanceVO" resultType="AttendanceVO">
+		SELECT seq,
+			id,													
+		    TO_CHAR(attend_time, 'YYYY/MM/DD HH24:MI:SS') AS attendTime, 											
+		    TO_CHAR(lv_ffc_time, 'YYYY/MM/DD HH24:MI:SS') AS leaveTime, 											
+		    attend_yn	AS attendYN,   											
+		    lv_ffc_yn	AS leaveYN,
+		    state,   											
+		    work_time	AS workTime,   											
+		    reg_id		AS regId,      											
+		    TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI:SS') AS regDate,
+		    mod_id		AS modId,      											
+		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') AS modDate
+		FROM attendance
+		WHERE id = #{id}   
+	</select>
+	
+</mapper>

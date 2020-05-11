@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.april.groupware.reserve.service">
+	
+	<!-- Insert : 등록 -->
+	<!-- Dao(namespace+id) : com.sist.ehr.board.doInsert -->
+	<insert id="doInsert" parameterType="ReservationVO">
+		INSERT INTO reservation (
+		    rsv_no,             
+		    rsv_day,            
+		    rsv_st_time,        
+		    rsv_end_time,       
+		    mt_rm_no,           
+		    rsv_name,           
+		    rsv_cn,             
+		    rsv_yn,             
+		    reg_id,
+		    reg_date,
+		    mod_id,
+		    mod_date
+		) VALUES (              
+		    #{rsvNo},                  
+		    #{rsvDay},                  
+		    #{rsvStartTime},           
+		    #{rsvEndTime},           
+		    #{meetRoomNo},           
+		    #{rsvName},           
+		    #{rsvCn},           
+		    #{rsvYN},           
+		    #{regId},
+		    sysdate,
+		    #{modId},
+		    sysdate
+		)                       
+	</insert>
+	
+	<!-- Update : 수정 -->
+	<update id="doUpdate" parameterType="ReservationVO">
+		UPDATE reservation    
+		SET rsv_day = 		#{rsvDay},      
+		    rsv_st_time = 	#{rsvStartTime},  
+		    rsv_end_time = 	#{rsvEndTime}, 
+		    mt_rm_no = 		#{meetRoomNo},     
+		    rsv_name = 		#{rsvName},     
+		    rsv_cn = 		#{rsvCn},       
+		    rsv_yn = 		#{rsvYN},       
+		    mod_id = 		#{modId},       
+		    mod_date = 		sysdate
+		WHERE reg_id = 		#{regId}
+		AND	rsv_no = 		#{rsvNo}
+	</update>
+	
+	<!-- Delete : 삭제 -->
+	<!-- Dao(namespace+id) : com.sist.ehr.board.doDelete -->
+	<delete id="doDelete" parameterType="ReservationVO">
+		DELETE FROM reservation
+		WHERE rsv_no = #{rsvNo}
+	</delete>
+	
+	<!-- SelectOne : 상세 조회 -->
+	<select id="doSelectOne" parameterType="ReservationVO" resultType="ReservationVO">
+		SELECT rsv_no		AS rsvNo,         										
+		    rsv_day       	AS rsvDay,        										
+		    rsv_st_time   	AS rsvStartTime,  										
+		    rsv_end_time  	AS rsvEndTime,    										
+		    mt_rm_no      	AS meetRoomNo,    										
+		    rsv_name      	AS rsvName,       										
+		    rsv_cn        	AS rsvCn,         										
+		    rsv_yn        	AS rsvYN,         										
+		    reg_id        	AS regId,         										
+		    TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI:SS') AS regDate,
+		    mod_id        	AS modId,         										
+		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') AS modDate
+		FROM reservation
+		WHERE reg_id = #{regId}
+	</select>
+	
+	<!-- 목록 조회 -->
+	<!-- ID 검색-10, 이름 검색-20, 예약번호 검색-30 -->
+	<sql id="searchDivCondition">
+		<choose>
+			<when test="searchDiv == '' and searchWord == '' and searchStartDate != null and searchEndDate != null">
+				AND #{searchStartDate} <![CDATA[<=]]> r.rsv_day
+				AND r.rsv_day <![CDATA[<=]]> #{searchEndDate}
+			</when>
+			<when test="searchDiv =='10' and searchStartDate == '' and searchEndDate == ''">
+				AND UPPER(r.reg_id) LIKE UPPER('%'||#{searchWord}||'%')
+			</when>
+			<when test="searchDiv =='20' and searchStartDate == '' and searchEndDate == ''">
+				AND r.rsv_name LIKE '%'||#{searchWord}||'%'
+			</when>
+			<when test="searchDiv =='30' and searchStartDate == '' and searchEndDate == ''">
+				AND r.rsv_no = #{searchWord}
+			</when>
+			<when test="searchDiv =='10' and searchStartDate != null and searchEndDate != null">
+				AND #{searchStartDate} <![CDATA[<=]]> r.rsv_day
+				AND r.rsv_day <![CDATA[<=]]> #{searchEndDate}
+				AND UPPER(r.reg_id) LIKE UPPER('%'||#{searchWord}||'%')
+			</when>
+			<when test="searchDiv =='20' and searchStartDate != null and searchEndDate != null">
+				AND #{searchStartDate} <![CDATA[<=]]> r.rsv_day
+				AND r.rsv_day <![CDATA[<=]]> #{searchEndDate}
+				AND r.rsv_name LIKE '%'||#{searchWord}||'%'
+			</when>
+			<when test="searchDiv =='30' and searchStartDate != null and searchEndDate != null">
+				AND #{searchStartDate} <![CDATA[<=]]> r.rsv_day
+				AND r.rsv_day <![CDATA[<=]]> #{searchEndDate}
+				AND r.rsv_no = #{searchWord}
+			</when>
+		</choose>
+	</sql>
+
+	<select id="doRetrieve" parameterType="SearchVO" resultType="ReservationVO">
+		SELECT t1.*, t2.*
+		FROM(
+			SELECT 
+				b.rsv_no 		AS rsvNo,
+				b.rsv_day 		AS rsvDay,
+				b.rsv_st_time 	AS rsvStartTime,
+				b.rsv_end_time 	AS rsvEndTime,
+				b.mt_rm_no 		AS meetRoomNo,
+				b.rsv_name 		AS rsvName,
+				b.rsv_cn 		AS rsvCn,
+				b.rsv_yn 		AS rsvYN,
+				b.reg_id 		AS regId,
+				CASE TO_CHAR(b.reg_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+													THEN TO_CHAR(SYSDATE,'HH24:MI') 
+				ELSE TO_CHAR(b.reg_date,'YYYY/MM/DD') END AS regDate,
+				b.mod_id 		AS modId,
+				CASE TO_CHAR(b.mod_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+													THEN TO_CHAR(SYSDATE,'HH24:MI') 
+				ELSE TO_CHAR(b.mod_date,'YYYY/MM/DD') END AS modDate,
+				b.rnum AS num
+		    FROM(
+				SELECT ROWNUM as rnum, a.*
+				FROM(
+					SELECT r.*
+					FROM reservation r
+					WHERE 1 = 1
+					<include refid="searchDivCondition" />
+					ORDER BY r.rsv_no DESC
+				) a
+				WHERE rownum <![CDATA[<=]]> (#{pageSize}*(#{pageNum}-1)+#{pageSize})
+			) b
+			WHERE rnum <![CDATA[>=]]> (#{pageSize}*(#{pageNum}-1)+1)
+		) t1
+		NATURAL JOIN (
+			SELECT COUNT(*) AS totalCnt
+		    FROM reservation r
+		    WHERE 1 = 1
+		    <include refid="searchDivCondition" />
+		) t2
+	</select>
+	
+</mapper>

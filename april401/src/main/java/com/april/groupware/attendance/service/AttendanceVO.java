@@ -26,7 +26,7 @@ import com.april.groupware.cmn.DTO;
  */
 public class AttendanceVO extends DTO {
 	/**아이디*/
-	private String userId;
+	private String id;
 	/**순서*/
 	private String seq;
 	/**출근 시간*/
@@ -43,10 +43,10 @@ public class AttendanceVO extends DTO {
 	private String workTime;
 	/**작성자*/
 	private String regId;
-	/**수정자*/
-	private String modId;
 	/**작성일*/
 	private String regDate;
+	/**수정자*/
+	private String modId;
 	/**수정일*/
 	private String modDate;
 	
@@ -54,10 +54,10 @@ public class AttendanceVO extends DTO {
 		
 	}
 
-	public AttendanceVO(String userId, String seq, String attendTime, String leaveTime, String attendYN, String leaveYN,
+	public AttendanceVO(String id, String seq, String attendTime, String leaveTime, String attendYN, String leaveYN,
 			String state, String workTime, String regId, String modId, String regDate, String modDate) {
 		super();
-		this.userId = userId;
+		this.id = id;
 		this.seq = seq;
 		this.attendTime = attendTime;
 		this.leaveTime = leaveTime;
@@ -71,12 +71,12 @@ public class AttendanceVO extends DTO {
 		this.modDate = modDate;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getid() {
+		return id;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setid(String id) {
+		this.id = id;
 	}
 
 	public String getSeq() {
@@ -169,7 +169,7 @@ public class AttendanceVO extends DTO {
 
 	@Override
 	public String toString() {
-		return "attendanceVO [userId=" + userId + ", seq=" + seq + ", attendTime=" + attendTime + ", leaveTime=" + leaveTime
+		return "attendanceVO [id=" + id + ", seq=" + seq + ", attendTime=" + attendTime + ", leaveTime=" + leaveTime
 				+ ", attendYN=" + attendYN + ", leaveYN=" + leaveYN + ", state=" + state + ", workTime=" + workTime
 				+ ", regId=" + regId + ", modId=" + modId + ", regDate=" + regDate + ", modDate=" + modDate
 				+ ", toString()=" + super.toString() + "]";

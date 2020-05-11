@@ -24,7 +24,7 @@ import com.april.groupware.cmn.DTO;
  * @author JIEUN 
  *
  */
-public class UserUpdateVO extends DTO {
+public class OrgUpdateVO extends DTO {
 	/**아이디*/
 	private String id;
 	/**비밀번호*/
@@ -67,8 +67,8 @@ public class UserUpdateVO extends DTO {
 	private String imgPath;
 	/**사진 확장자*/
 	private String ext;
-	/**사진 확장자*/
-	private String fileSize;
+	/**사진 크기*/
+	private int fileSize;
 	/**작성자*/
 	private String regId;
 	/**작성일*/
@@ -78,14 +78,14 @@ public class UserUpdateVO extends DTO {
 	/**수정일*/
 	private String modDate;
 	
-	public UserUpdateVO() {
+	public OrgUpdateVO() {
 		
 	}
 
-	public UserUpdateVO(String id, String password, String deptNm, String deptCd, String parentDeptCd, String auth,
+	public OrgUpdateVO(String id, String password, String deptNm, String deptCd, String parentDeptCd, String auth,
 			String name, String position, String mobile, String email, String address, String hiredate, String birth,
 			String vacationCnt, String militaryYN, String dspsnYN, String grade, String orgFileName, String modFileName,
-			String imgPath, String ext, String fileSize, String regId, String regDate, String modId, String modDate) {
+			String imgPath, String ext, int fileSize, String regId, String regDate, String modId, String modDate) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -283,11 +283,11 @@ public class UserUpdateVO extends DTO {
 		this.ext = ext;
 	}
 
-	public String getFileSize() {
+	public int getFileSize() {
 		return fileSize;
 	}
 
-	public void setFileSize(String fileSize) {
+	public void setFileSize(int fileSize) {
 		this.fileSize = fileSize;
 	}
 
@@ -325,7 +325,7 @@ public class UserUpdateVO extends DTO {
 
 	@Override
 	public String toString() {
-		return "UserUpdateVO [id=" + id + ", password=" + password + ", deptNm=" + deptNm + ", deptCd=" + deptCd
+		return "OrgUpdateVO [id=" + id + ", password=" + password + ", deptNm=" + deptNm + ", deptCd=" + deptCd
 				+ ", parentDeptCd=" + parentDeptCd + ", auth=" + auth + ", name=" + name + ", position=" + position
 				+ ", mobile=" + mobile + ", email=" + email + ", address=" + address + ", hiredate=" + hiredate
 				+ ", birth=" + birth + ", vacationCnt=" + vacationCnt + ", militaryYN=" + militaryYN + ", dspsnYN="

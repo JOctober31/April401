@@ -576,16 +576,24 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="">병역 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="">병역 사항 <span class=""></span>
                                             </label>
                                             <div class="col-lg-6">
                                             	<label>
-                                            		<input type="radio" name="military" value="1">
-                                            		예
+                                            		<input type="radio" name="military" value="0">
+                                            		해당 없음
                                             	</label>
                                             	<label>
-                                            		<input type="radio" name="military" value="0">
-                                            		아니요
+                                            		<input type="radio" name="military" value="1">
+                                            		군필
+                                            	</label>
+                                            	<label>
+                                            		<input type="radio" name="military" value="1">
+                                            		미필
+                                            	</label>
+                                            	<label>
+                                            		<input type="radio" name="military" value="1">
+                                            		군면제
                                             	</label>
                                                 <input type="text" class="form-control" id="" name="" placeholder="">
                                             </div>
@@ -596,11 +604,11 @@
                                             <div class="col-lg-6">
                                             	<label>
                                             		<input type="radio" name="disabled" value="1">
-                                            		예
+                                            		비대상
                                             	</label>
                                             	<label>
                                             		<input type="radio" name="disabled" value="0">
-                                            		아니요
+                                            		대상
                                             	</label>
                                                 <input type="text" class="form-control" id="" name="" placeholder="">
                                             </div>

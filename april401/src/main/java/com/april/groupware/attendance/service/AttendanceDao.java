@@ -30,7 +30,7 @@ public interface AttendanceDao {
 	/**
 	 * 
 	 * Method Name:doInsert 
-	 * 작성일: 2020. 5. 6.
+	 * 작성일: 2020. 5. 10.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto
@@ -41,7 +41,7 @@ public interface AttendanceDao {
 	/**
 	 * 
 	 * Method Name:doUpdate
-	 * 작성일: 2020. 5. 6.
+	 * 작성일: 2020. 5. 10.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto
@@ -49,10 +49,12 @@ public interface AttendanceDao {
 	 */
 	public int doUpdate(DTO dto);
 	
+	public int leaveUpdate(DTO dto);
+	
 	/**
 	 * 
 	 * Method Name:doDelete
-	 * 작성일: 2020. 5. 6.
+	 * 작성일: 2020. 5. 10.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto
@@ -63,7 +65,7 @@ public interface AttendanceDao {
 	/**
 	 * 
 	 * Method Name:doSelectOne
-	 * 작성일: 2020. 5. 6.
+	 * 작성일: 2020. 5. 10.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto
@@ -74,7 +76,7 @@ public interface AttendanceDao {
 	/**
 	 * 
 	 * Method Name:getAll
-	 * 작성일: 2020. 5. 6.
+	 * 작성일: 2020. 5. 10.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto
@@ -85,7 +87,7 @@ public interface AttendanceDao {
 	/**
 	 * 
 	 * Method Name:doRetrieve
-	 * 작성일: 2020. 5. 6.
+	 * 작성일: 2020. 5. 10.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto

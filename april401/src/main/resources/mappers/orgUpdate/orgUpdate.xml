@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.april.groupware.attendance.service">
+
+	<!-- Update : 수정 -->
+	<update id="orgDoUpdate" parameterType="OrgUpdateVO">
+		UPDATE organization	 
+		SET password = 		#{password},     
+		    mobile = 		#{mobile},       
+		    email = 		#{email},        
+		    address = 		#{address},      
+		    military_yn = 	#{militaryYN},  
+		    dspsn_yn = 		#{dspsnYN},     
+		    grade = 		#{grade},        
+		    org_file_nm = 	#{orgFileName},  
+		    mod_file_nm = 	#{modFileName},  
+		    img_path = 		#{imgPath},     
+		    ext = 			#{ext},          
+		    file_size = 	#{fileSize},
+		    mod_id = 		#{modId},
+		    mod_date = 		sysdate
+		WHERE id = 			#{id}
+	</update>
+	
+	<!-- SelectOne : 상세 조회 -->
+	<select id="orgDoSelectOne" parameterType="OrgUpdateVO" resultType="OrgUpdateVO">
+		SELECT
+			id,													
+		    password,        										
+		    dept_nm 		AS deptNm,         										
+		    dept_cd 		AS deptCd,         										
+		    parent_dept_cd 	AS parentDeptCd,  										
+		    auth,            										
+		    name,            										
+		    position,        										
+		    mobile,          										
+		    email,           										
+		    address,         										
+		    hire_date 		AS hiredate,       										
+		    birth,           										
+		    vacation_cnt 	AS vacationCnt,    										
+		    military_yn 	AS militaryYN,     										
+		    dspsn_yn 		AS dspsnYN,        										
+		    grade,           										
+		    org_file_nm 	AS orgFileName,     										
+		    mod_file_nm 	AS modFileName,     										
+		    img_path 		AS imgPath,        										
+		    ext,             										
+		    file_size 		AS fileSize,       										
+		    reg_id 			AS regId,          										
+		    TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI:SS') AS regDate,
+		    mod_id 			AS modId,          										
+		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') AS modDate
+		FROM organization
+		WHERE id = 			#{id}
+	</select>
+	
+</mapper>

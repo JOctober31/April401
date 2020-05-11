@@ -21,8 +21,6 @@ package com.april.groupware.attendance;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -36,10 +34,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.april.groupware.attendance.service.AttendanceDao;
 import com.april.groupware.attendance.service.AttendanceVO;
-import com.april.groupware.attendance.service.UserDao;
-import com.april.groupware.cmn.SearchVO;
-import com.april.groupware.reserve.service.ReservationVO;
 
 /**
  * @author JIEUN 
@@ -55,13 +51,13 @@ public class TestAttendanceDao {
 	WebApplicationContext webApplicationContext;
 	
 	@Autowired
-	UserDao dao;
+	AttendanceDao dao;
 	
 	AttendanceVO user01;
 	
 	/**
 	 * Method Name:setUp
-	 * 작성일: 2020. 5. 2.
+	 * 작성일: 2020. 5. 10.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @throws java.lang.Exception
@@ -72,11 +68,31 @@ public class TestAttendanceDao {
 		LOG.debug("WebApplicationContext : "+webApplicationContext);
 		LOG.debug("======================");
 		
-		user01 = new AttendanceVO("1","20200428","09","11","1",
-				"이지은","회의실 예약입니다","0","test", "",
-				"test", "");
+		user01 = new AttendanceVO("test", "1", "", "", "1", "0", "0", "0", "test", "test", "", "");
 	}
 
+	@Test
+//	@Ignore
+	public void addAndGet() {
+		//삭제
+		int flag = dao.doDelete(user01);
+//		assertThat(flag, is(1));
+		
+		//등록
+		flag = dao.doInsert(user01);
+		assertThat(flag, is(1));
+		
+		//수정
+//		user01.setLeaveYN("1");;	
+//		flag = dao.doUpdate(user01);
+		flag = dao.leaveUpdate(user01);
+		assertThat(flag, is(1));
+		
+		AttendanceVO userVO = (AttendanceVO) dao.doSelectOne(user01);
+		
+		//assertThat(list.size(), is(1));
+	}
+	
 	@Test
 	@Ignore
 	public void doInsert() {
@@ -104,7 +120,7 @@ public class TestAttendanceDao {
 		
 		int flag = 0;
 		
-		user01.setLeaveYN("1");;
+		user01.setLeaveYN("1");
 		flag = dao.doUpdate(user01);
 	}
 	
@@ -132,33 +148,12 @@ public class TestAttendanceDao {
 		//4.입력 data, 조회 data 비교
 		
 		//3.단건 조회
-		ReservationVO userVO = (ReservationVO) dao.doSelectOne(user01);
-	}
-	
-	@Test
-//	@Ignore
-	public void doRetrieve() {
-		//삭제
-		dao.doDelete(user01);
-		
-		//등록
-		int flag = dao.doInsert(user01);
-		
-		SearchVO inVO = new SearchVO("10", "test", 10, 1, "20200427", "20200429"); //날짜 검색, 검색 조건이 모두 있는 경우
-//		SearchVO inVO = new SearchVO("10", "test", 10, 1, "", ""); //검색 조건만 있는 경우
-//		SearchVO inVO = new SearchVO("", "", 10, 1, "", ""); //날짜 검색, 검색 조건이 모두 없는 경우
-		List<ReservationVO> list = (List<ReservationVO>) dao.doRetrieve(inVO);
-		
-		for(ReservationVO outVO : list) {
-			LOG.debug(outVO.toString());
-		}
-		
-		assertThat(list.size(), is(1));
+		AttendanceVO userVO = (AttendanceVO) dao.doSelectOne(user01);
 	}
 	
 	/**
 	 * Method Name:tearDown
-	 * 작성일: 2020. 5. 2.
+	 * 작성일: 2020. 5. 10.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @throws java.lang.Exception
