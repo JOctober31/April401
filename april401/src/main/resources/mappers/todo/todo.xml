@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.april.groupware.todo.service">
+    	
+     <!-- 검색조건 
+        10: 등록자ID
+        20: 제목
+        30: 내용
+    -->
+    <sql id="baseCondition">
+        <choose>
+            <when test="'10' == searchDiv">
+                AND reg_id like '%' || #{searchWord} || '%'
+            </when>
+            <when test="'20' == searchDiv">
+                AND p_title like '%' || #{searchWord} || '%'
+            </when>
+            <when test="'30' == searchDiv">
+                AND task_contents like '%' || #{searchWord} || '%'
+            </when>                     
+        </choose>
+    </sql>
+    
+    <!-- 목록조회 -->
+    <select id="doRetrieve" parameterType="SearchVO" resultType="TodoVO">
+		SELECT T1.*,T2.* 
+		FROM(
+		    SELECT B.id,
+		           B.dept_nm as deptNm,
+		           B.p_title as pTitle,
+		           B.p_type as pType,
+		           B.task_contents as taskContents,
+		           B.customer,
+		           B.area,
+		           B.working_form as workingForm,
+		           B.mod_id   as modId,
+		           B.reg_id   as regId,
+		           CASE TO_CHAR(B.reg_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+		                                               THEN TO_CHAR(SYSDATE,'HH24:MI') 
+		           ELSE TO_CHAR(B.reg_date,'YYYY/MM/DD') END regDate,
+		           B.rnum as num
+		    FROM(
+		        SELECT ROWNUM AS rnum,a.*
+		        FROM (
+		            SELECT *
+		            FROM todo
+		            WHERE 1=1
+		            --검색조건
+		            <include refid="baseCondition"/>
+		            ORDER BY reg_date desc
+		        )A
+		        WHERE ROWNUM  <![CDATA[ <= ]]> (#{pageSize} *(#{pageNum} - 1)+#{pageSize})
+		    )B
+		    WHERE rnum <![CDATA[ >= ]]> (#{pageSize}*(#{pageNum}-1)+1) 
+		)T1
+		NATURAL JOIN
+		(
+		    SELECT COUNT(*) totalCnt
+		    FROM todo
+		    WHERE 1=1
+		    --검색조건
+		    <include refid="baseCondition"/>
+		)T2
+    
+    </select>	
+    	
+  <!-- 수정 : readCount-->
+    <update id="doUpdateReadCnt" parameterType="TodoVO">
+        UPDATE todo
+        SET read_cnt = (SELECT NVL(MAX(read_cnt),0)+1
+                        FROM todo
+                        WHERE id = #{id})
+        WHERE id = #{id}  
+    </update>
+
+
+    <!-- 수정 -->
+    <update id="doUpdate" parameterType="TodoVO">
+		UPDATE todo
+		SET id = #{id},
+		    dept_nm =  #{deptNm},
+		    p_title =   #{pTitle},
+		    p_type =   #{pType},
+		    customer =   #{customer},
+		    task_contents = #{taskContents},
+		    area =    #{area},
+		    working_form =   #{workingForm},
+		    mod_id =  #{modId},
+		    mod_date =  sysdate
+		WHERE id = #{id}  
+    </update>
+
+<sql id="boardColumns">
+            id,
+            dept_nm as deptNm,
+            p_title as pTitle,
+            p_type as pType,
+            task_contents as taskContents,
+            customer,
+            area,
+            working_form as workingForm,
+            mod_id   as modId,
+            reg_id   as regId,
+            TO_CHAR(reg_date,'YYYY/MM/DD HH24MISS') mogDate   
+    </sql>
+
+<!-- 단건조회 : title-board_id -->
+    <select id="doSelectOneTitle" parameterType="TodoVO" resultType="TodoVO">
+        SELECT
+            <include refid="boardColumns"/>
+        FROM todo
+        WHERE ID like  '%' || #{id} || '%'
+    </select>
+    
+    <!-- 단건조회 -->
+    <select id="doSelectOne" parameterType="TodoVO" resultType="TodoVO">
+		SELECT
+		    <include refid="boardColumns"/>
+		FROM todo
+		WHERE id = #{id}
+    </select>
+
+
+<!-- 등록: namespace+id = com.sist.ehr.board.doInsert -->
+	<insert id="doInsert" parameterType="com.april.groupware.todo.service.TodoVO">
+			INSERT INTO todo (
+			id,
+			dept_nm,
+			p_title,
+			p_type,
+			customer,
+			task_contents,
+			area,
+			working_form,
+			reg_id,
+			mod_id,
+			mod_date
+			
+		) VALUES (
+		    #{id },
+		    #{deptNm },
+		    #{pTitle },
+		    #{pType },
+		    #{customer },
+	        #{taskContents },
+	        #{area },
+	        #{workingForm },
+	        #{regId },
+	        #{modId },
+	        #{modDate }
+	            
+		        
+		)
+	</insert>
+	
+	
+	
+	<!-- 삭제:namespace+id = com.sist.ehr.board.doDelete
+		<![CDATA[ >,<,>=,<= ]]>	
+	 -->
+	<delete id="doDelete" parameterType="TodoVO" >
+		<![CDATA[
+		DELETE FROM todo WHERE id = #{id}
+		]]>
+	</delete>
+	
+	<delete id="doDeleteAll" >
+		<![CDATA[
+		DELETE FROM todo
+		]]>
+	</delete>
+	
+</mapper>

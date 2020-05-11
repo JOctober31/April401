@@ -10,6 +10,7 @@
 	<!-- type 별칭 -->
 	<!-- parameterType="com.sist.ehr.board.service.BoardVO" - > parameterType="BoardVO" -->
 	<typeAliases>
+		<typeAlias type="com.april.groupware.todo.service.TodoVO" alias="TodoVO"/>
 		<typeAlias type="com.april.groupware.attendance.service.OrgUpdateVO" alias="OrgUpdateVO"/>
 		<typeAlias type="com.april.groupware.attendance.service.AttendanceVO" alias="AttendanceVO"/>
 		<typeAlias type="com.april.groupware.reserve.service.ReservationVO" alias="ReservationVO"/>

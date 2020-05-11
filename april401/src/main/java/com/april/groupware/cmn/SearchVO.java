@@ -25,12 +25,12 @@ public class SearchVO extends DTO {
 		
 	}
 	
-	public SearchVO(String searchDiv, String searchWord, int pageSize, int pageNum) {
+	public SearchVO(int pageSize, int pageNum, String searchDiv, String searchWord) {
 		super();
-		this.searchDiv = searchDiv;
-		this.searchWord = searchWord;
 		this.pageSize = pageSize;
 		this.pageNum = pageNum;
+		this.searchDiv = searchDiv;
+		this.searchWord = searchWord;
 	}
 
 	public SearchVO(String searchDiv, String searchWord, int pageSize, int pageNum, String searchStartDate,
