@@ -19,6 +19,9 @@
 
 package com.april.groupware.org;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -31,11 +34,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
-import com.april.groupware.org.service.OrgDao;
+import com.april.groupware.org.service.OrgService;
 import com.april.groupware.org.service.OrgVO;
 /**
  * @author JUHEE
- *
  */
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -48,9 +50,10 @@ public class TestOrgDao {
 	WebApplicationContext webApplicationContext;
 	
 	@Autowired 
-	OrgDao dao;
+	OrgService dao;
 	
-	OrgVO user01;
+	OrgVO insertUser;
+	OrgVO updateUser;
 	
 	/**
 	 * Method Name:setUp
@@ -69,23 +72,57 @@ public class TestOrgDao {
 //		user01 = new OrgVO("kimjh","1234","이름","20200202","부서명","직급","1","1","1","학력",
 //				"원본파일명","수정파일명","이미지경로","ext","0","email","20200202","012-345-6789","주소",
 //				"test","1234","test","1234");
-		user01 = new OrgVO(
-				"kimjh","1234","부서명","1","1",
+		insertUser = new OrgVO(
+				"kimjh3","1234","부서명","1","1",
 				"1","이름","직급","012-345-6789","email",
 				"주소","20200202","20200202","1","1",
 				"1","학력","원본파일명","수정파일명","이미지경로",
 				"ext","0",
 				"test","1234","test","1234");
+		
+		updateUser = new OrgVO(
+				"kimjh3",
+				"1234",
+				"연구소_U",
+				"000001_U",
+				"000000_U",
+				"1",
+				"김주희_U",
+				"대리_U",
+				"20200112",
+				"15",
+				"test_U",
+				"1234_U"
+				
+				);
 	}
 
 	@Test
-	@Ignore
+
 	public void doUpdate() {
+		
+		int flag = dao.doUpdate(updateUser);
+		assertThat(flag, is(1));
 
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
+	public void doInsert() {
+		//1.삭제
+		//2.입력
+		//3.단건 조회
+		//4.입력 data, 조회 data 비교
+		
+		//3.단건 조회
+		int flag = dao.doInsert(insertUser);
+		assertThat(flag, is(1));
+
+	
+	}
+	
+	@Test
+	@Ignore
 	public void doSelectOne() {
 		//1.삭제
 		//2.입력
@@ -93,7 +130,8 @@ public class TestOrgDao {
 		//4.입력 data, 조회 data 비교
 		
 		//3.단건 조회
-		OrgVO OrgVO = (OrgVO) dao.doSelectOne(user01);
+		OrgVO OrgVO = (OrgVO) dao.doSelectOne(insertUser);
+		LOG.debug(OrgVO.toString());
 	}
 	
 	/**

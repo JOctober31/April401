@@ -77,5 +77,7 @@ public interface OrgDao {
 	 * @return
 	 */
 	public List<?> doRetrieve(DTO dto);
+	
+	public int doUpdateReadCnt(DTO dto);
 
 }

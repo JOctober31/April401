@@ -81,6 +81,26 @@ public class OrgVO extends DTO {
 	public OrgVO() {
 
 	}
+	
+	
+	public OrgVO(String id, String password, String deptNm, String deptCd, String parentDeptCd, String auth, String name,
+			String position, String hiredate, String vacationCnt, String modId, String modDate
+
+	) {
+		
+		this.id = id;
+		this.password = password;
+		this.deptNm = deptNm;
+		this.deptCd = deptCd;
+		this.parentDeptCd = parentDeptCd;
+		this.auth = auth;
+		this.name = name;
+		this.position = position;
+		this.hiredate = hiredate;
+		this.vacationCnt = vacationCnt;
+		this.modId = modId;
+		this.modDate = modDate;
+	}
 
 	public OrgVO(String id, String password, String deptNm, String deptCd, String parentDeptCd, String auth,
 			String name, String position, String mobile, String email, String address, String hiredate, String birth,
