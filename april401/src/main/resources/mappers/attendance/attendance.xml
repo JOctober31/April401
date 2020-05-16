@@ -22,7 +22,7 @@
 		    #{seq},                  
 		    #{id},                  
 		    sysdate,                  
-		    #{attendYN},                  
+		    #{attendYN, jdbcType=VARCHAR},          
 		    #{leaveYN},                  
 		    #{workTime},                  
 		    #{regId},                  
@@ -36,7 +36,6 @@
 	<update id="doUpdate" parameterType="AttendanceVO">
 		UPDATE attendance	
 		SET attend_time = 	sysdate,
-		    lv_ffc_time = 	sysdate,
 		    attend_yn = 	#{attendYN},  
 		    lv_ffc_yn = 	#{leaveYN},  
 		    state = 		#{state},   	

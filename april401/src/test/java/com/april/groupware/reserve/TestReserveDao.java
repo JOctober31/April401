@@ -71,46 +71,11 @@ public class TestReserveDao {
 		LOG.debug("WebApplicationContext : "+webApplicationContext);
 		LOG.debug("======================");
 		
-		user01 = new ReservationVO("1","20200427","09","11","1",
+		user01 = new ReservationVO("1","20200428","09","11","1",
 				"이지은","회의실 예약입니다","0","test", "",
 				"test", "");
 	}
 
-	@Test
-//	@Ignore
-	public void addAndGet() {
-		//삭제
-		int flag = dao.doDelete(user01);
-//		assertThat(flag, is(1));
-		
-		//등록
-		flag = dao.doInsert(user01);
-		assertThat(flag, is(1));
-		
-		//수정
-		user01.setRsvDay("20200428");
-		flag = dao.doUpdate(user01);
-		assertThat(flag, is(1));
-		
-		ReservationVO userVO = (ReservationVO) dao.doSelectOne(user01);
-		
-		//검색 조건만 있는 경우
-//		SearchVO inVO = new SearchVO("10", "test", 10, 1, "", "");
-		//날짜 검색만 있는 경우
-//		SearchVO inVO = new SearchVO("", "", 10, 1, "20200427", "20200429");
-		//날짜 검색, 검색 조건이 모두 없는 경우
-//		SearchVO inVO = new SearchVO("", "", 10, 1, "", ""); 
-		//날짜 검색, 검색 조건이 모두 있는 경우
-		SearchVO inVO = new SearchVO("10", "test", 10, 1, "20200427", "20200429");
-		List<ReservationVO> list = (List<ReservationVO>) dao.doRetrieve(inVO);
-		
-		for(ReservationVO outVO : list) {
-			LOG.debug(outVO.toString());
-		}
-		
-		//assertThat(list.size(), is(1));
-	}
-	
 	@Test
 	@Ignore
 	public void doInsert() {
@@ -170,7 +135,7 @@ public class TestReserveDao {
 	}
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void doRetrieve() {
 		//삭제
 		dao.doDelete(user01);

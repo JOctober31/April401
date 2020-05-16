@@ -11,17 +11,22 @@
 		    mobile = 		#{mobile},       
 		    email = 		#{email},        
 		    address = 		#{address},      
-		    military_yn = 	#{militaryYN},  
-		    dspsn_yn = 		#{dspsnYN},     
+		    military_yn = 	#{militaryYN, jdbcType=VARCHAR},  
+		    dspsn_yn = 		#{dspsnYN, jdbcType=VARCHAR},     
 		    grade = 		#{grade},        
-		    org_file_nm = 	#{orgFileName},  
-		    mod_file_nm = 	#{modFileName},  
-		    img_path = 		#{imgPath},     
+		    org_file_nm = 	#{orgFileName, jdbcType=VARCHAR},  
+		    mod_file_nm = 	#{modFileName, jdbcType=VARCHAR},  
+		    img_path = 		#{imgPath, jdbcType=VARCHAR},     
 		    ext = 			#{ext},          
 		    file_size = 	#{fileSize},
-		    mod_id = 		#{modId},
+		    mod_id = 		#{modId, jdbcType=VARCHAR},
 		    mod_date = 		sysdate
-		WHERE id = 			#{id}
+		WHERE id = 			#{id, jdbcType=VARCHAR}
+	</update>
+	
+	<!-- Delete : 전체 삭제 -->
+	<update id="orgDoDelete" parameterType="OrgUpdateVO">
+		DELETE FROM organization	 
 	</update>
 	
 	<!-- SelectOne : 상세 조회 -->
@@ -54,7 +59,7 @@
 		    mod_id 			AS modId,          										
 		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') AS modDate
 		FROM organization
-		WHERE id = 			#{id}
+		WHERE id = 			#{id, jdbcType=VARCHAR}
 	</select>
 	
 </mapper>

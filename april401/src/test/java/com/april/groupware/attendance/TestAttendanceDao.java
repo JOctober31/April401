@@ -63,6 +63,8 @@ public class TestAttendanceDao {
 	 * @throws java.lang.Exception
 	 */
 	@Before
+	
+	
 	public void setUp() throws Exception {
 		LOG.debug("======================");
 		LOG.debug("WebApplicationContext : "+webApplicationContext);
@@ -85,7 +87,7 @@ public class TestAttendanceDao {
 		//수정
 //		user01.setLeaveYN("1");;	
 //		flag = dao.doUpdate(user01);
-		flag = dao.leaveUpdate(user01);
+		flag = dao.doLeaveUpdate(user01);
 		assertThat(flag, is(1));
 		
 		AttendanceVO userVO = (AttendanceVO) dao.doSelectOne(user01);

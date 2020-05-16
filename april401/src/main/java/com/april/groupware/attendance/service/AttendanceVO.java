@@ -71,11 +71,11 @@ public class AttendanceVO extends DTO {
 		this.modDate = modDate;
 	}
 
-	public String getid() {
+	public String getId() {
 		return id;
 	}
 
-	public void setid(String id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -143,20 +143,20 @@ public class AttendanceVO extends DTO {
 		this.regId = regId;
 	}
 
-	public String getModId() {
-		return modId;
-	}
-
-	public void setModId(String modId) {
-		this.modId = modId;
-	}
-
 	public String getRegDate() {
 		return regDate;
 	}
 
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
+	}
+
+	public String getModId() {
+		return modId;
+	}
+
+	public void setModId(String modId) {
+		this.modId = modId;
 	}
 
 	public String getModDate() {
@@ -169,9 +169,9 @@ public class AttendanceVO extends DTO {
 
 	@Override
 	public String toString() {
-		return "attendanceVO [id=" + id + ", seq=" + seq + ", attendTime=" + attendTime + ", leaveTime=" + leaveTime
+		return "AttendanceVO [id=" + id + ", seq=" + seq + ", attendTime=" + attendTime + ", leaveTime=" + leaveTime
 				+ ", attendYN=" + attendYN + ", leaveYN=" + leaveYN + ", state=" + state + ", workTime=" + workTime
-				+ ", regId=" + regId + ", modId=" + modId + ", regDate=" + regDate + ", modDate=" + modDate
+				+ ", regId=" + regId + ", regDate=" + regDate + ", modId=" + modId + ", modDate=" + modDate
 				+ ", toString()=" + super.toString() + "]";
 	}
 	

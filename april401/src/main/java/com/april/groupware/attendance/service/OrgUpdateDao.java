@@ -1,20 +1,5 @@
 /**
- * <pre>
- * com.april.groupware.attendance.service
- * Class Name : attendanceDao.java
- * Description : 
- * Modification Information
  * 
- * 수정일         수정자        수정내용
- * ------------ ----------- -------------------------------
- * 2020-05-06           최초생성
- *
- * @author 쌍용교육센터 E반 April
- * @since 2020-05-06 
- * @version 1.0
- * 
- *  Copyright (C) by April All right reserved.
- * </pre>
  */
 package com.april.groupware.attendance.service;
 
@@ -26,11 +11,11 @@ import com.april.groupware.cmn.DTO;
  * @author SIST
  *
  */
-public interface AttendanceDao {
+public interface OrgUpdateDao {
 	/**
 	 * 
 	 * Method Name:doInsert 
-	 * 작성일: 2020. 5. 10.
+	 * 작성일: 2020. 5. 2.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto
@@ -41,7 +26,7 @@ public interface AttendanceDao {
 	/**
 	 * 
 	 * Method Name:doUpdate
-	 * 작성일: 2020. 5. 10.
+	 * 작성일: 2020. 5. 2.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto
@@ -49,12 +34,10 @@ public interface AttendanceDao {
 	 */
 	public int doUpdate(DTO dto);
 	
-	public int doLeaveUpdate(DTO dto);
-	
 	/**
 	 * 
 	 * Method Name:doDelete
-	 * 작성일: 2020. 5. 10.
+	 * 작성일: 2020. 5. 2.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto
@@ -65,7 +48,7 @@ public interface AttendanceDao {
 	/**
 	 * 
 	 * Method Name:doSelectOne
-	 * 작성일: 2020. 5. 10.
+	 * 작성일: 2020. 5. 2.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto
@@ -76,7 +59,7 @@ public interface AttendanceDao {
 	/**
 	 * 
 	 * Method Name:getAll
-	 * 작성일: 2020. 5. 10.
+	 * 작성일: 2020. 5. 2.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto
@@ -87,12 +70,14 @@ public interface AttendanceDao {
 	/**
 	 * 
 	 * Method Name:doRetrieve
-	 * 작성일: 2020. 5. 10.
+	 * 작성일: 2020. 5. 2.
 	 * 작성자: JIEUN
 	 * 설명:
 	 * @param dto
 	 * @return
 	 */
 	public List<?> doRetrieve(DTO dto);
+
+	public void doDeleteAll();
 
 }

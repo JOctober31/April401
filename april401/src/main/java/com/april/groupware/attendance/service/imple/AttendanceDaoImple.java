@@ -74,25 +74,25 @@ public class AttendanceDaoImple implements AttendanceDao {
 	@Override
 	public int doInsert(DTO dto) {
 		LOG.debug("=====================");
-		LOG.debug("=doInsert=");
+		LOG.debug("=AttendanceDao doInsert=");
 		LOG.debug("=====================");
 		
 		//Param
 		AttendanceVO inVO = (AttendanceVO) dto;
 		LOG.debug("=====================");
-		LOG.debug("=inVO= : "+inVO);
+		LOG.debug("=AttendanceDao inVO= : "+inVO);
 		LOG.debug("=====================");
 		
 		//SQL-Query
 		String statement = NAMESPACE+".doInsert";
 		LOG.debug("=====================");
-		LOG.debug("=statement= : "+statement);
+		LOG.debug("=doInsert statement= : "+statement);
 		LOG.debug("=====================");
 		
 		//Call
 		int flag = this.sqlSessionTemplate.insert(statement, inVO);
 		LOG.debug("=====================");
-		LOG.debug("=flag= : "+flag);
+		LOG.debug("=doInsert flag= : "+flag);
 		LOG.debug("=====================");
 		
 		return flag;
@@ -152,27 +152,27 @@ public class AttendanceDaoImple implements AttendanceDao {
 	}
 	
 	//퇴근
-	public int leaveUpdate(DTO dto) {
+	public int doLeaveUpdate(DTO dto) {
 		LOG.debug("=====================");
-		LOG.debug("=leaveUpdate=");
+		LOG.debug("=AttendanceDao doLeaveUpdate=");
 		LOG.debug("=====================");
 		
 		//Param
 		AttendanceVO inVO = (AttendanceVO) dto;
 		LOG.debug("=====================");
-		LOG.debug("=inVO= : "+inVO);
+		LOG.debug("=AttendanceDao inVO= : "+inVO);
 		LOG.debug("=====================");
 		
 		//SQL-Query
 		String statement = NAMESPACE+".leaveUpdate";
 		LOG.debug("=====================");
-		LOG.debug("=statement= : "+statement);
+		LOG.debug("=doLeaveUpdate statement= : "+statement);
 		LOG.debug("=====================");
 		
 		//Call
 		int flag = this.sqlSessionTemplate.update(statement, inVO);
 		LOG.debug("=====================");
-		LOG.debug("=flag= : "+flag);
+		LOG.debug("=doLeaveUpdate flag= : "+flag);
 		LOG.debug("=====================");
 		
 		return flag;
@@ -221,25 +221,25 @@ public class AttendanceDaoImple implements AttendanceDao {
 	@Override
 	public int doUpdate(DTO dto) {
 		LOG.debug("=====================");
-		LOG.debug("=doUpdate=");
+		LOG.debug("=AttendanceDao doUpdate=");
 		LOG.debug("=====================");
 		
 		//Param
 		AttendanceVO inVO = (AttendanceVO) dto;
 		LOG.debug("=====================");
-		LOG.debug("=inVO= : "+inVO);
+		LOG.debug("=AttendanceDao inVO= : "+inVO);
 		LOG.debug("=====================");
 		
 		//SQL-Query
 		String statement = NAMESPACE+".doUpdate";
 		LOG.debug("=====================");
-		LOG.debug("=statement= : "+statement);
+		LOG.debug("=doUpdate statement= : "+statement);
 		LOG.debug("=====================");
 		
 		//Call
 		int flag = this.sqlSessionTemplate.update(statement, inVO);
 		LOG.debug("=====================");
-		LOG.debug("=flag= : "+flag);
+		LOG.debug("=doUpdate flag= : "+flag);
 		LOG.debug("=====================");
 		
 		return flag;
@@ -291,25 +291,25 @@ public class AttendanceDaoImple implements AttendanceDao {
 	@Override
 	public int doDelete(DTO dto) {
 		LOG.debug("=====================");
-		LOG.debug("=doDelete=");
+		LOG.debug("=AttendanceDao doDelete=");
 		LOG.debug("=====================");
 		
 		//Param
 		AttendanceVO inVO = (AttendanceVO) dto;
 		LOG.debug("=====================");
-		LOG.debug("=inVO= : "+inVO);
+		LOG.debug("=AttendanceDao inVO= : "+inVO);
 		LOG.debug("=====================");
 		
 		//SQL-Query
 		String statement = NAMESPACE+".doDelete";
 		LOG.debug("=====================");
-		LOG.debug("=statement= : "+statement);
+		LOG.debug("=doDelete statement= : "+statement);
 		LOG.debug("=====================");
 		
 		//Call
 		int flag = this.sqlSessionTemplate.delete(statement, inVO);
 		LOG.debug("=====================");
-		LOG.debug("=flag= : "+flag);
+		LOG.debug("=doDelete flag= : "+flag);
 		LOG.debug("=====================");
 		
 		return flag;
@@ -347,25 +347,25 @@ public class AttendanceDaoImple implements AttendanceDao {
 	@Override
 	public DTO doSelectOne(DTO dto) {
 		LOG.debug("=====================");
-		LOG.debug("=doSelectOne=");
+		LOG.debug("=AttendanceDao doSelectOne=");
 		LOG.debug("=====================");
 		
 		//Param
 		AttendanceVO inVO = (AttendanceVO) dto;
 		LOG.debug("=====================");
-		LOG.debug("=inVO= : "+inVO);
+		LOG.debug("=AttendanceDao inVO= : "+inVO);
 		LOG.debug("=====================");
 		
 		//SQL-Query
 		String statement = NAMESPACE+".doSelectOne";
 		LOG.debug("=====================");
-		LOG.debug("=statement= : "+statement);
+		LOG.debug("=doSelectOne statement= : "+statement);
 		LOG.debug("=====================");
 		
 		//Call
 		AttendanceVO outVO = this.sqlSessionTemplate.selectOne(statement, inVO);
 		LOG.debug("=====================");
-		LOG.debug("=outVO= : "+outVO);
+		LOG.debug("=doSelectOne outVO= : "+outVO);
 		LOG.debug("=====================");
 		
 		return outVO;

@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.april.groupware.attendance.service.OrgUpdateVO;
-import com.april.groupware.attendance.service.UserDao;
+import com.april.groupware.attendance.service.OrgUpdateDao;
 import com.april.groupware.cmn.DTO;
 
 /**
@@ -37,7 +37,7 @@ import com.april.groupware.cmn.DTO;
  *
  */
 @Repository
-public class OrgUpdateDaoImple implements UserDao {
+public class OrgUpdateDaoImple implements OrgUpdateDao {
 	private final Logger LOG = LoggerFactory.getLogger(OrgUpdateDaoImple.class); //LOG
 	
 	//namespace : 상수
@@ -109,19 +109,19 @@ public class OrgUpdateDaoImple implements UserDao {
 		//Param
 		OrgUpdateVO inVO = (OrgUpdateVO) dto;
 		LOG.debug("=====================");
-		LOG.debug("=inVO= : "+inVO);
+		LOG.debug("=doUpdate inVO= : "+inVO);
 		LOG.debug("=====================");
 		
 		//SQL-Query
 		String statement = NAMESPACE+".orgDoUpdate";
 		LOG.debug("=====================");
-		LOG.debug("=statement= : "+statement);
+		LOG.debug("=doUpdate statement= : "+statement);
 		LOG.debug("=====================");
 		
 		//Call
 		int flag = this.sqlSessionTemplate.update(statement, inVO);
 		LOG.debug("=====================");
-		LOG.debug("=flag= : "+flag);
+		LOG.debug("=doUpdate flag= : "+flag);
 		LOG.debug("=====================");
 		
 		return flag;
@@ -184,6 +184,24 @@ public class OrgUpdateDaoImple implements UserDao {
 	public int doDelete(DTO dto) {
 		return 0;
 	}
+	
+	public void doDeleteAll() {
+		LOG.debug("=====================");
+		LOG.debug("=doDeleteAll=");
+		LOG.debug("=====================");
+		
+		//SQL-Query
+		String statement = NAMESPACE+".orgDoDelete";
+		LOG.debug("=====================");
+		LOG.debug("=statement= : "+statement);
+		LOG.debug("=====================");
+		
+		//Call
+		int flag = this.sqlSessionTemplate.delete(statement);
+		LOG.debug("=====================");
+		LOG.debug("=flag= : "+flag);
+		LOG.debug("=====================");
+	}
 
 	@Override
 	public DTO doSelectOne(DTO dto) {
@@ -194,19 +212,19 @@ public class OrgUpdateDaoImple implements UserDao {
 		//Param
 		OrgUpdateVO inVO = (OrgUpdateVO) dto;
 		LOG.debug("=====================");
-		LOG.debug("=inVO= : "+inVO);
+		LOG.debug("=doSelectOne inVO= : "+inVO);
 		LOG.debug("=====================");
 		
 		//SQL-Query
 		String statement = NAMESPACE+".orgDoSelectOne";
 		LOG.debug("=====================");
-		LOG.debug("=statement= : "+statement);
+		LOG.debug("=doSelectOne statement= : "+statement);
 		LOG.debug("=====================");
 		
 		//Call
 		OrgUpdateVO outVO = this.sqlSessionTemplate.selectOne(statement, inVO);
 		LOG.debug("=====================");
-		LOG.debug("=outVO= : "+outVO);
+		LOG.debug("=doSelectOne outVO= : "+outVO);
 		LOG.debug("=====================");
 		
 		return outVO;

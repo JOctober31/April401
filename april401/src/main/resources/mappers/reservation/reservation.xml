@@ -56,7 +56,8 @@
 	<!-- Dao(namespace+id) : com.sist.ehr.board.doDelete -->
 	<delete id="doDelete" parameterType="ReservationVO">
 		DELETE FROM reservation
-		WHERE rsv_no = #{rsvNo}
+		WHERE reg_id = 		#{regId}
+		AND	rsv_no = 		#{rsvNo}
 	</delete>
 	
 	<!-- SelectOne : 상세 조회 -->
