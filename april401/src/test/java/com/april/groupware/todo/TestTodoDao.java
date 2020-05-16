@@ -50,6 +50,7 @@ public class TestTodoDao {
 	
 	
 	@Test
+	@Ignore
 	public void doRetrieve() {
 		//1.전체 삭제
 		//2.추가:3건
@@ -73,7 +74,6 @@ public class TestTodoDao {
 	}
 	
 	@Test
-	@Ignore
 	public void addAndGet() {
 		//1.전체 삭제		
 		//2.추가		
@@ -139,11 +139,11 @@ public class TestTodoDao {
 		LOG.debug("^^^^^^^^^^^");
 		LOG.debug("^WebApplicationContext^"+webApplicationContext);
 		LOG.debug("^^^^^^^^^^^");
-		board01=new TodoVO("1234_124","IT운영팀","PM작업","MAIN","무림페이","잘하고 있습니다","서울","외근","1234_124","1234_124","20100327");
-		board02=new TodoVO("5678_124","IT개발팀","PM작업","MAIN","무림페이","잘하고 있습니다","서울","외근","5678_124","5678_124","20100327");
-		board03=new TodoVO("9876_124","IT보수팀","PM작업","MAIN","무림페이","잘하고 있습니다","서울","외근","9876_124","9876_124","20100327");
+		board01=new TodoVO("1234_124","운영","PM작업","MAIN","무림","잘하고 있습니다","서울","외근","1234_124","1234_124","","");
+		board02=new TodoVO("5678_124","개발","PM작업","MAIN","무림","잘하고 있습니다","서울","외근","5678_124","5678_124","","");
+		board03=new TodoVO("9876_124","회계","PM작업","MAIN","무림","잘하고 있습니다","서울","외근","9876_124","9876_124","","");
 		
-		board04=new TodoVO("1234_124","IT운영팀","PM작업","MAIN","무림페이","잘하고 있습니다","서울","외근","1234_124","1234_124","20100327");
+		board04=new TodoVO("1234_124","운영","PM작업","MAIN","무림","잘하고 있습니다","서울","외근","1234_124","1234_124","","");
 		
 	}
 

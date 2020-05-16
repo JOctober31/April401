@@ -30,6 +30,8 @@ public class TodoVO extends DTO {
 	private String regId        ;
 	/** 수정자 */
 	private String modId        ;
+	/** 작성일 */
+	private String regDate      ;
 	/** 수정일 */
 	private String modDate      ;
 
@@ -38,7 +40,7 @@ public class TodoVO extends DTO {
 
 
 	public TodoVO(String id, String deptNm, String pTitle, String pType, String customer, String taskContents,
-			String area, String workingForm, String regId, String modId, String modDate) {
+			String area, String workingForm, String regId, String modId, String regDate, String modDate) {
 		super();
 		this.id = id;
 		this.deptNm = deptNm;
@@ -50,6 +52,7 @@ public class TodoVO extends DTO {
 		this.workingForm = workingForm;
 		this.regId = regId;
 		this.modId = modId;
+		this.regDate = regDate;
 		this.modDate = modDate;
 	}
 
@@ -154,6 +157,16 @@ public class TodoVO extends DTO {
 	}
 
 
+	public String getRegDate() {
+		return regDate;
+	}
+
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+
+
 	public String getModDate() {
 		return modDate;
 	}
@@ -166,10 +179,10 @@ public class TodoVO extends DTO {
 
 	@Override
 	public String toString() {
-		return "BoardVO [id=" + id + ", deptNm=" + deptNm + ", pTitle=" + pTitle + ", pType=" + pType + ", customer="
+		return "TodoVO [id=" + id + ", deptNm=" + deptNm + ", pTitle=" + pTitle + ", pType=" + pType + ", customer="
 				+ customer + ", taskContents=" + taskContents + ", area=" + area + ", workingForm=" + workingForm
-				+ ", regId=" + regId + ", modId=" + modId + ", modDate=" + modDate + ", toString()=" + super.toString()
-				+ "]";
+				+ ", regId=" + regId + ", modId=" + modId + ", regDate=" + regDate + ", modDate=" + modDate
+				+ ", toString()=" + super.toString() + "]";
 	}
 
 
@@ -185,6 +198,7 @@ public class TodoVO extends DTO {
 		result = prime * result + ((modId == null) ? 0 : modId.hashCode());
 		result = prime * result + ((pTitle == null) ? 0 : pTitle.hashCode());
 		result = prime * result + ((pType == null) ? 0 : pType.hashCode());
+		result = prime * result + ((regDate == null) ? 0 : regDate.hashCode());
 		result = prime * result + ((regId == null) ? 0 : regId.hashCode());
 		result = prime * result + ((taskContents == null) ? 0 : taskContents.hashCode());
 		result = prime * result + ((workingForm == null) ? 0 : workingForm.hashCode());
@@ -241,6 +255,11 @@ public class TodoVO extends DTO {
 				return false;
 		} else if (!pType.equals(other.pType))
 			return false;
+		if (regDate == null) {
+			if (other.regDate != null)
+				return false;
+		} else if (!regDate.equals(other.regDate))
+			return false;
 		if (regId == null) {
 			if (other.regId != null)
 				return false;
@@ -258,8 +277,7 @@ public class TodoVO extends DTO {
 			return false;
 		return true;
 	}
-	
-	
+
 
 
 }

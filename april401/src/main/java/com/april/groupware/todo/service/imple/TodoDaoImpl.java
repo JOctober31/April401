@@ -27,7 +27,7 @@ public class TodoDaoImpl implements TodoDao {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 	
-	private final  String NAMESPACE= "com.april.groupware.todo.service";
+	private final  String NAMESPACE= "com.april.groupware.todo";
 	
 	@Override
 	public int doInsert(DTO dto) {
