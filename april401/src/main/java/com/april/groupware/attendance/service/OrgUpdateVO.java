@@ -68,7 +68,7 @@ public class OrgUpdateVO extends DTO {
 	/**사진 확장자*/
 	private String ext;
 	/**사진 크기*/
-	private int fileSize;
+	private long fileSize;
 	/**작성자*/
 	private String regId;
 	/**작성일*/
@@ -85,7 +85,7 @@ public class OrgUpdateVO extends DTO {
 	public OrgUpdateVO(String id, String password, String deptNm, String deptCd, String parentDeptCd, String auth,
 			String name, String position, String mobile, String email, String address, String hiredate, String birth,
 			String vacationCnt, String militaryYN, String dspsnYN, String grade, String orgFileName, String modFileName,
-			String imgPath, String ext, int fileSize, String regId, String regDate, String modId, String modDate) {
+			String imgPath, String ext, long fileSize, String regId, String regDate, String modId, String modDate) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -283,11 +283,11 @@ public class OrgUpdateVO extends DTO {
 		this.ext = ext;
 	}
 
-	public int getFileSize() {
+	public long getFileSize() {
 		return fileSize;
 	}
 
-	public void setFileSize(int fileSize) {
+	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
 
