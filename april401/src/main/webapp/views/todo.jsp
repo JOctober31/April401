@@ -16,6 +16,8 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="aprilContext" value="${pageContext.request.contextPath}"></c:set>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -429,19 +431,19 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-validation">
-                                    <form class="form-valide" action="${hContext}/todo/do_insert.do" method="post">
+                                    <form class="form-valide" action="${hContext}/todo/do_insert.do" name="mngFrm" id="mngFrm" method="post">
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="id">아이디 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="id" name="id" placeholder="Your valid id..">
+                                                <input type="text" class="form-control" id="id" name="id" value="${vo.id }" placeholder="Your valid id.." >
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-skill">부서 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <select class="form-control" id="dept_nm" name="dept_nm">
+                                                <select class="form-control" id="dept_nm" name="dept_nm" value="${vo.deptNm }">
                                                     <option value="">부서 선택</option>
                                                     <option value="html">인사</option>
                                                     <option value="css">IT센터운영팀</option>
@@ -455,14 +457,14 @@
                                             <label class="col-lg-4 col-form-label" for=pTitle>프로젝트 명 <span class="text-danger" >*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="pTitle" name="pTitle" placeholder="Choose a pTitle"  value="${vo.pTitle }">
+                                                <input type="text" class="form-control" id="pTitle" name="pTitle" value="${vo.pTitle }" placeholder="Choose a pTitle"  value="${vo.pTitle }">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-skill">프로젝트 타입 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <select class="form-control" id="P_TYPE" name="P_TYPE">
+                                                <select class="form-control" id="pType" name="pType" value="${vo.pType }">
                                                      <option value="">프로젝트 타입 선택</option>
                                                     <option value="area">main</option>
                                                     <option value="area">sub</option>
@@ -473,21 +475,21 @@
                                             <label class="col-lg-4 col-form-label" for="taskContents">업무 내용 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <textarea class="form-control" id="task_contents" name="task_contents" rows="5" placeholder="What would you like to see?">${vo.contents}</textarea>
+                                                <textarea class="form-control" id="taskContents" name="taskContents" value="${vo.taskContents } rows="5" placeholder="What would you like to see?">${vo.contents}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="customer">고객사<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="customer" name="customer" placeholder="Enter a customer">
+                                                <input type="text" class="form-control" id="customer" name="customer" value="${vo.customer } placeholder="Enter a customer">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-skill">지역 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <select class="form-control" id="area" name="area">
+                                                <select class="form-control" id="area" name="area" value="${vo.area }">
                                                     <option value="">지역 선택</option>
                                                     <option value="area">서울</option>
                                                     <option value="area">부산</option>
@@ -505,7 +507,7 @@
                                             <label class="col-lg-4 col-form-label" for="val-skill">근무형태 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <select class="form-control" id="working_form" name="working_form">
+                                                <select class="form-control" id="workingForm" name="workingForm" value="${vo.workingForm }">
                                                     <option value="">근무 선택</option>
                                                     <option value="html">내근</option>
                                                     <option value="css">외근</option>
@@ -514,12 +516,12 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-8 ml-auto">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </div>
-                                        </div>
+                                        <div class="row text-right">
+									    <label for="pTitle" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label"></label>
+									    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+											<input  type="button" class="btn btn-primary btn-sm" value="등록" id="insert_btn" />
+										</div>
+									 </div>
                                     </form>
                                 </div>
                             </div>
@@ -561,7 +563,70 @@
 
     <script src="./plugins/validation/jquery.validate.min.js"></script>
     <script src="./plugins/validation/jquery.validate-init.js"></script>
+	
+	
+	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <script src="${hContext}/resources/js/jquery-migrate-1.4.1.js"></script>
+    <!-- jQuery validator -->
+    <script src="${hContext}/resources/js/jquery.validate.js"></script>    
+    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script src="${hContext}/resources/js/bootstrap.min.js"> </script>
+    <script type="text/javascript">
 
+		function doInsert(){
+			   var frm = document.mngFrm;
+		        frm.action = "${hContext}/todo/do_insert.do";
+		        frm.submit();
+		    }
+        $("#insert_btn").on("click",function(){
+        	console.log("insert_btn");
+        	
+            if(false==confirm("등록 하시겠습니까?"))return;
+
+            $.ajax({
+                       type:"POST",
+                       url:"${hContext}/todo/do_insert.do",
+                       dataType:"html", 
+                       data:{
+                                "id":id,
+                                "deptNm":deptNm,
+                                "pTitle":pTitle,
+                                "pType":pType,
+                                "customer":customer,
+                                "taskContents":taskContents,
+                                "area":area,
+                                "workingForm":workingForm,
+                                "contents":contents
+                                
+                            },
+                       success:function(data){ //성공
+                        //alert(data);
+                        //{"msgId":"1","msgMsg":"삭제 되었습니다.","num":0,"totalCnt":0}
+                        var jData = JSON.parse(data);
+                        if(null !=jData && jData.msgId=="1"){
+                            alert(jData.msgMsg);
+                            //목록화면으로 이동
+                            goRetrieve();
+                        }else{
+                            alert(jData.msgMsg);
+                            
+                        }
+                   
+                   },
+                   error:function(xhr,status,error){
+                       alert("error:"+error);
+                   },
+                   complete:function(data){
+                   
+                   }   
+                   
+           });//--ajax
+
+               
+        	
+        });
+	
 </body>
 
 </html>
