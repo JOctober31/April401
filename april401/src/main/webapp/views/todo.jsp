@@ -16,8 +16,11 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="aprilContext" value="${pageContext.request.contextPath}"></c:set>
+<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ include file="/common/common.jsp"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +33,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <!-- Custom Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
 
 </head>
 
@@ -443,13 +447,11 @@
                                             <label class="col-lg-4 col-form-label" for="val-skill">부서 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <select class="form-control" id="dept_nm" name="dept_nm" value="${vo.deptNm }">
+                                                <select class="form-control" id="deptNm" name="deptNm" value="${vo.deptNm }">
                                                     <option value="">부서 선택</option>
-                                                    <option value="html">인사</option>
-                                                    <option value="css">IT센터운영팀</option>
-                                                    <option value="javascript">금융회계팀</option>
-                                                    <option value="angular">경영진단팀</option>
-                                                    <option value="angular">정보보안팀</option>
+                                                    <option value="인사">인사</option>
+                                                    <option value="IT">IT</option>
+                                                    <option value="회계">회계</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -491,15 +493,10 @@
                                             <div class="col-lg-6">
                                                 <select class="form-control" id="area" name="area" value="${vo.area }">
                                                     <option value="">지역 선택</option>
-                                                    <option value="area">서울</option>
-                                                    <option value="area">부산</option>
-                                                    <option value="area">충남</option>
-                                                    <option value="area">경기</option>
-                                                    <option value="area">충북</option>
-                                                    <option value="area">강원</option>
-                                                    <option value="area">전남</option>
-                                                    <option value="area">전북</option>
-                                                    <option value="area">제주</option>
+                                                    <option value="서울">서울</option>
+                                                    <option value="부산">부산</option>
+                                                    <option value="경기">경기</option>
+                                                    <option value="제주">제주</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -509,20 +506,20 @@
                                             <div class="col-lg-6">
                                                 <select class="form-control" id="workingForm" name="workingForm" value="${vo.workingForm }">
                                                     <option value="">근무 선택</option>
-                                                    <option value="html">내근</option>
-                                                    <option value="css">외근</option>
-                                                    <option value="css">휴가</option>
-                                                    <option value="css">병가</option>
+                                                    <option value="내근">내근</option>
+                                                    <option value="외근">외근</option>
+                                                    <option value="휴가">휴가</option>
+                                                    <option value="병가">병가</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="row text-right">
-									    <label for="pTitle" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label"></label>
-									    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-											<input  type="button" class="btn btn-primary btn-sm" value="등록" id="insert_btn" />
-										</div>
+   								</form>                                        
+                                       <div class="row text-centert">
+                                       <label for="pTitle" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label"></label>
+									   <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+										   <input  type="submit" class="btn btn-primary btn-sm" value="등록" id="insert_btn" />
+									   </div>
 									 </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -572,17 +569,70 @@
     <script src="${hContext}/resources/js/jquery.validate.js"></script>    
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${hContext}/resources/js/bootstrap.min.js"> </script>
+	<script src="${hContext}/resources/js/jquery-migrate-1.4.1.js"></script>
     <script type="text/javascript">
 
-		function doInsert(){
-			   var frm = document.mngFrm;
-		        frm.action = "${hContext}/todo/do_insert.do";
-		        frm.submit();
-		    }
-        $("#insert_btn").on("click",function(){
-        	console.log("insert_btn");
-        	
+	
+
+	    function goRetrieve(){
+	    	location.href="/views/todo.jsp";
+	    }
+    
+		 $("#insert_btn").on("click",function(){
+				var id = $("#id").val().trim();
+	            if(null == id || id.length<=1){
+	            	$("#id").focus();
+	                alert("아이디를 입력하세요.");
+	                return;
+	            }
+	        	
+	        	var deptNm = $("#deptNm").val().trim();
+	            if(null == deptNm || deptNm.length<=1){
+	                $("#deptNm").focus();
+	                alert("제목을 입력하세요.");
+	                return;
+	            }        	
+	        	var pTitle = $("#pTitle").val().trim();
+	            if(null == pTitle || pTitle.length <=1){
+	                $("#pTitle").focus();
+	                alert("내용을 입력하세요.");
+	                return;
+	            }         	
+	        	var pType = $("#pType").val().trim();
+	            if(null == pType || pType.length<=1){
+	                $("#pType").focus();
+	                alert("아이디를 입력하세요.");
+	                return;
+	            }
+	            var customer = $("#customer").val().trim();
+	            if(null == customer || customer.length<=1){
+	                $("#customer").focus();
+	                alert("아이디를 입력하세요.");
+	                return;
+	            }
+	            var taskContents = $("#taskContents").val().trim();
+	            if(null == taskContents || taskContents.length<=1){
+	                $("#taskContents").focus();
+	                alert("아이디를 입력하세요.");
+	                return;
+	            }
+	            var area = $("#area").val().trim();
+	            if(null == area || area.length<=1){
+	                $("#area").focus();
+	                alert("아이디를 입력하세요.");
+	                return;
+	            }
+	            var workingForm = $("#workingForm").val().trim();
+	            if(null == workingForm || workingForm.length<=1){
+	                $("#workingForm").focus();
+	                alert("아이디를 입력하세요.");
+	                return;
+	            }
+	 
             if(false==confirm("등록 하시겠습니까?"))return;
+
+
+	        
 
             $.ajax({
                        type:"POST",
@@ -596,8 +646,7 @@
                                 "customer":customer,
                                 "taskContents":taskContents,
                                 "area":area,
-                                "workingForm":workingForm,
-                                "contents":contents
+                                "workingForm":workingForm
                                 
                             },
                        success:function(data){ //성공
@@ -623,10 +672,11 @@
                    
            });//--ajax
 
-               
-        	
         });
-	
+
+
+
+    </script>   
 </body>
 
 </html>

@@ -216,7 +216,7 @@ public class TodoController {
 //	public String doInsertView(Locale locale) {
 //		
 //		LOG.debug("1=================");
-//		LOG.debug("1=todo/todo_write");
+//		LOG.debug("1=todo/todo");
 //		LOG.debug("1=================");
 //		return "views/todo";
 //	}

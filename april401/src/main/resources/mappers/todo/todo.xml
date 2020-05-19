@@ -147,11 +147,9 @@
 	        #{taskContents },
 	        #{area },
 	        #{workingForm },
-	        #{regId },
-	        #{modId },
-	        #{modDate }
-	            
-		        
+	        #{regId , jdbcType=VARCHAR},
+	        #{regId , jdbcType=VARCHAR},
+	        sysdate
 		)
 	</insert>
 	
