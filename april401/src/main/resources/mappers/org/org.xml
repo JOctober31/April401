@@ -34,7 +34,8 @@
 		           B.REG_ID   as regId,
 		           CASE TO_CHAR(B.reg_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
 		                                                 THEN TO_CHAR(SYSDATE,'HH24:MI') 
-		           ELSE TO_CHAR(B.reg_date,'YYYY/MM/DD') END regDate,
+		          										 ELSE TO_CHAR(B.reg_date,'YYYY/MM/DD') 
+		           END regDate,
 		           B.rnum as num
 		    FROM(
 		        SELECT ROWNUM AS rnum,a.*
@@ -84,8 +85,7 @@
 				    dspsn_yn,
 				    grade,
 				    org_file_nm,
-				    mod_file_nm,
-				    img_path,
+				    save_file_nm,
 				    ext,
 				    file_size,
 				    reg_id,
@@ -111,8 +111,7 @@
 					#{dspsnYN},
 					#{grade},
 					#{orgFileName},
-					#{modFileName},
-					#{imgPath},
+					#{saveFileName},
 					#{ext},
 					#{fileSize},
 					#{regId},
@@ -120,6 +119,7 @@
 					#{modId},
 					sysdate
 		)
+		
 	</insert>
 	
 
@@ -146,38 +146,41 @@
     <!-- 단건조회 -->
     <select id="doSelectOne" parameterType="OrgVO" resultType="OrgVO">
 		SELECT
-		    id,
-		    password,
-		    dept_nm as deptNm,
-		    dept_cd as deptCd,
-		    parent_dept_cd as parentDeptCd,
-		    auth,
-		    name,
-		    position,
-		    mobile,
-		    email,
-		    address,
-		    hire_date as hiredate,
-		    birth,
-		    vacation_cnt as vacationCnt,
-		    military_yn as militaryYN,
-		    dspsn_yn as dspsnYN,
-		    grade,
-		    org_file_nm as orgFileName,
-		    mod_file_nm as modFileName,
-		    img_path as imgPath,
-		    ext,
-		    file_size as fileSize,
-		    reg_id as regId,
-		    TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI:SS') as regDate, 
-		    mod_id as modId,
-		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') as modDate
+			id,													
+		    password,        										
+		    dept_nm 		AS deptNm,         										
+		    dept_cd 		AS deptCd,         										
+		    parent_dept_cd 	AS parentDeptCd,  										
+		    auth,            										
+		    name,            										
+		    position,        										
+		    mobile,          										
+		    email,           										
+		    address,         										
+		    hire_date 		AS hiredate,       										
+		    birth,           										
+		    vacation_cnt 	AS vacationCnt,    										
+		    military_yn 	AS militaryYN,     										
+		    dspsn_yn 		AS dspsnYN,        										
+		    grade,           										
+		    org_file_nm 	AS orgFileName,     										
+		    save_file_nm 	AS saveFileName,     																			
+		    ext,             										
+		    file_size 		AS fileSize,       										
+		    reg_id 			AS regId,          										
+		    TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI:SS') AS regDate,
+		    mod_id 			AS modId,          										
+		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') AS modDate
 		FROM organization
-		WHERE id = #{id}  
+		WHERE id = 			#{id, jdbcType=VARCHAR} 
     </select>
     
-    
-    
+    <!-- 삭제 -->
+   <delete id="doDelete" parameterType="OrgVO"  >
+	    <![CDATA[
+		  DELETE FROM organization WHERE id = #{id}
+		]]>
+	</delete>
     
     
 </mapper>

@@ -62,9 +62,7 @@ public class OrgVO extends DTO {
 	/** 원본 사진 경로 */
 	private String orgFileName;
 	/** 수정 사진 경로 */
-	private String modFileName;
-	/** 저장된 사진 경로 */
-	private String imgPath;
+	private String saveFileName;
 	/** 사진 확장자 */
 	private String ext;
 	/** 사진 확장자 */
@@ -83,11 +81,10 @@ public class OrgVO extends DTO {
 	}
 	
 	
-	public OrgVO(String id, String password, String deptNm, String deptCd, String parentDeptCd, String auth, String name,
-			String position, String hiredate, String vacationCnt, String modId, String modDate
+	
+	public OrgVO(String id, String password, String deptNm, String deptCd, String parentDeptCd, String auth,
+			String name, String position, String hiredate, String vacationCnt, String modId, String modDate) {
 
-	) {
-		
 		this.id = id;
 		this.password = password;
 		this.deptNm = deptNm;
@@ -101,11 +98,14 @@ public class OrgVO extends DTO {
 		this.modId = modId;
 		this.modDate = modDate;
 	}
+	
+
 
 	public OrgVO(String id, String password, String deptNm, String deptCd, String parentDeptCd, String auth,
 			String name, String position, String mobile, String email, String address, String hiredate, String birth,
-			String vacationCnt, String militaryYN, String dspsnYN, String grade, String orgFileName, String modFileName,
-			String imgPath, String ext, String fileSize, String regId, String regDate, String modId, String modDate) {
+			String vacationCnt, String militaryYN, String dspsnYN, String grade, String orgFileName,
+			String saveFileName, String ext, String fileSize, String regId, String regDate, String modId,
+			String modDate) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -125,8 +125,7 @@ public class OrgVO extends DTO {
 		this.dspsnYN = dspsnYN;
 		this.grade = grade;
 		this.orgFileName = orgFileName;
-		this.modFileName = modFileName;
-		this.imgPath = imgPath;
+		this.saveFileName = saveFileName;
 		this.ext = ext;
 		this.fileSize = fileSize;
 		this.regId = regId;
@@ -135,225 +134,276 @@ public class OrgVO extends DTO {
 		this.modDate = modDate;
 	}
 
-	@Override
-	public String toString() {
-		return "UserVO [id=" + id + ", password=" + password + ", deptNm=" + deptNm + ", deptCd=" + deptCd
-				+ ", parentDeptCd=" + parentDeptCd + ", auth=" + auth + ", name=" + name + ", position=" + position
-				+ ", mobile=" + mobile + ", email=" + email + ", address=" + address + ", hiredate=" + hiredate
-				+ ", birth=" + birth + ", vacationCnt=" + vacationCnt + ", militaryYN=" + militaryYN + ", dspsnYN="
-				+ dspsnYN + ", grade=" + grade + ", orgFileName=" + orgFileName + ", modFileName=" + modFileName
-				+ ", imgPath=" + imgPath + ", ext=" + ext + ", fileSize=" + fileSize + ", regId=" + regId + ", regDate="
-				+ regDate + ", modId=" + modId + ", modDate=" + modDate + "]";
-	}
+
+
+
+
+
 
 	public String getId() {
 		return id;
 	}
 
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 
 	public String getPassword() {
 		return password;
 	}
 
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 
 	public String getDeptNm() {
 		return deptNm;
 	}
 
+
 	public void setDeptNm(String deptNm) {
 		this.deptNm = deptNm;
 	}
+
 
 	public String getDeptCd() {
 		return deptCd;
 	}
 
+
 	public void setDeptCd(String deptCd) {
 		this.deptCd = deptCd;
 	}
+
 
 	public String getParentDeptCd() {
 		return parentDeptCd;
 	}
 
+
 	public void setParentDeptCd(String parentDeptCd) {
 		this.parentDeptCd = parentDeptCd;
 	}
+
 
 	public String getAuth() {
 		return auth;
 	}
 
+
 	public void setAuth(String auth) {
 		this.auth = auth;
 	}
+
 
 	public String getName() {
 		return name;
 	}
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 	public String getPosition() {
 		return position;
 	}
 
+
 	public void setPosition(String position) {
 		this.position = position;
 	}
+
 
 	public String getMobile() {
 		return mobile;
 	}
 
+
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
+
 
 	public String getEmail() {
 		return email;
 	}
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 
 	public String getAddress() {
 		return address;
 	}
 
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 
 	public String getHiredate() {
 		return hiredate;
 	}
 
+
 	public void setHiredate(String hiredate) {
 		this.hiredate = hiredate;
 	}
+
 
 	public String getBirth() {
 		return birth;
 	}
 
+
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
+
 
 	public String getVacationCnt() {
 		return vacationCnt;
 	}
 
+
 	public void setVacationCnt(String vacationCnt) {
 		this.vacationCnt = vacationCnt;
 	}
+
 
 	public String getMilitaryYN() {
 		return militaryYN;
 	}
 
+
 	public void setMilitaryYN(String militaryYN) {
 		this.militaryYN = militaryYN;
 	}
+
 
 	public String getDspsnYN() {
 		return dspsnYN;
 	}
 
+
 	public void setDspsnYN(String dspsnYN) {
 		this.dspsnYN = dspsnYN;
 	}
+
 
 	public String getGrade() {
 		return grade;
 	}
 
+
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+
 
 	public String getOrgFileName() {
 		return orgFileName;
 	}
 
+
 	public void setOrgFileName(String orgFileName) {
 		this.orgFileName = orgFileName;
 	}
 
-	public String getModFileName() {
-		return modFileName;
+
+	public String getSaveFileName() {
+		return saveFileName;
 	}
 
-	public void setModFileName(String modFileName) {
-		this.modFileName = modFileName;
+
+	public void setSaveFileName(String saveFileName) {
+		this.saveFileName = saveFileName;
 	}
 
-	public String getImgPath() {
-		return imgPath;
-	}
-
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
-	}
 
 	public String getExt() {
 		return ext;
 	}
 
+
 	public void setExt(String ext) {
 		this.ext = ext;
 	}
+
 
 	public String getFileSize() {
 		return fileSize;
 	}
 
+
 	public void setFileSize(String fileSize) {
 		this.fileSize = fileSize;
 	}
+
 
 	public String getRegId() {
 		return regId;
 	}
 
+
 	public void setRegId(String regId) {
 		this.regId = regId;
 	}
+
 
 	public String getRegDate() {
 		return regDate;
 	}
 
+
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+
 
 	public String getModId() {
 		return modId;
 	}
 
+
 	public void setModId(String modId) {
 		this.modId = modId;
 	}
+
 
 	public String getModDate() {
 		return modDate;
 	}
 
+
 	public void setModDate(String modDate) {
 		this.modDate = modDate;
 	}
+
+
+	@Override
+	public String toString() {
+		return "OrgVO [id=" + id + ", password=" + password + ", deptNm=" + deptNm + ", deptCd=" + deptCd
+				+ ", parentDeptCd=" + parentDeptCd + ", auth=" + auth + ", name=" + name + ", position=" + position
+				+ ", mobile=" + mobile + ", email=" + email + ", address=" + address + ", hiredate=" + hiredate
+				+ ", birth=" + birth + ", vacationCnt=" + vacationCnt + ", militaryYN=" + militaryYN + ", dspsnYN="
+				+ dspsnYN + ", grade=" + grade + ", orgFileName=" + orgFileName + ", saveFileName=" + saveFileName
+				+ ", ext=" + ext + ", fileSize=" + fileSize + ", regId=" + regId + ", regDate=" + regDate + ", modId="
+				+ modId + ", modDate=" + modDate + "]";
+	}
 	
+	
+	
+
 	
 	
 

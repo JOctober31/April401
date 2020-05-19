@@ -48,8 +48,8 @@ import com.april.groupware.org.service.OrgVO;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml", 
 								    "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
-public class TestOrgDao {
-	private final Logger LOG = LoggerFactory.getLogger(TestOrgDao.class);
+public class TestOrgServiceDao {
+	private final Logger LOG = LoggerFactory.getLogger(TestOrgServiceDao.class);
 	
 	@Autowired
 	WebApplicationContext webApplicationContext;
@@ -59,21 +59,6 @@ public class TestOrgDao {
 	
 	OrgVO insertUser;
 	OrgVO updateUser;
-	
-	
-	@Test
-	public void doRetrieve() {
-		//1.전체 삭제
-		//2.추가:3건
-		//3.목록조회:3건
-		SearchVO  searchVO=new SearchVO(10,1,"10","kimjh");
-		List<OrgVO> list =   (List<OrgVO>) dao.doRetrieve(searchVO);
-		assertThat(list.size(), is(4));
-		for(OrgVO vo: list) {
-			LOG.debug("doRetrieve:"+vo.toString());
-		}
-				
-	}
 	
 	/**
 	 * Method Name:setUp
@@ -93,10 +78,10 @@ public class TestOrgDao {
 //				"원본파일명","수정파일명","이미지경로","ext","0","email","20200202","012-345-6789","주소",
 //				"test","1234","test","1234");
 		insertUser = new OrgVO(
-				"kimjh3","1234","부서명","1","1",
+				"king001","1234","부서명","1","1",
 				"1","이름","직급","012-345-6789","email",
 				"주소","20200202","20200202","1","1",
-				"1","학력","원본파일명","수정파일명","이미지경로",
+				"1","학력","원본파일명","수정파일명",
 				"ext","0",
 				"test","1234","test","1234");
 		
@@ -115,15 +100,71 @@ public class TestOrgDao {
 				"1234_U"
 				);
 	}
+	
+	
+	@Test
+	@Ignore
+	public void addAndGet() {
+		//1.전체 삭제		
+		//2.추가		
+		//3.단건조회		
+		//4.수정		
+		//5.비교
+		
+		//1.전체 삭제		
+		dao.doDelete(insertUser);
+		
+		//2.추가:3건		
+		int flag = dao.doInsert(insertUser);;
+		
+		assertThat(flag, is(1));
+		//3.단건조회:board01		
+		OrgVO vsVO = (OrgVO) dao.doSelectOne(insertUser);
+		//4.수정		
+		vsVO.setName(vsVO.getName()+"_U");
+		vsVO.setRegId("update_user");
+		//4.1 수정
+		flag = dao.doUpdate(vsVO);
+		assertThat(flag, is(1));
+		//4.2.단건조회
+		OrgVO orgVO = (OrgVO) dao.doSelectOne(vsVO);
+		
+		//5.비교
+		this.checkSameUser(orgVO, vsVO);
+	}
+	
+	
+	@Test
+
+	public void doRetrieve() {
+		//1.전체 삭제
+		//2.추가:3건
+		//3.목록조회:3건
+		SearchVO  searchVO=new SearchVO(10,1,"10","kimjh");
+		List<OrgVO> list =   (List<OrgVO>) dao.doRetrieve(searchVO);
+		assertThat(list.size(), is(5));
+		for(OrgVO vo: list) {
+			LOG.debug("doRetrieve:"+vo.toString());
+		}
+				
+	}
 
 	@Test
 	@Ignore
 	public void doUpdate() {
-		
 		int flag = dao.doUpdate(updateUser);
 		assertThat(flag, is(1));
 
 	}
+	
+	
+	@Test
+	@Ignore
+	public void doDelete() {
+		int flag = dao.doDelete(insertUser);
+		assertThat(flag, is(1));
+	}
+	
 	
 	@Test
 	@Ignore
@@ -136,7 +177,6 @@ public class TestOrgDao {
 		//3.단건 조회
 		int flag = dao.doInsert(insertUser);
 		assertThat(flag, is(1));
-
 	
 	}
 	
@@ -156,10 +196,17 @@ public class TestOrgDao {
 	/**
 	 * Method Name:tearDown
 	 * 작성일: 2020. 5. 2.
-	 * 작성자: JIEUN
+	 * 작성자: JUHEE
 	 * 설명:
 	 * @throws java.lang.Exception
 	 */
+	
+	public void checkSameUser(OrgVO orgVO, OrgVO vsVO) {
+		//assertTrue(orgVO.equals(vsVO));
+		assertThat(orgVO.getId(), is(vsVO.getId()));
+
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 	}

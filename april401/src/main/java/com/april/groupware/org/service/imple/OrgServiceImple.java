@@ -22,7 +22,6 @@ public class OrgServiceImple implements OrgService {
 	
 	@Override
 	public int doInsert(DTO dto) {
-		
 		return dao.doInsert(dto);
 	}
 

@@ -70,8 +70,8 @@ public class DashDaoImple implements DashDao {
 			outData.setDspsnYN(rs.getString("dspsn_yn"));
 			outData.setGrade(rs.getString("grade"));
 			outData.setOrgFileName(rs.getString("org_file_nm"));
-			outData.setModFileName(rs.getString("mod_file_nm"));
-			outData.setImgPath(rs.getString("img_path"));
+			outData.setSaveFileName(rs.getString("save_file_nm"));
+
 			
 			outData.setExt(rs.getString("ext"));
 			outData.setFileSize(rs.getString("file_size"));
@@ -115,7 +115,7 @@ public class DashDaoImple implements DashDao {
 		sb.append("    dspsn_yn = ?,       \n");
 		sb.append("    grade = ?,          \n");
 		sb.append("    org_file_nm = ?,    \n");
-		sb.append("    mod_file_nm = ?,    \n");
+		sb.append("    save_file_nm = ?,    \n");
 		sb.append("    img_path = ?,       \n");
 		sb.append("    ext = ?,            \n");
 		sb.append("    file_size = ?,      \n");
@@ -136,8 +136,8 @@ public class DashDaoImple implements DashDao {
 				inVO.getDspsnYN(), 
 				inVO.getGrade(), 
 				inVO.getOrgFileName(), 
-				inVO.getModFileName(), 
-				inVO.getImgPath(), 
+				inVO.getSaveFileName(), 
+ 
 				inVO.getExt(),
 				inVO.getFileSize(),
 				inVO.getId(), 
@@ -187,7 +187,7 @@ public class DashDaoImple implements DashDao {
 		sb.append("    dspsn_yn,        \n");
 		sb.append("    grade,           \n");
 		sb.append("    org_file_nm,     \n");
-		sb.append("    mod_file_nm,     \n");
+		sb.append("    save_file_nm,     \n");
 		sb.append("    img_path,        \n");
 		sb.append("    ext,             \n");
 		sb.append("    file_size,       \n");
