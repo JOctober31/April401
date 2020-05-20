@@ -1,9 +1,13 @@
 package com.april.groupware.attendance.web;
 
+import java.text.ParseException;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,12 +26,12 @@ public class AttendanceController {
 	
 	@RequestMapping(value="attend/do_insert.do", method=RequestMethod.POST, produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public String doInsert(AttendanceVO attendVO) {
+	public String doInsert(AttendanceVO attendVO) throws ParseException {
 		LOG.debug("====================");
 		LOG.debug("=doInsert user= : "+attendVO);
 		LOG.debug("====================");
 		
-		int flag = attendanceDao.doInsert(attendVO);
+		int flag  = attendanceDao.doInsert(attendVO);
 		LOG.debug("====================");
 		LOG.debug("=doInsert flag= : "+flag);
 		LOG.debug("====================");
@@ -37,9 +41,9 @@ public class AttendanceController {
 		message.setMsgId(String.valueOf(flag));
 		
 		if(flag == 1) {
-			message.setMsgMsg(attendVO.getId()+"등록 성공");
+			message.setMsgMsg(attendVO.getId()+"출근 성공");
 		} else {
-			message.setMsgMsg(attendVO.getId()+"등록 실패");
+			message.setMsgMsg(attendVO.getId()+"출근 실패");
 		}
 		
 		//Json(Gson)
@@ -74,9 +78,9 @@ public class AttendanceController {
 		message.setMsgId(String.valueOf(flag));
 		
 		if(flag == 1) {
-			message.setMsgMsg(attendVO.getId()+"출근 성공");
+			message.setMsgMsg(attendVO.getId()+"성공");
 		} else {
-			message.setMsgMsg(attendVO.getId()+"출근 실패");
+			message.setMsgMsg(attendVO.getId()+"실패");
 		}
 		
 		//Json(Gson)
@@ -100,6 +104,10 @@ public class AttendanceController {
 		if(attendVO.getId() == null) {
 			throw new IllegalArgumentException("ID를 입력하세요");
 		}
+		
+		//TODO
+		attendVO.setWorkTime("8");
+		attendVO.setLeaveYN("1");
 		
 		int flag = attendanceDao.doLeaveUpdate(attendVO);
 		LOG.debug("====================");
@@ -134,6 +142,9 @@ public class AttendanceController {
 		LOG.debug("=doDelete user= : "+attendVO);
 		LOG.debug("====================");
 		
+		//TODO 로그인 
+		attendVO.setId("kimjh1");
+		
 		if(attendVO.getId() == null) {
 			throw new IllegalArgumentException("ID를 입력하세요");
 		}
@@ -166,27 +177,28 @@ public class AttendanceController {
 		return json;
 	}
 	
-	@RequestMapping(value="attend/do_select_one.do", method=RequestMethod.POST, produces="application/json; charset=UTF-8")
-	@ResponseBody
-	public String doSelectOne(AttendanceVO attendVO) {
+	@RequestMapping(value="attend/do_select_one.do", method=RequestMethod.GET, produces="application/json; charset=UTF-8")
+	public String doSelectOne(AttendanceVO attendVO, Model model) {
 		LOG.debug("====================");
-		LOG.debug("=doSelectOne user= : "+attendVO);
+		LOG.debug("=doSelectOne(getAll) user= : "+attendVO);
 		LOG.debug("====================");
 		
-		AttendanceVO outVO = (AttendanceVO) attendanceDao.doSelectOne(attendVO);
+		List<AttendanceVO> outList = (List<AttendanceVO>) attendanceDao.getAll(attendVO);
 		LOG.debug("====================");
-		LOG.debug("=doSelectOne outVO= : "+outVO);
+		LOG.debug("=doSelectOne(getAll) outList= : "+outList);
 		LOG.debug("====================");
+		
+		model.addAttribute("attendanceVO", outList);
 		
 		//Json(Gson)
-		Gson gson = new Gson();
-		String json = gson.toJson(outVO);
+//		Gson gson = new Gson();
+//		String json = gson.toJson(outVO);
+//		
+//		LOG.debug("====================");
+//		LOG.debug("=doSelectOne json= : "+json);
+//		LOG.debug("====================");
 		
-		LOG.debug("====================");
-		LOG.debug("=doSelectOne json= : "+json);
-		LOG.debug("====================");
-		
-		return json;
+		return "/views/attendance";
 	}
 	
 }

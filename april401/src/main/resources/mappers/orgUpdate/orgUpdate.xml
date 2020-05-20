@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.april.groupware.attendance.service">
+<mapper namespace="com.april.groupware.attendance">
 
 	<!-- Update : 수정 -->
 	<update id="orgDoUpdate" parameterType="OrgUpdateVO">
@@ -15,9 +15,8 @@
 		    dspsn_yn = 		#{dspsnYN, jdbcType=VARCHAR},     
 		    grade = 		#{grade},        
 		    org_file_nm = 	#{orgFileName, jdbcType=VARCHAR},  
-		    mod_file_nm = 	#{modFileName, jdbcType=VARCHAR},  
-		    img_path = 		#{imgPath, jdbcType=VARCHAR},     
-		    ext = 			#{ext},          
+		    save_file_nm = 	#{saveFileName, jdbcType=VARCHAR},  
+		    ext = 			#{ext},       
 		    file_size = 	#{fileSize},
 		    mod_id = 		#{modId, jdbcType=VARCHAR},
 		    mod_date = 		sysdate
@@ -43,15 +42,14 @@
 		    mobile,          										
 		    email,           										
 		    address,         										
-		    hire_date 		AS hiredate,       										
-		    birth,           										
+		    TO_CHAR(TO_DATE(hire_date), 'YYYY/MM/DD') 	AS hiredate,       										
+		    TO_CHAR(TO_DATE(birth), 'YYYY/MM/DD') 		AS birth,           										
 		    vacation_cnt 	AS vacationCnt,    										
 		    military_yn 	AS militaryYN,     										
 		    dspsn_yn 		AS dspsnYN,        										
 		    grade,           										
 		    org_file_nm 	AS orgFileName,     										
-		    mod_file_nm 	AS modFileName,     										
-		    img_path 		AS imgPath,        										
+		    save_file_nm 	AS saveFileName,     										
 		    ext,             										
 		    file_size 		AS fileSize,       										
 		    reg_id 			AS regId,          										

@@ -61,21 +61,21 @@ public class TestOrgUpdateController {
 					"kimjh1","1234","부서명","1","1",
 					"1","이름","직급","012-345-6789","email",
 					"주소","20200202","20200202","1","1",
-					"1","학력","원본파일명","수정파일명","이미지경로",
+					"1","학력","원본파일명","수정파일명",
 					"ext",0,
 					"test1","1234","test1","1234"),
 				new OrgUpdateVO(
 					"kimjh2","1234","부서명","1","1",
 					"1","이름","직급","012-345-6789","email",
 					"주소","20200202","20200202","1","1",
-					"1","학력","원본파일명","수정파일명","이미지경로",
+					"1","학력","원본파일명","수정파일명",
 					"ext",0,
 					"test","1234","test","1234"),
 				new OrgUpdateVO(
 					"kimjh3","1234","부서명","1","1",
 					"1","이름","직급","012-345-6789","email",
 					"주소","20200202","20200202","1","1",
-					"1","학력","원본파일명","수정파일명","이미지경로",
+					"1","학력","원본파일명","수정파일명",
 					"ext",0,
 					"test","1234","test","1234")
 				);
@@ -134,8 +134,7 @@ public class TestOrgUpdateController {
 				.param("dspsnYN", orgVO.getDspsnYN())
 				.param("grade", orgVO.getGrade())
 				.param("orgFileName", orgVO.getOrgFileName())
-				.param("modFileName", orgVO.getModFileName())
-				.param("imgPath", orgVO.getImgPath())
+				.param("saveFileName", orgVO.getSaveFileName())
 				.param("ext", orgVO.getExt())
 				.param("fileSize", orgVO.getFileSize()+"")
 				.param("modId", orgVO.getModId())

@@ -253,6 +253,7 @@ public class TestReserveController {
 	}
 	
 	@Test
+//	@Ignore
 	public void doRetrieve() throws Exception {
 		//조회 + 검색 조건
 		//URL+Param
@@ -263,19 +264,18 @@ public class TestReserveController {
 		MockHttpServletRequestBuilder createMessage = MockMvcRequestBuilders.get("/reserve/do_retrieve.do")
 				.param("pageNum", "1")
 				.param("pageSize", "10")
-				.param("searchDiv", "")
-				.param("searchWord", " ")
-//				.param("searchDiv", "10")
-//				.param("searchWord", "test")
-//				.param("searchStartDate", "20200427")
-//				.param("searchEndDate", "20200429")
+//				.param("searchDiv", "")
+//				.param("searchWord", " ")
+				.param("searchDiv", "10")
+				.param("searchWord", "test")
+				.param("searchStartDate", "20200427")
+				.param("searchEndDate", "20200427")
 				;
 		
 		ResultActions resultActions = mockMvc.perform(createMessage)
 				.andExpect(status().is2xxSuccessful())
 				.andExpect(model().attributeExists("searchList"))
 				.andExpect(model().attributeExists("list"))
-				.andExpect(model().attributeExists("vo"))
 				.andExpect(model().attributeExists("totalCnt"))
 				;
 		

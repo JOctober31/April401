@@ -15,7 +15,6 @@ import com.april.groupware.cmn.MessageVO;
 import com.april.groupware.cmn.SearchVO;
 import com.april.groupware.cmn.StringUtil;
 import com.april.groupware.code.service.CodeService;
-import com.april.groupware.code.service.CodeVO;
 import com.april.groupware.reserve.service.ReservationVO;
 import com.april.groupware.reserve.service.ReserveDao;
 import com.google.gson.Gson;
@@ -177,57 +176,91 @@ public class ReservationController {
 			search.setPageSize(10);
 		}
 
-		//TODO
+		//검색구분, 검색어
 		search.setSearchDiv(StringUtil.nvl(search.getSearchDiv()));
-//		search.setSearchDiv(StringUtil.nvl(search.getSearchWord().trim()));
 		search.setSearchWord(StringUtil.nvl(search.getSearchWord().trim()));
 		search.setSearchStartDate(StringUtil.nvl(search.getSearchStartDate()));
 		search.setSearchEndDate(StringUtil.nvl(search.getSearchEndDate()));
+
+		model.addAttribute("searchList", search);
+		LOG.debug("1.1====================");
+		LOG.debug("1.1=search= : "+search);
+		LOG.debug("1.1====================");
 		
+		List<ReservationVO> list = (List<ReservationVO>) reserveDao.doRetrieve(search);
+		LOG.debug("1.2====================");
+		for(ReservationVO vo : list) {
+			LOG.debug("list : "+vo);
+		}
+		LOG.debug("1.2====================");
 		
-		model.addAttribute("vo", search);
-		
-		//검색 조건
-		CodeVO code = new CodeVO();
-		
-		//RESERVE_SEARCH
-//		code.setCodeTypeId("BOARD_SEARCH");
-		code.setCodeTypeId("RESERVE_SEARCH");
-		List<CodeVO> searchList = (List<CodeVO>) this.codeService.doRetrieve(code);
-		LOG.debug("======================");
-		LOG.debug("=searchList= : "+searchList);
-		LOG.debug("======================");
-		model.addAttribute("searchList", searchList);
-		
-		//PAGE_SIZE
-		code.setCodeTypeId("PAGE_SIZE");
-		List<CodeVO> pageSizeList = (List<CodeVO>) this.codeService.doRetrieve(code);
-		LOG.debug("======================");
-		LOG.debug("=pageSizeList= : "+pageSizeList);
-		LOG.debug("======================");
-		model.addAttribute("pageSizeList", pageSizeList);
-		
-		
-		List<ReservationVO> list = (List<ReservationVO>) this.reserveDao.doRetrieve(search);
 		model.addAttribute("list", list);
 		
-		for (ReservationVO ReservationVO : list) {
-			LOG.debug("outVO : "+ReservationVO);
-		}
-		
-		//총 게시글 수
+		//총 게시글수
 		int totalCnt = 0;
-		if(list != null && list.size() > 0) {
+		if(list != null && list.size()>0) {
 			totalCnt = list.get(0).getTotalCnt();
 		}
 		
-		LOG.debug("======================");
-		LOG.debug("=totalCnt= : "+totalCnt);
-		LOG.debug("======================");
-		
 		model.addAttribute("totalCnt", totalCnt);
 		
-		return "views/reserv";
+		int maxPageNo = ((totalCnt - 1) / search.getPageSize()) + 1;
+		
+		model.addAttribute("maxPageNo", maxPageNo);
+		model.addAttribute("pageNum", search.getPageNum());
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(list);
+		LOG.debug("====================");
+		LOG.debug("=json="+json);
+		LOG.debug("====================");
+		
+		//"member/member_mng" -> "/(root)" + "member/member_mng" + ".jsp"
+//		return json;
+		
+//		model.addAttribute("vo", search);
+		
+//		//검색 조건
+//		CodeVO code = new CodeVO();
+//		
+//		//RESERVE_SEARCH
+////		code.setCodeTypeId("BOARD_SEARCH");
+//		code.setCodeTypeId("RESERVE_SEARCH");
+//		List<CodeVO> searchList = (List<CodeVO>) this.codeService.doRetrieve(code);
+//		LOG.debug("======================");
+//		LOG.debug("=searchList= : "+searchList);
+//		LOG.debug("======================");
+//		model.addAttribute("searchList", searchList);
+//		
+//		//PAGE_SIZE
+//		code.setCodeTypeId("PAGE_SIZE");
+//		List<CodeVO> pageSizeList = (List<CodeVO>) this.codeService.doRetrieve(code);
+//		LOG.debug("======================");
+//		LOG.debug("=pageSizeList= : "+pageSizeList);
+//		LOG.debug("======================");
+//		model.addAttribute("pageSizeList", pageSizeList);
+//		
+//		
+//		List<ReservationVO> list = (List<ReservationVO>) this.reserveDao.doRetrieve(search);
+//		model.addAttribute("list", list);
+//		
+//		for (ReservationVO ReservationVO : list) {
+//			LOG.debug("outVO : "+ReservationVO);
+//		}
+//		
+//		//총 게시글 수
+//		int totalCnt = 0;
+//		if(list != null && list.size() > 0) {
+//			totalCnt = list.get(0).getTotalCnt();
+//		}
+//		
+//		LOG.debug("======================");
+//		LOG.debug("=totalCnt= : "+totalCnt);
+//		LOG.debug("======================");
+//		
+//		model.addAttribute("totalCnt", totalCnt);
+		
+		return "views/reservation";
 	}
 	
 }

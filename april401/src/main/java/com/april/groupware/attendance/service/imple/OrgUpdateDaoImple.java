@@ -18,8 +18,6 @@
  */
 package com.april.groupware.attendance.service.imple;
 
-
-
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -41,7 +39,7 @@ public class OrgUpdateDaoImple implements OrgUpdateDao {
 	private final Logger LOG = LoggerFactory.getLogger(OrgUpdateDaoImple.class); //LOG
 	
 	//namespace : 상수
-	private final String NAMESPACE = "com.april.groupware.attendance.service";
+	private final String NAMESPACE = "com.april.groupware.attendance";
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;

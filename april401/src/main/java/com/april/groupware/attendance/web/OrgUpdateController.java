@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,13 +26,12 @@ public class OrgUpdateController {
 	private final Logger LOG = LoggerFactory.getLogger(OrgUpdateController.class);
 	
 	//파일 저장 경로 : JIEUN 부분 -> sist
-	private final String PROFILE_UPLOAD_PATH ="C:\\Users\\JIEUN\\git\\April401\\april401\\src\\main\\webapp\\WEB-INF\\file_upload_img";
+	private final String PROFILE_UPLOAD_PATH ="C:\\Users\\SIST\\git\\April401\\april401\\src\\main\\webapp\\WEB-INF\\file_upload_img";
 	
 	@Autowired
 	OrgUpdateDao orgUpdateDao;
 	
 	@RequestMapping(value="org/do_update.do", method=RequestMethod.POST, produces="application/json; charset=UTF-8")
-	@ResponseBody
 	public String doUpdate(OrgUpdateVO userOrg, MultipartHttpServletRequest mhsRequest, ModelAndView model) throws IllegalStateException, IOException {
 		LOG.debug("====================");
 		LOG.debug("=doUpdate user= : "+userOrg);
@@ -42,7 +40,6 @@ public class OrgUpdateController {
 		if(userOrg.getId() == null) {
 			throw new IllegalArgumentException("ID를 입력하세요");
 		}
-		
 		
 		/**프로필 이미지 파일 저장*/
 		//1.저장 폴더 생성
@@ -109,16 +106,18 @@ public class OrgUpdateController {
 			saveFileName += "."+ext;
 			LOG.debug("=saveFileName.ext= : "+saveFileName);
 			
-			//2.5.3.전체 경로 = datePath"폴더+연+월" + saveFileName"저장될파일명+확장자"
+			//2.5.5.DB에 저장될 파일 전체 경로 set(절대 경로)
+			String projectDir = File.separator + "WEB-INF"+ File.separator +"file_upload_img"+ File.separator + yyyyStr + File.separator + mmStr;
+			String dbSaveFilePath = projectDir+ File.separator+saveFileName;
+			userOrg.setSaveFileName(dbSaveFilePath);
+			//원본 파일명, 파일 사이즈, 확장자, 전체 경로
+
+			//2.5.5.전체 경로 = datePath"폴더+연+월" + saveFileName"저장될파일명+확장자"
 			File fullPathFileName = new File(datePath, saveFileName);
 			LOG.debug("=fullPathFileName= : "+fullPathFileName);
 			
-			//2.5.4.DB 저장될 파일 전체 경로 set(절대 경로)
-			userOrg.setModFileName(fullPathFileName.getAbsolutePath());
-			//원본 파일명, 파일 사이즈, 확장자, 전체 경로
-			
 			//3.전송하기
-			//multiFile.transferTo(new File(fullPathFileName.getAbsolutePath()));
+			multiFile.transferTo(new File(fullPathFileName.getAbsolutePath()));
 		}	
 		/**--프로필 이미지 파일 저장*/
 		
@@ -145,7 +144,7 @@ public class OrgUpdateController {
 		LOG.debug("=doUpdate json= : "+json);
 		LOG.debug("====================");
 		
-		return json;
+		return "/views/mypage_org";
 	}
 
 	@RequestMapping(value="org/do_select_one.do", method=RequestMethod.GET, produces="application/json; charset=UTF-8")

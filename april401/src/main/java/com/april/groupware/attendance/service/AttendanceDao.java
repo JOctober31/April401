@@ -18,6 +18,7 @@
  */
 package com.april.groupware.attendance.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import com.april.groupware.cmn.DTO;
@@ -35,8 +36,9 @@ public interface AttendanceDao {
 	 * 설명:
 	 * @param dto
 	 * @return
+	 * @throws ParseException 
 	 */
-	public int doInsert(DTO dto);
+	public int doInsert(DTO dto) throws ParseException;
 	
 	/**
 	 * 

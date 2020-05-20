@@ -1,7 +1,7 @@
 <%--
  /**
   * Class Name : 
-  * Description : 
+  * Description : http://localhost:8080/groupware/org/do_select_one.do?id=kimjh1
   * Modification Information
   *
   * 수정일		수정자		수정내용
@@ -14,12 +14,15 @@
   * Copyright (C) 2009 by KandJang  All right reserved.
   */
 --%>
+<%@page import="com.april.groupware.attendance.service.OrgUpdateVO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="aprilContext" value="${pageContext.request.contextPath}"></c:set>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="utf-8">
@@ -27,9 +30,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="${aprilContext}/views/images/favicon.png">
     <!-- Custom Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="${aprilContext}/views/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -61,10 +64,10 @@
         <div class="nav-header">
             <div class="brand-logo">
                 <a href="index.html">
-                    <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
-                    <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
+                    <b class="logo-abbr"><img src="${aprilContext}/views/images/logo.png" alt=""> </b>
+                    <span class="logo-compact"><img src="${aprilContext}/views/images/logo-compact.png" alt=""></span>
                     <span class="brand-title">
-                        <img src="images/logo-text.png" alt="">
+                        <img src="${aprilContext}/views/images/logo-text.png" alt="">
                     </span>
                 </a>
             </div>
@@ -112,7 +115,7 @@
                                     <ul>
                                         <li class="notification-unread">
                                             <a href="javascript:void()">
-                                                <img class="float-left mr-3 avatar-img" src="images/avatar/1.jpg" alt="">
+                                                <img class="float-left mr-3 avatar-img" src="${aprilContext}/views/images/avatar/1.jpg" alt="">
                                                 <div class="notification-content">
                                                     <div class="notification-heading">Saiful Islam</div>
                                                     <div class="notification-timestamp">08 Hours ago</div>
@@ -122,7 +125,7 @@
                                         </li>
                                         <li class="notification-unread">
                                             <a href="javascript:void()">
-                                                <img class="float-left mr-3 avatar-img" src="images/avatar/2.jpg" alt="">
+                                                <img class="float-left mr-3 avatar-img" src="${aprilContext}/views/images/avatar/2.jpg" alt="">
                                                 <div class="notification-content">
                                                     <div class="notification-heading">Adam Smith</div>
                                                     <div class="notification-timestamp">08 Hours ago</div>
@@ -132,7 +135,7 @@
                                         </li>
                                         <li>
                                             <a href="javascript:void()">
-                                                <img class="float-left mr-3 avatar-img" src="images/avatar/3.jpg" alt="">
+                                                <img class="float-left mr-3 avatar-img" src="${aprilContext}/views/images/avatar/3.jpg" alt="">
                                                 <div class="notification-content">
                                                     <div class="notification-heading">Barak Obama</div>
                                                     <div class="notification-timestamp">08 Hours ago</div>
@@ -142,7 +145,7 @@
                                         </li>
                                         <li>
                                             <a href="javascript:void()">
-                                                <img class="float-left mr-3 avatar-img" src="images/avatar/4.jpg" alt="">
+                                                <img class="float-left mr-3 avatar-img" src="${aprilContext}/views/images/avatar/4.jpg" alt="">
                                                 <div class="notification-content">
                                                     <div class="notification-heading">Hilari Clinton</div>
                                                     <div class="notification-timestamp">08 Hours ago</div>
@@ -223,7 +226,7 @@
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                 <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
+                                <img src="${aprilContext}/views/images/user/1.png" height="40" width="40" alt="">
                             </div>
                             <div class="drop-down dropdown-profile   dropdown-menu">
                                 <div class="dropdown-content-body">
@@ -462,21 +465,21 @@
 	                                		<td colspan="3">00</td>
 	                                	</tr>
 	                                </table> -->
-	                                <!-- TODO -->
-
-                                
-                                    <form class="form-valide" action="#" method="post">
+									
+	                                <!-- TODO : 지우기 -->
+                                	${orgUpdateVO}
+                                    <form class="form-valide" action="${aprilContext}/org/do_update.do" name="org_form" method="post" enctype="multipart/form-data">
                                     	<div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-username">사진 <span class="text-danger"></span>
+                                            <label class="col-lg-4 col-form-label" for="profile">사진 <span class="text-danger"></span>
                                             </label>
                                             <div class="col-lg-3">
-                                            	<!-- 사진 미리보기 https://codepen.io/buppagi/pen/wKwPBP 
-                                            	js 파일 생성해서 임포트 사용-->
+                                            	<!-- 사진 미리보기 https://codepen.io/buppagi/pen/wKwPBP -->
                                             	<table>
                                             		<tr>
                                             			<td>
                                             				<!-- style="width: 150px; height: 180px; color: grey; border: 1px solid grey; dispaly: inline;" -->
-                                                			<img alt="profile" src="${aprilContext}/img_cmn/no_image.gif" width="150px" height="180px"/>
+                                            				<!-- TODO saveFileName : ./WEB-INF/file_upload_img/2020/05/20200518183556e4e57f3d2dfe4a09a6315871562752ae.gif  -->
+                                                			<img alt="profile" src="./WEB-INF/file_upload_img/2020/05/20200518183556e4e57f3d2dfe4a09a6315871562752ae.gif" width="150px" height="180px"/>
                                                 		</td>
                                                 		<td>
 															<div id='View_area' style='position:relative; width: 150px; height: 180px; display: inline;'></div>
@@ -484,133 +487,146 @@
                                                 	</tr>
                                                 	<tr>
                                                 		<td colspan="2">
-                                                			<input type="file" name="profile_pt" id="profile_pt" onchange="previewImage(this,'View_area')">
+                                                			<input type="file" name="profile_after" id="profile_after" onchange="previewImage(this,'View_area')">
+                                                			<!-- TODO : 지우기 -->
+                                                			<input type="text" name="profile_before" id="profile_before" value="${orgUpdateVO.orgFileName}" />
+                                                			<input type="text" name="id" id="id" value="${orgUpdateVO.id}" />
+                                                			<!-- TODO : 지우기 -->
                                                 		</td>
                                                 	</tr>
                                                 </table>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-username">이름 <span class="text-danger">*</span>
+                                            <label class="col-lg-4 col-form-label" for="name">이름 <span class="text-danger" >*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-username" name="val-username" placeholder="">
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="${orgUpdateVO.name}" readonly="readonly">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-password">패스워드 <span class="text-danger">*</span>
+                                            <label class="col-lg-4 col-form-label" for="password">패스워드 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="password" class="form-control" id="val-password" name="val-password" placeholder="">
+                                                <input type="password" class="form-control" id="password" name="password" placeholder="">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-confirm-password">패스워드  확인 <span class="text-danger">*</span>
+                                            <label class="col-lg-4 col-form-label" for="confirm-password">패스워드  확인 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="password" class="form-control" id="val-confirm-password" name="val-confirm-password" placeholder="">
+                                                <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="">입사일 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="hiredate">입사일 <span class=""></span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="" name="" placeholder="">
+                                                <input type="text" class="form-control" id="hiredate" name="hiredate" placeholder="${orgUpdateVO.hiredate}" readonly="readonly">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="">부서명 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="deptNm">부서명 <span class=""></span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="" name="" placeholder="">
+                                                <input type="text" class="form-control" id="deptNm" name="deptNm" placeholder="${orgUpdateVO.deptNm}" readonly="readonly">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="">직급 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="position">직급 <span class=""></span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="" name="" placeholder="">
+                                                <input type="text" class="form-control" id="position" name="position" placeholder="${orgUpdateVO.position}" readonly="readonly">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-email">이메일 <span class="text-danger"></span>
+                                            <label class="col-lg-4 col-form-label" for="email">이메일 <span class="text-danger"></span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-email" name="val-email" placeholder="">
+                                                <input type="text" class="form-control" id="email" name="email" placeholder="${orgUpdateVO.email}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="">생년월일 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="birth">생년월일 <span class=""></span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="" name="" placeholder="">
+                                                <input type="text" class="form-control" id="birth" name="birth" placeholder="${orgUpdateVO.birth}" readonly="readonly">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-phoneus">휴대폰 번호 <span class="text-danger"></span>
+                                            <label class="col-lg-4 col-form-label" for="mobile">휴대폰 번호 <span class="text-danger"></span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-phoneus" name="val-phoneus" placeholder="">
+                                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="${orgUpdateVO.mobile}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="">주소 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="address">주소 <span class=""></span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="" name="" placeholder="">
+                                                <input type="text" class="form-control" id="address" name="address" placeholder="${orgUpdateVO.address}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="">최종 학력 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="grade">최종 학력 <span class=""></span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <select class="form-control" id="val-skill" name="val-skill">
-                                                    <option value="고졸">고졸</option>
-                                                    <option value="전문대">전문학사</option>
-                                                    <option value="학사">학사</option>
-                                                    <option value="석사">석사</option>
-                                                    <option value="박사">박사</option>
+                                                <select class="form-control" id="grade" name="grade">
+                                                    <option value="고졸" <c:if test="${orgUpdateVO.grade == '고졸'}"> selected="selected"</c:if>>
+                                                    	고졸
+                                                    </option>
+                                                    <option value="전문학사" <c:if test="${orgUpdateVO.grade == '전문학사'}"> selected="selected"</c:if>>
+                                                    	전문학사
+                                                    </option>
+                                                    <option value="학사" <c:if test="${orgUpdateVO.grade == '학사'}"> selected="selected"</c:if>>
+                                                    	학사
+                                                    </option>
+                                                    <option value="석사" <c:if test="${orgUpdateVO.grade == '석사'}"> selected="selected"</c:if>>
+                                                    	석사
+                                                    </option>
+                                                    <option value="박사" <c:if test="${orgUpdateVO.grade == '박사'}"> selected="selected"</c:if>>
+                                                    	박사
+                                                    </option>
                                                 </select>
-                                                <input type="text" class="form-control" id="" name="" placeholder="학교명">
-                                                <input type="text" class="form-control" id="" name="" placeholder="계열 및 전공학과명">
+                                                <!-- TODO : ,로 split -->
+                                                <input type="text" class="form-control" id="grade_sc_name" name="grade_sc_name" placeholder="학교명">
+                                                <input type="text" class="form-control" id="grade_dp_name" name="grade_dp_name" placeholder="계열 및 전공학과명">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="">병역 사항 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="military">병역 사항 <span class=""></span>
                                             </label>
                                             <div class="col-lg-6">
                                             	<label>
-                                            		<input type="radio" name="military" value="0">
+                                            		<input type="radio" name="military" value="0" <c:if test="${orgUpdateVO.militaryYN == '0'}"> checked="checked"</c:if>>
                                             		해당 없음
                                             	</label>
                                             	<label>
-                                            		<input type="radio" name="military" value="1">
+                                            		<input type="radio" name="military" value="1" <c:if test="${orgUpdateVO.militaryYN == '1'}"> checked="checked"</c:if>>
                                             		군필
                                             	</label>
                                             	<label>
-                                            		<input type="radio" name="military" value="1">
+                                            		<input type="radio" name="military" value="1" <c:if test="${orgUpdateVO.militaryYN == '2'}"> checked="checked"</c:if>>
                                             		미필
                                             	</label>
                                             	<label>
-                                            		<input type="radio" name="military" value="1">
+                                            		<input type="radio" name="military" value="1" <c:if test="${orgUpdateVO.militaryYN == '3'}"> checked="checked"</c:if>>
                                             		군면제
                                             	</label>
-                                                <input type="text" class="form-control" id="" name="" placeholder="">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="">장애 여부<span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="disabled">장애 여부<span class=""></span>
                                             </label>
                                             <div class="col-lg-6">
                                             	<label>
-                                            		<input type="radio" name="disabled" value="1">
+                                            		<input type="radio" name="disabled" value="0" <c:if test="${orgUpdateVO.dspsnYN == '0'}"> checked="checked"</c:if>>
                                             		비대상
                                             	</label>
                                             	<label>
-                                            		<input type="radio" name="disabled" value="0">
+                                            		<input type="radio" name="disabled" value="1" <c:if test="${orgUpdateVO.dspsnYN == '1'}"> checked="checked"</c:if>>
                                             		대상
                                             	</label>
-                                                <input type="text" class="form-control" id="" name="" placeholder="">
                                             </div>
                                         </div>
                                         <hr/>
@@ -693,8 +709,8 @@
                                         </div> -->
                                         <div class="form-group row">
                                             <div class="col-lg-8 ml-auto">
-                                                <button type="submit" class="btn btn-primary">저장</button>
-                                                <button type="submit" class="btn btn-outline-primary">취소</button>
+                                                <button type="submit" name="update_btn" id="update_btn" class="btn btn-primary">저장</button>
+                                                <button type="button" name="cancel_btn" id="cancel_btn" class="btn btn-outline-primary">취소</button>
                                             </div>
                                         </div>
                                     </form>
@@ -730,34 +746,142 @@
     <!--**********************************
         Scripts
     ***********************************-->
-    <script src="plugins/common/common.min.js"></script>
-    <script src="js/custom.min.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/gleek.js"></script>
-    <script src="js/styleSwitcher.js"></script>
+    <script src="${aprilContext}/views/plugins/common/common.min.js"></script>
+    <script src="${aprilContext}/views/js/custom.min.js"></script>
+    <script src="${aprilContext}/views/js/settings.js"></script>
+    <script src="${aprilContext}/views/js/gleek.js"></script>
+    <script src="${aprilContext}/views/js/styleSwitcher.js"></script>
 
-    <script src="./plugins/validation/jquery.validate.min.js"></script>
-    <script src="./plugins/validation/jquery.validate-init.js"></script>
+    <script src="${aprilContext}/views/plugins/validation/jquery.validate.min.js"></script>
+    <script src="${aprilContext}/views/plugins/validation/jquery.validate-init.js"></script>
 	
 	<script type="text/javascript">
+
+		//취소-초기화
+		$("#cancel_btn").on("click", function(){
+			console.log("#cancel_btn");
+	
+			//입력 초기화
+			$("#profile_after").val("");
+			$("#password").val("");
+			$("#confirm-password").val("");
+			$("#hiredate").val("");
+			$("#deptNm").val("");
+			$("#position").val("");
+			$("#email").val("");
+			$("#birth").val("");
+			$("#mobile").val("");
+			$("#address").val("");
+			$("#grade").val("고졸");
+			$("#grade_sc_name").val("");
+			$("#grade_dp_name").val("");
+			//$("#military").val(0);
+			//$("#disabled").val(0);
+			$('input:radio[name="military"]:input[value="0"]').attr("checked", true);
+			$('input:radio[name="disabled"]:input[value="0"]').attr("checked", true);
+	
+			//버튼 제어
+			//enable 
+			//disable
+			//$("#u_id").prop("disabled", false);
+			//$("#doInsert").prop("disabled", false);
+			//$("#doUpdate").prop("disabled", true);
+			//$("#doDelete").prop("disabled", true);
+		});
+
+	//id = id;                   
+	//password = password;       
+	//deptNm = deptNm;           
+	//deptCd = deptCd;           
+	//parentDeptCd = parentDeptCd
+	//auth = auth;               
+	//name = name;               
+	//position = position;       
+	//mobile = mobile;           
+	//email = email;             
+	//address = address;         
+	//hiredate = hiredate;       
+	//birth = birth;             
+	//vacationCnt = vacationCnt; 
+	//militaryYN = militaryYN;   
+	//dspsnYN = dspsnYN;         
+	//grade = grade;             
+	//orgFileName = orgFileName; 
+	//modFileName = modFileName; 
+	//imgPath = imgPath;         
+	//ext = ext;                 
+	//fileSize = fileSize;       
+	//regId = regId;             
+	//regDate = regDate;         
+	//modId = modId;             
+	//modDate = modDate;         
+		//정보 수정 버튼
+		$("#update_btn").on("click", function(){
+        	var id = $("#id").val().trim();
+            if(id == null || id.length<=1){
+                console.log("아이디가 없습니다");
+                return;
+            }
+        	
+        	var modFileName = $("#profile_after").val().trim();
+        	
+        	var orgFileName = $("#profile_before").val().trim();
+
+			
+        	
+        	
+            if(false==confirm("수정하시겠습니까?")) return;
+
+            $.ajax({
+				processData: false,
+				contentType: false,
+		        type:"POST",
+		        url:"${aprilContext}/org/do_update.do",
+		        dataType:"html", 
+		        data:{
+				    "modFileName": modFileName,  
+				    "orgFileName": orgFileName,
+		        },
+				//성공
+		        success:function(data){ 
+			        //alert(data);
+			        //{"msgId":"1","msgMsg":"삭제 되었습니다.","num":0,"totalCnt":0}
+			        var jData = JSON.parse(data);
+			        if(jData != null && jData.msgId== "1"){
+				        //alert(jData.msgMsg);
+			        } else {
+			            alert(jData.msgMsg);
+			        }
+	            },
+				//에러
+	            error:function(xhr,status,error){
+	            	//alert("error:"+error);
+	            },
+	            complete:function(data){
+	            }   
+			}); //--ajax
+        });
+
 		function previewImage(targetObj, View_area) {
 			var preview = document.getElementById(View_area); //div id
 			var ua = window.navigator.userAgent;
 	
-		  //ie일때(IE8 이하에서만 작동)
+			//IE일 때(IE8 이하만 작동)
 			if (ua.indexOf("MSIE") > -1) {
 				targetObj.select();
 				try {
-					var src = document.selection.createRange().text; // get file full path(IE9, IE10에서 사용 불가)
+					var src = document.selection.createRange().text; //get file full path(IE9, IE10에서 사용 불가)
 					var ie_preview_error = document.getElementById("ie_preview_error_" + View_area);
-	
+
+					//error가 있으면 delete
 					if (ie_preview_error) {
-						preview.removeChild(ie_preview_error); //error가 있으면 delete
+						preview.removeChild(ie_preview_error); 
 					}
+
+					//이미지 보여줄 영역
+					var img = document.getElementById(View_area); 
 	
-					var img = document.getElementById(View_area); //이미지가 뿌려질 곳
-	
-					//이미지 로딩, sizingMethod는 div에 맞춰서 사이즈를 자동조절 하는 역할
+					//이미지 로딩, sizingMethod는 div에 맞춰서 사이즈를 자동 조절하는 역할
 					img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+src+"', sizingMethod='scale')";
 				} catch (e) {
 					if (!document.getElementById("ie_preview_error_" + View_area)) {
@@ -767,15 +891,19 @@
 						preview.insertBefore(info, null);
 					}
 				}
-		  //ie가 아닐때(크롬, 사파리, FF)
+			//IE가 아닐때(크롬, 사파리, FF 등)
 			} else {
 				var files = targetObj.files;
 				for ( var i = 0; i < files.length; i++) {
 					var file = files[i];
-					var imageType = /image.*/; //이미지 파일일경우만.. 뿌려준다.
+					
+					//이미지 파일일 경우만 미리보기
+					var imageType = /image.*/; 
 					if (!file.type.match(imageType))
 						continue;
-					var prevImg = document.getElementById("prev_" + View_area); //이전에 미리보기가 있다면 삭제
+
+					//이전에 미리보기가 있다면 삭제
+					var prevImg = document.getElementById("prev_" + View_area); 
 					if (prevImg) {
 						preview.removeChild(prevImg);
 					}
@@ -786,7 +914,9 @@
 					img.style.width = '150px'; 
 					img.style.height = '180px';
 					preview.appendChild(img);
-					if (window.FileReader) { // FireFox, Chrome, Opera 확인.
+					
+					//FireFox, Chrome, Opera 확인
+					if (window.FileReader) {
 						var reader = new FileReader();
 						reader.onloadend = (function(aImg) {
 							return function(e) {
@@ -794,7 +924,8 @@
 							};
 						})(img);
 						reader.readAsDataURL(file);
-					} else { // safari is not supported FileReader
+						//Safari is not supported FileReader
+					} else { 
 						//alert('not supported FileReader');
 						if (!document.getElementById("sfr_preview_error_"
 								+ View_area)) {

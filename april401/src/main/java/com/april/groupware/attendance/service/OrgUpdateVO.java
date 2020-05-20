@@ -62,9 +62,7 @@ public class OrgUpdateVO extends DTO {
 	/**원본 사진 경로*/
 	private String orgFileName;
 	/**수정 사진 경로*/
-	private String modFileName;
-	/**저장된 사진 경로*/
-	private String imgPath;
+	private String saveFileName;
 	/**사진 확장자*/
 	private String ext;
 	/**사진 크기*/
@@ -84,8 +82,9 @@ public class OrgUpdateVO extends DTO {
 
 	public OrgUpdateVO(String id, String password, String deptNm, String deptCd, String parentDeptCd, String auth,
 			String name, String position, String mobile, String email, String address, String hiredate, String birth,
-			String vacationCnt, String militaryYN, String dspsnYN, String grade, String orgFileName, String modFileName,
-			String imgPath, String ext, long fileSize, String regId, String regDate, String modId, String modDate) {
+			String vacationCnt, String militaryYN, String dspsnYN, String grade, String orgFileName,
+			String saveFileName, String ext, long fileSize, String regId, String regDate, String modId,
+			String modDate) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -105,8 +104,7 @@ public class OrgUpdateVO extends DTO {
 		this.dspsnYN = dspsnYN;
 		this.grade = grade;
 		this.orgFileName = orgFileName;
-		this.modFileName = modFileName;
-		this.imgPath = imgPath;
+		this.saveFileName = saveFileName;
 		this.ext = ext;
 		this.fileSize = fileSize;
 		this.regId = regId;
@@ -259,20 +257,12 @@ public class OrgUpdateVO extends DTO {
 		this.orgFileName = orgFileName;
 	}
 
-	public String getModFileName() {
-		return modFileName;
+	public String getSaveFileName() {
+		return saveFileName;
 	}
 
-	public void setModFileName(String modFileName) {
-		this.modFileName = modFileName;
-	}
-
-	public String getImgPath() {
-		return imgPath;
-	}
-
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
+	public void setSaveFileName(String saveFileName) {
+		this.saveFileName = saveFileName;
 	}
 
 	public String getExt() {
@@ -329,9 +319,9 @@ public class OrgUpdateVO extends DTO {
 				+ ", parentDeptCd=" + parentDeptCd + ", auth=" + auth + ", name=" + name + ", position=" + position
 				+ ", mobile=" + mobile + ", email=" + email + ", address=" + address + ", hiredate=" + hiredate
 				+ ", birth=" + birth + ", vacationCnt=" + vacationCnt + ", militaryYN=" + militaryYN + ", dspsnYN="
-				+ dspsnYN + ", grade=" + grade + ", orgFileName=" + orgFileName + ", modFileName=" + modFileName
-				+ ", imgPath=" + imgPath + ", ext=" + ext + ", fileSize=" + fileSize + ", regId=" + regId + ", regDate="
-				+ regDate + ", modId=" + modId + ", modDate=" + modDate + ", toString()=" + super.toString() + "]";
+				+ dspsnYN + ", grade=" + grade + ", orgFileName=" + orgFileName + ", saveFileName=" + saveFileName
+				+ ", ext=" + ext + ", fileSize=" + fileSize + ", regId=" + regId + ", regDate=" + regDate + ", modId="
+				+ modId + ", modDate=" + modDate + ", toString()=" + super.toString() + "]";
 	}
 
 }

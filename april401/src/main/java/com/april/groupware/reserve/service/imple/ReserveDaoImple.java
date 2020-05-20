@@ -40,7 +40,7 @@ public class ReserveDaoImple implements ReserveDao {
 	private final Logger LOG = LoggerFactory.getLogger(ReserveDaoImple.class); //LOG
 	
 	//namespace : 상수
-	private final String NAMESPACE = "com.april.groupware.reserve.service";
+	private final String NAMESPACE = "com.april.groupware.reserve";
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.april.groupware.attendance.service">
+<mapper namespace="com.april.groupware.attendance">
 	
 	<!-- Insert : 등록 -->
 	<!-- Dao(namespace+id) : com.sist.ehr.board.doInsert -->
@@ -10,10 +10,9 @@
 		INSERT INTO attendance (
 		    seq,                
 		    id,                 
-		    attend_time,        
 		    attend_yn,          
 		    lv_ffc_yn,          
-		    work_time,          
+		    state,          
 		    reg_id,
 		    mod_id,
 		    reg_date,
@@ -21,10 +20,9 @@
 		) VALUES (              
 		    #{seq},                  
 		    #{id},                  
-		    sysdate,                  
 		    #{attendYN, jdbcType=VARCHAR},          
 		    #{leaveYN},                  
-		    #{workTime},                  
+		    #{state},                  
 		    #{regId},                  
 		    #{modId},                  
 		    sysdate,
@@ -33,7 +31,7 @@
 	</insert>
 	
 	<!-- Update : 수정 -->
-	<update id="doUpdate" parameterType="AttendanceVO">
+	<!-- <update id="doUpdate" parameterType="AttendanceVO">
 		UPDATE attendance	
 		SET attend_time = 	sysdate,
 		    attend_yn = 	#{attendYN},  
@@ -43,18 +41,20 @@
 		    mod_id = 		#{modId},     
 		    mod_date = 		sysdate    
 		WHERE id = 			#{id}        
-	</update>
+	</update> -->
 	
 	<!-- leaveUpdate : 퇴근 -->
 	<update id="leaveUpdate" parameterType="AttendanceVO">
 		UPDATE attendance	
 		SET lv_ffc_time = 	sysdate, 
 		    lv_ffc_yn = 	#{leaveYN},   
-		    state = 		#{state},   	
 		    work_time = 	#{workTime},   
 		    mod_id = 		#{modId},      
 		    mod_date = 		sysdate     
-		WHERE id = 			#{id}         
+		WHERE id = 			#{id}
+		AND seq =	(SELECT MAX(seq)
+                    FROM attendance
+                    WHERE id = #{id})
 	</update>
 	
 	<!-- Delete : 삭제 -->
@@ -80,7 +80,8 @@
 		    mod_id		AS modId,      											
 		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') AS modDate
 		FROM attendance
-		WHERE id = #{id}   
+		WHERE id = #{id}
+		ORDER BY seq desc
 	</select>
 	
 </mapper>

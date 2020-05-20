@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.april.groupware.reserve.service">
+<mapper namespace="com.april.groupware.reserve">
 	
 	<!-- Insert : 등록 -->
 	<!-- Dao(namespace+id) : com.sist.ehr.board.doInsert -->
@@ -87,7 +87,7 @@
 				AND r.rsv_day <![CDATA[<=]]> #{searchEndDate}
 			</when>
 			<when test="searchDiv =='10' and searchStartDate == '' and searchEndDate == ''">
-				AND UPPER(r.reg_id) LIKE UPPER('%'||#{searchWord}||'%')
+				AND UPPER(r.reg_id) = UPPER('%'||#{searchWord}||'%')
 			</when>
 			<when test="searchDiv =='20' and searchStartDate == '' and searchEndDate == ''">
 				AND r.rsv_name LIKE '%'||#{searchWord}||'%'
@@ -98,7 +98,7 @@
 			<when test="searchDiv =='10' and searchStartDate != null and searchEndDate != null">
 				AND #{searchStartDate} <![CDATA[<=]]> r.rsv_day
 				AND r.rsv_day <![CDATA[<=]]> #{searchEndDate}
-				AND UPPER(r.reg_id) LIKE UPPER('%'||#{searchWord}||'%')
+				AND UPPER(r.reg_id) = UPPER('%'||#{searchWord}||'%')
 			</when>
 			<when test="searchDiv =='20' and searchStartDate != null and searchEndDate != null">
 				AND #{searchStartDate} <![CDATA[<=]]> r.rsv_day

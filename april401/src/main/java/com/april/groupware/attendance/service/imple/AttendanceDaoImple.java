@@ -18,6 +18,7 @@
  */
 package com.april.groupware.attendance.service.imple;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -39,7 +40,7 @@ public class AttendanceDaoImple implements AttendanceDao {
 	private final Logger LOG = LoggerFactory.getLogger(AttendanceDaoImple.class); //LOG
 	
 	//namespace : 상수
-	private final String NAMESPACE = "com.april.groupware.attendance.service";
+	private final String NAMESPACE = "com.april.groupware.attendance";
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
@@ -72,7 +73,7 @@ public class AttendanceDaoImple implements AttendanceDao {
 	
 	//출근
 	@Override
-	public int doInsert(DTO dto) {
+	public int doInsert(DTO dto) throws ParseException {
 		LOG.debug("=====================");
 		LOG.debug("=AttendanceDao doInsert=");
 		LOG.debug("=====================");
@@ -83,19 +84,60 @@ public class AttendanceDaoImple implements AttendanceDao {
 		LOG.debug("=AttendanceDao inVO= : "+inVO);
 		LOG.debug("=====================");
 		
+		//TODO
+		//출결상태(state) : 0-디폴트, 1-지각, 2-결근, 3-조퇴
+		//String attendTimeStr = "2020-05-19 16:28:25";
+		String attendTimeStr = inVO.getAttendTime();
+		int attendTime = Integer.parseInt(attendTimeStr);
+
+		if(attendTime > 9) {
+			//지각
+			inVO.setState("1");
+			//SQL-Query
+			String statement = NAMESPACE+".doInsert";
+			LOG.debug("=====================");
+			LOG.debug("=doInsert statement= : "+statement);
+			LOG.debug("=====================");
+			
+			//Call
+			int flag = this.sqlSessionTemplate.insert(statement, inVO);
+			LOG.debug("=====================");
+			LOG.debug("=doInsert flag= : "+flag);
+			LOG.debug("=====================");
+			
+			return flag;
+		} else {
+			//정상출근
+			inVO.setState("0");
+			
+			//SQL-Query
+			String statement = NAMESPACE+".doInsert";
+			LOG.debug("=====================");
+			LOG.debug("=doInsert statement= : "+statement);
+			LOG.debug("=====================");
+			
+			//Call
+			int flag = this.sqlSessionTemplate.insert(statement, inVO);
+			LOG.debug("=====================");
+			LOG.debug("=doInsert flag= : "+flag);
+			LOG.debug("=====================");
+			
+			return flag;
+		}
+		
 		//SQL-Query
-		String statement = NAMESPACE+".doInsert";
-		LOG.debug("=====================");
-		LOG.debug("=doInsert statement= : "+statement);
-		LOG.debug("=====================");
-		
-		//Call
-		int flag = this.sqlSessionTemplate.insert(statement, inVO);
-		LOG.debug("=====================");
-		LOG.debug("=doInsert flag= : "+flag);
-		LOG.debug("=====================");
-		
-		return flag;
+//		String statement = NAMESPACE+".doInsert";
+//		LOG.debug("=====================");
+//		LOG.debug("=doInsert statement= : "+statement);
+//		LOG.debug("=====================");
+//		
+//		//Call
+//		int flag = this.sqlSessionTemplate.insert(statement, inVO);
+//		LOG.debug("=====================");
+//		LOG.debug("=doInsert flag= : "+flag);
+//		LOG.debug("=====================");
+//		
+//		return flag;
 		
 //		int flag = 0;
 //		AttendanceVO inVO = (AttendanceVO) dto;
@@ -162,6 +204,9 @@ public class AttendanceDaoImple implements AttendanceDao {
 		LOG.debug("=====================");
 		LOG.debug("=AttendanceDao inVO= : "+inVO);
 		LOG.debug("=====================");
+		
+		//TODO : workTime 계산하기 leaveTime - attendTime
+		
 		
 		//SQL-Query
 		String statement = NAMESPACE+".leaveUpdate";
@@ -346,29 +391,31 @@ public class AttendanceDaoImple implements AttendanceDao {
 
 	@Override
 	public DTO doSelectOne(DTO dto) {
-		LOG.debug("=====================");
-		LOG.debug("=AttendanceDao doSelectOne=");
-		LOG.debug("=====================");
+//		LOG.debug("=====================");
+//		LOG.debug("=AttendanceDao doSelectOne=");
+//		LOG.debug("=====================");
+//		
+//		//Param
+//		AttendanceVO inVO = (AttendanceVO) dto;
+//		LOG.debug("=====================");
+//		LOG.debug("=AttendanceDao inVO= : "+inVO);
+//		LOG.debug("=====================");
+//		
+//		//SQL-Query
+//		String statement = NAMESPACE+".doSelectOne";
+//		LOG.debug("=====================");
+//		LOG.debug("=doSelectOne statement= : "+statement);
+//		LOG.debug("=====================");
+//		
+//		//Call
+//		AttendanceVO outVO = this.sqlSessionTemplate.selectOne(statement, inVO);
+//		LOG.debug("=====================");
+//		LOG.debug("=doSelectOne outVO= : "+outVO);
+//		LOG.debug("=====================");
+//		
+//		return outVO;
 		
-		//Param
-		AttendanceVO inVO = (AttendanceVO) dto;
-		LOG.debug("=====================");
-		LOG.debug("=AttendanceDao inVO= : "+inVO);
-		LOG.debug("=====================");
-		
-		//SQL-Query
-		String statement = NAMESPACE+".doSelectOne";
-		LOG.debug("=====================");
-		LOG.debug("=doSelectOne statement= : "+statement);
-		LOG.debug("=====================");
-		
-		//Call
-		AttendanceVO outVO = this.sqlSessionTemplate.selectOne(statement, inVO);
-		LOG.debug("=====================");
-		LOG.debug("=doSelectOne outVO= : "+outVO);
-		LOG.debug("=====================");
-		
-		return outVO;
+		return null;
 		
 //		AttendanceVO inVO = (AttendanceVO) dto;
 //		AttendanceVO outVO = null;
@@ -415,8 +462,34 @@ public class AttendanceDaoImple implements AttendanceDao {
 
 	@Override
 	public List<?> getAll(DTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		LOG.debug("=====================");
+		LOG.debug("=AttendanceDao doSelectOne(getAll)=");
+		LOG.debug("=====================");
+		
+		//Param
+		AttendanceVO inVO = (AttendanceVO) dto;
+		LOG.debug("=====================");
+		LOG.debug("=AttendanceDao inVO= : "+inVO);
+		LOG.debug("=====================");
+		
+		//SQL-Query
+		String statement = NAMESPACE+".doSelectOne";
+		LOG.debug("=====================");
+		LOG.debug("=getAll statement= : "+statement);
+		LOG.debug("=====================");
+		
+		//Call
+		List<AttendanceVO> outList = this.sqlSessionTemplate.selectList(statement, inVO);
+		LOG.debug("=====================");
+		LOG.debug("=getAll outList= : "+outList);
+		LOG.debug("=====================");
+
+		for(AttendanceVO vo: outList) {
+			LOG.debug("=vo="+vo);
+		}
+		
+		
+		return outList;
 	}
 
 	@Override
