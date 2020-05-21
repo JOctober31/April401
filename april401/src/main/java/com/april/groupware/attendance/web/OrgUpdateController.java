@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,12 +27,13 @@ public class OrgUpdateController {
 	private final Logger LOG = LoggerFactory.getLogger(OrgUpdateController.class);
 	
 	//파일 저장 경로 : JIEUN 부분 -> sist
-	private final String PROFILE_UPLOAD_PATH ="C:\\Users\\SIST\\git\\April401\\april401\\src\\main\\webapp\\resources\\file_upload_img";
+	private final String PROFILE_UPLOAD_PATH ="C:\\Users\\HOME\\git\\April401\\april401\\src\\main\\webapp\\resources\\file_upload_img";
 	
 	@Autowired
 	OrgUpdateDao orgUpdateDao;
 	
 	@RequestMapping(value="org/do_update.do", method=RequestMethod.POST, produces="application/json; charset=UTF-8")
+	@ResponseBody
 	public String doUpdate(OrgUpdateVO userOrg, MultipartHttpServletRequest mhsRequest, ModelAndView model) throws IllegalStateException, IOException {
 		LOG.debug("====================");
 		LOG.debug("=doUpdate user= : "+userOrg);
@@ -39,6 +41,77 @@ public class OrgUpdateController {
 		
 		if(userOrg.getId() == null) {
 			throw new IllegalArgumentException("ID를 입력하세요");
+		}
+		
+		userOrg.setId("kimjh1");
+		
+		OrgUpdateVO orgUpdateVO = (OrgUpdateVO) orgUpdateDao.doSelectOne(userOrg);
+		LOG.debug("====================");
+		LOG.debug("=doSelectOne OrgUpdateVO= : "+orgUpdateVO);
+		LOG.debug("====================");
+		
+		//수정 불가 변수
+		String deptNm = userOrg.getDeptNm();
+		orgUpdateVO.setDeptNm(deptNm);
+		
+		String deptCd = userOrg.getDeptCd();
+		orgUpdateVO.setDeptCd(deptCd);;
+		
+		String parentDeptCd = userOrg.getParentDeptCd();
+		orgUpdateVO.setParentDeptCd(parentDeptCd);
+		
+		String auth = userOrg.getAuth();
+		orgUpdateVO.setAuth(auth);
+		
+		String name = userOrg.getName();
+		orgUpdateVO.setName(name);
+		
+		String position = userOrg.getPosition();
+		orgUpdateVO.setPosition(position);
+		
+		String hiredate = userOrg.getHiredate();
+		orgUpdateVO.setHiredate(hiredate);
+		
+		String birth = userOrg.getBirth();
+		orgUpdateVO.setBirth(birth);
+		
+		String modId = userOrg.getId();
+		orgUpdateVO.setModId(modId);
+		
+		//수정 가능 변수
+		String password = userOrg.getPassword();
+		if(password!=null && !password.equals("")) {
+			orgUpdateVO.setPassword(password);
+		}
+		
+		String email = userOrg.getEmail();
+		if(email!=null && !email.equals("")) {
+			orgUpdateVO.setEmail(email);
+		}
+		
+		String mobile = userOrg.getMobile();
+		if(mobile!=null && !mobile.equals("")) {
+			orgUpdateVO.setMobile(mobile);
+		}
+		
+		String address = userOrg.getAddress();
+		if(address!=null && !address.equals("")) {
+			orgUpdateVO.setAddress(address);
+		}
+		
+		String grade = userOrg.getGrade();
+		if(grade!=null && !grade.equals("")) {
+			orgUpdateVO.setGrade(grade);
+		}
+		
+		String militaryYN = userOrg.getMilitaryYN();
+		if(militaryYN!=null && !militaryYN.equals("")) {
+			orgUpdateVO.setMilitaryYN(militaryYN);
+		}
+		
+		String dspsnYN = userOrg.getDspsnYN();
+		if(dspsnYN!=null && !dspsnYN.equals("")) {
+			orgUpdateVO.setDspsnYN(dspsnYN);
 		}
 		
 		/**프로필 이미지 파일 저장*/
@@ -85,8 +158,8 @@ public class OrgUpdateController {
 			//2.3.1.입력된 파일(원본 파일명)이 없으면 continue;
 			if (orgFileName == null || orgFileName.equals("")) continue;
 			//2.3.2.입력된 파일이 있으면 VO에 set
-			userOrg.setOrgFileName(orgFileName); //원본 파일명 set
-			userOrg.setFileSize(multiFile.getSize()); //파일 사이즈 set
+			orgUpdateVO.setOrgFileName(orgFileName); //원본 파일명 set
+			orgUpdateVO.setFileSize(multiFile.getSize()); //파일 사이즈 set
 			LOG.debug("=orgFileName= : " + orgFileName);
 			
 			//2.4.확장자 : .의 유무로 split
@@ -96,7 +169,7 @@ public class OrgUpdateController {
 			}
 			LOG.debug("=ext= : "+ext);
 			//2.4.1.확장자 set
-			userOrg.setExt(ext);
+			orgUpdateVO.setExt(ext);
 			
 			//2.5.전체 경로 생성
 			//2.5.1.프로젝트 경로 내에 저장될 파일명으로 변경(UUID 사용)
@@ -110,7 +183,7 @@ public class OrgUpdateController {
 			//String projectDir = "resources"+ File.separator +"file_upload_img"+ File.separator + yyyyStr + File.separator + mmStr;
 			String projectDir = "resources/file_upload_img/"+ yyyyStr + "/" + mmStr;
 			String dbSaveFilePath = projectDir+ "/" +saveFileName;
-			userOrg.setSaveFileName(dbSaveFilePath);
+			orgUpdateVO.setSaveFileName(dbSaveFilePath);
 			//원본 파일명, 파일 사이즈, 확장자, 전체 경로
 
 			//2.5.5.전체 경로 = datePath"폴더+연+월" + saveFileName"저장될파일명+확장자"
@@ -122,7 +195,7 @@ public class OrgUpdateController {
 		}	
 		/**--프로필 이미지 파일 저장*/
 		
-		int flag = orgUpdateDao.doUpdate(userOrg);
+		int flag = orgUpdateDao.doUpdate(orgUpdateVO);
 		LOG.debug("====================");
 		LOG.debug("=doUpdate flag= : "+flag);
 		LOG.debug("====================");
@@ -145,7 +218,7 @@ public class OrgUpdateController {
 		LOG.debug("=doUpdate json= : "+json);
 		LOG.debug("====================");
 		
-		return "/views/mypage_org";
+		return json;
 	}
 
 	@RequestMapping(value="org/do_select_one.do", method=RequestMethod.GET, produces="application/json; charset=UTF-8")

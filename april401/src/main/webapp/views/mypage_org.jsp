@@ -476,9 +476,9 @@
                                             		<tr>
                                             			<td>
                                             				<!-- style="width: 150px; height: 180px; color: grey; border: 1px solid grey; dispaly: inline;" -->
-                                            				<!-- TODO saveFileName : ./WEB-INF/file_upload_img/2020/05/20200518183556e4e57f3d2dfe4a09a6315871562752ae.gif  -->
-                                            				<!-- ${aprilContext}/resources/file_upload_img/2020/05/20200518183556e4e57f3d2dfe4a09a6315871562752ae.gif -->
-                                                			<img alt="profile" src="/groupware/resources/file_upload_img/2020/05/202005211803147161be0e7e2944baa2b85ed87f443507.jpg" width="150px" height="180px"/>
+                                            				<!-- URL : /groupware/resources/file_upload_img/2020/05/20200521223603e14a31e15955478eab54f34c7a9cd2cd.gif -->
+                                            				<!-- URL 못 불러오면 [Window]-[Preferences]-[Workspace]-"Refresh using native hooks or polling" 체크 -->
+                                                			<img alt="profile" src="${aprilContext}/${orgUpdateVO.saveFileName}" width="150px" height="180px"/>
                                                 		</td>
                                                 		<td>
 															<div id='View_area' style='position:relative; width: 150px; height: 180px; display: inline;'></div>
@@ -819,46 +819,85 @@
 	//modDate = modDate;         
 		//정보 수정 버튼
 		$("#update_btn").on("click", function(){
+			//아이디
         	var id = $("#id").val().trim();
+        	
             if(id == null || id.length<=1){
                 console.log("아이디가 없습니다");
                 return;
             }
-        	
-        	var modFileName = $("#profile_after").val().trim();
-        	
-        	var orgFileName = $("#profile_before").val().trim();
-        	
-            if(false==confirm("수정하시겠습니까?")) return;
 
-            $.ajax({
-				processData: false,
-				contentType: false,
-		        type:"POST",
-		        url:"${aprilContext}/org/do_update.do",
-		        dataType:"html", 
-		        data:{
-				    "modFileName": modFileName,  
-				    "saveFileName": saveFileName,
-		        },
-				//성공
-		        success:function(data){ 
-			        //alert(data);
-			        var jData = JSON.parse(data);
-			        if(jData != null && jData.msgId== "1"){
-				        alert(jData.msgMsg);
+            //변경 전 사진
+        	var modFileName = $("#profile_after").val().trim();
+
+			//변경 후 사진        	
+        	var orgFileName = $("#profile_before").val().trim();
+
+			//패스워드
+			var password = $("#password").val().trim();
+
+			//이메일
+			var email = $("#email").val().trim();
+
+			//휴대폰 번호
+			var mobile = $("#mobile").val().trim();
+
+			//주소
+        	var address = $("#address").val().trim();
+
+        	//최종 학력
+        	var grade = $("#grade").val().trim()+","+ $("#grade_sc_name").val().trim()+","+$("#grade_dp_name").val().trim();
+        	console.log("grade");
+
+			//병역 사항
+			var military = $("#military").val();
+
+			//장애 여부
+			var disabled = $("#disabled").val();
+        	        	
+            if(confirm("수정하시겠습니까?") == true) {
+	            $.ajax({
+					processData: false,
+					contentType: false,
+			        type:"POST",
+			        url:"${aprilContext}/org/do_update.do",
+			        dataType:"html", 
+			        data:{
+					    "id": id,
+					    "modFileName": modFileName,  
+					    "saveFileName": saveFileName,
+					    "password": password,
+					    "email": email,
+					    "mobile": mobile,
+					    "address": address,
+					    "grade": grade,
+					    "militaryYN": military,
+					    "dspsnYN": disabled
+			        },
+					//성공
+			        success:function(data){
+                        //alert(data);
 				        goAttend();
-			        } else {
-			            alert(jData.msgMsg);
-			        }
-	            },
-				//에러
-	            error:function(xhr,status,error){
-	            	//alert("error:"+error);
-	            },
-	            complete:function(data){
-	            }   
-			}); //--ajax
+
+				        var jData = JSON.parse(data);
+                        if(null != jData && jData.msgId == "1"){
+                            alert(jData.msgMsg);
+                        } else {
+                            alert(jData.msgMsg);
+                        }
+					},
+					//에러
+		            error:function(xhr,status,error){
+		            	alert("error:"+error);
+		            },
+		            complete:function(data){
+		            }   
+				}); //--ajax
+            } else {
+            	alert("에러");
+            	return;
+            }
+            
         });
 
 		function previewImage(targetObj, View_area) {
