@@ -437,7 +437,7 @@
                                     <h4>근태 관리</h4>
                                 </div>
                                 <div class="row">
-                                    <div class="text-center col-lg-2 mt-3">
+                                    <div class="text-center col-lg-3 mt-1">
                                     
                                     	<!-- 시계 -->
                                     	<table class="table table-bordered verticle-middle">
@@ -457,43 +457,18 @@
                                     	<!-- //시계 -->
                                     	
                                         <!-- <a href="#" data-toggle="modal" data-target="#add-category" class="btn btn-primary btn-block"><i class="ti-plus f-s-12 m-r-5"></i> Create New</a> -->
-                                    	<button type="button" name="attenance_btn" id="attenance_btn" class="btn mb-1 btn-outline-primary">출근하기</button><br/>
-                                    	<button type="button" name="leave_work_btn" id="leave_work_btn" class="btn mb-1 btn-outline-primary">퇴근하기</button><br/>
-                                    	<button type="button" name="_btn" id="_btn" class="btn mb-1 btn-outline-primary">조퇴하기</button><br/>
-                                    	<table class="table table-bordered verticle-middle">
-                                   			<tr>
-                                   				<th>이번주 누적</th>
-                                   			</tr>
-                                   			<tr>
-                                   				<th>이번주 초과</th>
-                                   			</tr>
-                                   			<tr>
-                                   				<th>이번주 잔여</th>
-                                   			</tr>
-                                   			<tr>
-                                   				<th>이번달 누적</th>
-                                   			</tr>
-                                   			<tr>
-                            				<%-- seq,                
-										    id,                 
-										    attend_time,        
-										    attend_yn,          
-										    lv_ffc_yn,          
-										    state,          
-										    reg_id,
-										    mod_id,
-										    reg_date,
-										    mod_date --%>
-                                   			</tr>
-                                    	</table>
+                                    	<button type="button" name="attenance_btn" id="attenance_btn" class="btn mb-1 btn-outline-primary">출근</button><br/>
+                                    	<button type="button" name="leave_work_btn" id="leave_work_btn" class="btn mb-1 btn-outline-primary">퇴근</button><br/>
+                                    	<button type="button" name="early_leave_btn" id="early_leave_btn" class="btn mb-1 btn-outline-primary">조퇴</button><br/>
+                                    	
                                     	<form action="${aprilContext}/attend/do_insert.do" name="attend_form" method="post">
-                                    		<input type="text" name="id" id="id" value="kimjh1">
-                                    		<input type="text" name="attendTime" id="attendTime" value="">
-                                    		<input type="text" name="attendYN" id="attendYN" value="1">
-                                    		<input type="text" name="leaveYN" id="leaveYN" value="0">
-                                    		<input type="text" name="state" id="state" value="0">
-                                    		<input type="text" name="regId" id="regId" value="kimjh1">
-                                    		<input type="text" name="modId" id="modId" value="kimjh1">
+                                    		<input type="hidden" name="id" id="id" value="kimjh1">
+                                    		<input type="hidden" name="attendTime" id="attendTime" value="">
+                                    		<input type="hidden" name="attendYN" id="attendYN" value="1">
+                                    		<input type="hidden" name="leaveYN" id="leaveYN" value="0">
+                                    		<input type="hidden" name="state" id="state" value="0">
+                                    		<input type="hidden" name="regId" id="regId" value="kimjh1">
+                                    		<input type="hidden" name="modId" id="modId" value="kimjh1">
                                     	</form>
                                         <!-- <div id="external-events" class="m-t-20">
                                             <p>Drag and drop your event or click in the calendar</p>
@@ -510,13 +485,66 @@
                                     </div>
                                     
                                     <!-- 캘린더 -->
-                                    <div class="col-md-8">
+                                    <!-- <div class="col-md-8">
                                         <div class="card-box m-b-50">
                                             <div id="calendar"></div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <!-- //캘린더 -->
                                     <!-- end col -->
+                                    <!-- TODO -->
+                                    <div class="col-md-7">
+                                    <table class="table table-bordered table-striped verticle-middle">
+						    		    <!-- hidden-sm hidden-xs 숨기기 -->
+						    			<thead>
+						    				<th style="display:none;">순서</th>
+						    				<th style="display:none;">아이디</th>
+						    				<th class="text-center">출근일</th>
+						    				<th class="text-center">출근시간</th>
+						    				<th class="text-center">출근여부</th>
+						    				<th class="text-center">퇴근시간</th>
+						    				<th class="text-center">퇴근여부</th>
+						    				<th class="text-center">출결상태</th>
+						    				<th class="text-center">근무시간</th>
+						    				<th class="text-center">누적 근무시간</th>
+						    			</thead>
+						    			<tbody>
+						    				<c:choose>
+						    					<c:when test="${attendanceList.size()>0}">
+						    						<c:forEach var="vo" items="${attendanceList}">
+								    					<tr>
+									    					<td style="display:none;"><c:out value="${vo.seq}" /></td>
+									    					<td style="display:none;"><c:out value="${vo.id}" /></td>
+									    					<td class="text-center"><c:out value="${vo.regDate}" /></td>
+									    					<td class="text-center"><c:out value="${vo.attendTime}" /></td>
+									    					<td class="text-center"><c:out value="${vo.attendYN}" /></td>
+									    					<td class="text-center"><c:out value="${vo.leaveTime}" /></td>
+									    					<td class="text-center"><c:out value="${vo.leaveYN}" /></td>
+									    					<td class="text-center"><c:out value="${vo.state}" /></td>
+									    					<td class="text-center"><c:out value="${vo.workTime}" /></td>
+									    					<td class="text-center"><c:out value="${vo.workTimeSum}" /></td>
+								    					</tr>
+							    					</c:forEach>
+						    					</c:when>
+						    					<c:otherwise>
+						    						<tr>
+						    							<td class="text-center">데이터가 없습니다</td>
+						    						</tr>
+						    					</c:otherwise>
+						    				</c:choose>
+						    				<%-- <tr>
+						    					<td class="text-center hidden-sm hidden-xs">1</td>
+						    					<td class="text-left">제목입니다. 비둘기 아닙니다.</td>
+						    					<td class="text-center">이상무</td>
+						    					<td class="text-center hidden-sm hidden-xs">2020/03/10</td>
+						    					<td class="text-right hidden-sm hidden-xs">88</td>
+						    					<td style="display:none;">88</td>
+						    				</tr> --%>
+						    			</tbody>
+						    		</table>
+						    		</div>
+						    		<!-- // -->
+                                    
                                     
                                     <!-- BEGIN MODAL -->
                                     <div class="modal fade none-border" id="event-modal">
@@ -571,55 +599,6 @@
                                     </div>
                                     <!-- END MODAL -->
                                     
-                                    <!-- TODO -->
-                                    <table class="">
-						    		    <!-- hidden-sm hidden-xs 숨기기 -->
-						    			<thead>
-						    				<th style="display:none;">순서</th>
-						    				<th style="display:none;">아이디</th>
-						    				<th class="text-center">출근시간</th>
-						    				<th class="text-center">출근여부</th>
-						    				<th class="text-center">퇴근시간</th>
-						    				<th class="text-center">퇴근여부</th>
-						    				<th class="text-center">출결상태</th>
-						    				<th class="text-center">근무시간</th>
-						    				<th style="display:none;">출근일</th>
-						    			</thead>
-						    			<tbody>
-						    				<c:choose>
-						    					<c:when test="${attendanceVO.size()>0}">
-						    						<c:forEach var="vo" items="${attendanceVO}">
-								    					<tr>
-									    					<td style="display:none;"><c:out value="${vo.seq}" /></td>
-									    					<td style="display:none;"><c:out value="${vo.id}" /></td>
-									    					<td class="text-center"><c:out value="${vo.attendTime}" /></td>
-									    					<td class="text-center"><c:out value="${vo.attendYN}" /></td>
-									    					<td class="text-center"><c:out value="${vo.leaveTime}" /></td>
-									    					<td class="text-center"><c:out value="${vo.leaveYN}" /></td>
-									    					<td class="text-center"><c:out value="${vo.state}" /></td>
-									    					<td class="text-center"><c:out value="${vo.workTime}" /></td>
-									    					<td style="display:none;"><c:out value="${vo.regDate}" /></td>
-								    					</tr>
-							    					</c:forEach>
-						    					</c:when>
-						    					<c:otherwise>
-						    						<tr>
-						    							<td class="text-center">데이터가 없습니다</td>
-						    						</tr>
-						    					</c:otherwise>
-						    				</c:choose>
-						    				<%-- <tr>
-						    					<td class="text-center hidden-sm hidden-xs">1</td>
-						    					<td class="text-left">제목입니다. 비둘기 아닙니다.</td>
-						    					<td class="text-center">이상무</td>
-						    					<td class="text-center hidden-sm hidden-xs">2020/03/10</td>
-						    					<td class="text-right hidden-sm hidden-xs">88</td>
-						    					<td style="display:none;">88</td>
-						    				</tr> --%>
-						    			</tbody>
-						    		</table>
-						    		<!-- // -->
-                                    
                                 </div>
                             </div>
                         </div>
@@ -666,19 +645,28 @@
     <script src="${aprilContext}/views/plugins/fullcalendar/js/fullcalendar.min.js"></script>
     <script src="${aprilContext}/views/js/plugins-init/fullcalendar-init.js"></script>
 	<script type="text/javascript">
-		//퇴근 버튼
-		$("#leave_work_btn").on("click", function(){
-			console.log("#leave_work_btn");
+		//TODO : id 변수 = 로그인 세션
+		function goAttend() {
+	    	location.href="${aprilContext}/attend/do_select_one.do?id=kimjh1";
+	    }
+	
+		//조퇴 버튼 
+		$("#early_leave_btn").on("click", function(){
+			console.log("#early_leave_btn");
 
+			var date = new Date();
+			var leaveTime = date.getHours();
+			
 			//ajax
 			$.ajax({
 				type:"POST",
-				url:"${aprilContext}/attend/leave_update.do",
+				url:"${aprilContext}/attend/early_leave.do",
 				dataType:"html",
 	            data:{
 		            //TODO 마지막 seq를 받아서 처리
-	            	"seq" : "3",
+	            	"seq" : "",
                     "id" : $("#id").val(),
+                    "leaveTime" : leaveTime,
 					"attendYN" : $("#attendYN").val(),
 					"leaveYN" : $("#leaveYN").val(),
 					"state" : $("#state").val(),
@@ -687,8 +675,52 @@
 	            },
 				success:function(data) {
 					console.log("data : "+data);
+					goAttend();
 					
-					alert("퇴근이 완료되었습니다.");
+					var parseData = $.parseJSON(data);
+					//성공
+					if(parseData.msgId=="1") {
+						alert(parseData.msgMsg);
+					//실패
+					} else {
+						alert(parseData.msgMsg);
+					}
+				},
+				error:function(xhr, status, error) {
+					alert("error:"+error);
+				},
+				complete:function(data) {
+					
+				}
+			}); //--ajax
+		});
+	
+		//퇴근 버튼
+		$("#leave_work_btn").on("click", function(){
+			console.log("#leave_work_btn");
+
+			var date = new Date();
+			var leaveTime = date.getHours();
+			
+			//ajax
+			$.ajax({
+				type:"POST",
+				url:"${aprilContext}/attend/leave_update.do",
+				dataType:"html",
+	            data:{
+		            //TODO 마지막 seq를 받아서 처리
+	            	"seq" : "7",
+                    "id" : $("#id").val(),
+                    "leaveTime" : leaveTime,
+					"attendYN" : $("#attendYN").val(),
+					"leaveYN" : $("#leaveYN").val(),
+					"state" : $("#state").val(),
+					"regId" : $("#id").val(),
+					"modId" : $("#id").val()
+	            },
+				success:function(data) {
+					console.log("data : "+data);
+					goAttend();
 					
 					var parseData = $.parseJSON(data);
 					//성공
@@ -708,8 +740,8 @@
 			}); //--ajax
 		});
 
-		//출근 버튼 : TODO 하루에 한 번만 누를 수 있어야 함
-		//state : 0-디폴트, 1-지각, 2-결근, 3-조퇴
+		//출근 버튼 : 하루에 한 번만 누를 수 있어야 함
+		//state : 0-디폴트, 1-지각
 		$("#attenance_btn").on("click", function(){
 			console.log("#attenance_btn");
 
@@ -723,7 +755,7 @@
 				dataType:"html",
 	            data:{
 		            //TODO seq query(next.val)
-	            	"seq" : "6",
+	            	"seq" : "7",
                     "id" : $("#id").val(),
 					"attendTime" : attendTime,
 					"attendYN" : $("#attendYN").val(),
@@ -734,7 +766,7 @@
 	            },
 				success:function(data) {
 					console.log("data : "+data);
-					alert("출근이 완료되었습니다.");
+					goAttend();
 					
 					var parseData = $.parseJSON(data);
 					//성공

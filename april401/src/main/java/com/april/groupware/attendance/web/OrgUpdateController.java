@@ -26,7 +26,7 @@ public class OrgUpdateController {
 	private final Logger LOG = LoggerFactory.getLogger(OrgUpdateController.class);
 	
 	//파일 저장 경로 : JIEUN 부분 -> sist
-	private final String PROFILE_UPLOAD_PATH ="C:\\Users\\SIST\\git\\April401\\april401\\src\\main\\webapp\\WEB-INF\\file_upload_img";
+	private final String PROFILE_UPLOAD_PATH ="C:\\Users\\SIST\\git\\April401\\april401\\src\\main\\webapp\\resources\\file_upload_img";
 	
 	@Autowired
 	OrgUpdateDao orgUpdateDao;
@@ -60,7 +60,7 @@ public class OrgUpdateController {
 		LOG.debug("=yyyyMM= : "+yyyyStr+mmStr);
 		
 		//1.4.폴더 경로 : Root폴더+연도(yyyy)폴더+월(MM)폴더
-		//ex) C:\\Users\\JIEUN\\git\\April401\\april401\\src\\main\\webapp\\WEB-INF\\file_upload_img\\2020\\05
+		//ex) C:\\Users\\JIEUN\\git\\April401\\april401\\src\\main\\webapp\\resources\\file_upload_img\\2020\\05
 		String datePath = this.PROFILE_UPLOAD_PATH + File.separator + yyyyStr + File.separator + mmStr;
 		
 		//1.5.연도+월 폴더 생성
@@ -107,8 +107,9 @@ public class OrgUpdateController {
 			LOG.debug("=saveFileName.ext= : "+saveFileName);
 			
 			//2.5.5.DB에 저장될 파일 전체 경로 set(절대 경로)
-			String projectDir = File.separator + "WEB-INF"+ File.separator +"file_upload_img"+ File.separator + yyyyStr + File.separator + mmStr;
-			String dbSaveFilePath = projectDir+ File.separator+saveFileName;
+			//String projectDir = "resources"+ File.separator +"file_upload_img"+ File.separator + yyyyStr + File.separator + mmStr;
+			String projectDir = "resources/file_upload_img/"+ yyyyStr + "/" + mmStr;
+			String dbSaveFilePath = projectDir+ "/" +saveFileName;
 			userOrg.setSaveFileName(dbSaveFilePath);
 			//원본 파일명, 파일 사이즈, 확장자, 전체 경로
 

@@ -5,7 +5,10 @@
 <mapper namespace="com.april.groupware.attendance">
 	
 	<!-- Insert : 등록 -->
-	<!-- Dao(namespace+id) : com.sist.ehr.board.doInsert -->
+	<!-- Dao(namespace+id) : com.april.groupware.attendance.doInsert -->
+	<!-- attend_yn : 출근 여부 1 -->
+	<!-- lv_ffc_yn : 퇴근 여부 0 -->
+	<!-- state : 출결 상태 0(정상 출근, 디폴트) -->
 	<insert id="doInsert" parameterType="AttendanceVO">
 		INSERT INTO attendance (
 		    seq,                
@@ -20,9 +23,9 @@
 		) VALUES (              
 		    #{seq},                  
 		    #{id},                  
-		    #{attendYN, jdbcType=VARCHAR},          
-		    #{leaveYN},                  
-		    #{state},                  
+		    #{state},          
+		    '0',                  
+		    '0',                  
 		    #{regId},                  
 		    #{modId},                  
 		    sysdate,
@@ -44,17 +47,42 @@
 	</update> -->
 	
 	<!-- leaveUpdate : 퇴근 -->
+	<!-- lv_ffc_yn : 퇴근 여부 1 -->
 	<update id="leaveUpdate" parameterType="AttendanceVO">
 		UPDATE attendance	
 		SET lv_ffc_time = 	sysdate, 
-		    lv_ffc_yn = 	#{leaveYN},   
+		    lv_ffc_yn = 	'1',
+		    state =			#{state},
+		    work_time = 	#{workTime, jdbcType=VARCHAR},   
+		    mod_id = 		#{modId},      
+		    mod_date = 		sysdate     
+		WHERE id = 			#{id}
+		AND seq =	(
+                    SELECT MAX(seq)
+                    FROM attendance
+                    WHERE id = #{id}
+                    AND TO_DATE(reg_date, 'YYYY/MM/DD') = TO_DATE(sysdate, 'YYYY/MM/DD')
+                    )
+	</update>
+	
+	<!-- earlyLeave : 조퇴 -->
+	<!-- lv_ffc_yn : 퇴근 여부 1 -->
+	<!-- state : 출결 상태 2(조퇴) -->
+	<update id="earlyLeave" parameterType="AttendanceVO">
+        UPDATE attendance	
+		SET lv_ffc_time = 	sysdate, 
+		    lv_ffc_yn = 	'1', 
+		    state = 		'2',
 		    work_time = 	#{workTime},   
 		    mod_id = 		#{modId},      
 		    mod_date = 		sysdate     
 		WHERE id = 			#{id}
-		AND seq =	(SELECT MAX(seq)
+		AND seq =	(
+                    SELECT MAX(seq)
                     FROM attendance
-                    WHERE id = #{id})
+                    WHERE id = #{id}
+                    AND TO_DATE(reg_date, 'YYYY/MM/DD') = TO_DATE(sysdate, 'YYYY/MM/DD')
+                    )
 	</update>
 	
 	<!-- Delete : 삭제 -->
@@ -79,6 +107,28 @@
 		    TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI:SS') AS regDate,
 		    mod_id		AS modId,      											
 		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') AS modDate
+		FROM attendance
+		WHERE id = #{id}
+		AND TO_DATE(reg_date, 'YYYY/MM/DD') = TO_DATE(sysdate, 'YYYY/MM/DD')
+		ORDER BY seq desc
+	</select>
+	
+	<!-- SelectOne : 상세 조회 -->
+	<select id="getAll" parameterType="AttendanceVO" resultType="AttendanceVO">
+		SELECT seq,
+			id,													
+		    TO_CHAR(attend_time, 'HH24:MI:SS') AS attendTime, 											
+		    TO_CHAR(lv_ffc_time, 'HH24:MI:SS') AS leaveTime,
+            DECODE(attend_yn,0,'출근 전',1,'완료') AS attendYN,
+            DECODE(lv_ffc_yn,0,'퇴근 전',1,'완료') AS leaveYN,
+            DECODE(state,0,'정상',1,'지각',2,'조퇴') AS state,
+		    work_time	AS workTime,   											
+		    reg_id		AS regId,
+            TO_CHAR(reg_date,'YYYY/MM/DD') AS regDate,
+		    mod_id		AS modId,      											
+		    CASE TO_CHAR(mod_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+                                                THEN TO_CHAR(SYSDATE,'HH24:MI') 
+			ELSE TO_CHAR(mod_date,'YYYY/MM/DD') END AS modDate
 		FROM attendance
 		WHERE id = #{id}
 		ORDER BY seq desc

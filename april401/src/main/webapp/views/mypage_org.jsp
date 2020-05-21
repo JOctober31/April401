@@ -466,8 +466,6 @@
 	                                	</tr>
 	                                </table> -->
 									
-	                                <!-- TODO : 지우기 -->
-                                	${orgUpdateVO}
                                     <form class="form-valide" action="${aprilContext}/org/do_update.do" name="org_form" method="post" enctype="multipart/form-data">
                                     	<div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="profile">사진 <span class="text-danger"></span>
@@ -479,7 +477,8 @@
                                             			<td>
                                             				<!-- style="width: 150px; height: 180px; color: grey; border: 1px solid grey; dispaly: inline;" -->
                                             				<!-- TODO saveFileName : ./WEB-INF/file_upload_img/2020/05/20200518183556e4e57f3d2dfe4a09a6315871562752ae.gif  -->
-                                                			<img alt="profile" src="./WEB-INF/file_upload_img/2020/05/20200518183556e4e57f3d2dfe4a09a6315871562752ae.gif" width="150px" height="180px"/>
+                                            				<!-- ${aprilContext}/resources/file_upload_img/2020/05/20200518183556e4e57f3d2dfe4a09a6315871562752ae.gif -->
+                                                			<img alt="profile" src="/groupware/resources/file_upload_img/2020/05/202005211803147161be0e7e2944baa2b85ed87f443507.jpg" width="150px" height="180px"/>
                                                 		</td>
                                                 		<td>
 															<div id='View_area' style='position:relative; width: 150px; height: 180px; display: inline;'></div>
@@ -489,8 +488,7 @@
                                                 		<td colspan="2">
                                                 			<input type="file" name="profile_after" id="profile_after" onchange="previewImage(this,'View_area')">
                                                 			<!-- TODO : 지우기 -->
-                                                			<input type="text" name="profile_before" id="profile_before" value="${orgUpdateVO.orgFileName}" />
-                                                			<input type="text" name="id" id="id" value="${orgUpdateVO.id}" />
+                                                			<input type="hidden" name="id" id="id" value="${orgUpdateVO.id}" />
                                                 			<!-- TODO : 지우기 -->
                                                 		</td>
                                                 	</tr>
@@ -756,7 +754,11 @@
     <script src="${aprilContext}/views/plugins/validation/jquery.validate-init.js"></script>
 	
 	<script type="text/javascript">
-
+		//TODO : id 변수 = 로그인 세션
+		function goAttend() {
+	    	location.href="${aprilContext}/org/do_select_one.do?id=kimjh1";
+	    }
+	
 		//취소-초기화
 		$("#cancel_btn").on("click", function(){
 			console.log("#cancel_btn");
@@ -826,9 +828,6 @@
         	var modFileName = $("#profile_after").val().trim();
         	
         	var orgFileName = $("#profile_before").val().trim();
-
-			
-        	
         	
             if(false==confirm("수정하시겠습니까?")) return;
 
@@ -840,15 +839,15 @@
 		        dataType:"html", 
 		        data:{
 				    "modFileName": modFileName,  
-				    "orgFileName": orgFileName,
+				    "saveFileName": saveFileName,
 		        },
 				//성공
 		        success:function(data){ 
 			        //alert(data);
-			        //{"msgId":"1","msgMsg":"삭제 되었습니다.","num":0,"totalCnt":0}
 			        var jData = JSON.parse(data);
 			        if(jData != null && jData.msgId== "1"){
-				        //alert(jData.msgMsg);
+				        alert(jData.msgMsg);
+				        goAttend();
 			        } else {
 			            alert(jData.msgMsg);
 			        }
@@ -927,8 +926,7 @@
 						//Safari is not supported FileReader
 					} else { 
 						//alert('not supported FileReader');
-						if (!document.getElementById("sfr_preview_error_"
-								+ View_area)) {
+						if (!document.getElementById("sfr_preview_error_" + View_area)) {
 							var info = document.createElement("p");
 							info.id = "sfr_preview_error_" + View_area;
 							info.innerHTML = "not supported FileReader";

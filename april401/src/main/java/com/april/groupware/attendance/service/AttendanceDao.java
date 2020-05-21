@@ -53,6 +53,8 @@ public interface AttendanceDao {
 	
 	public int doLeaveUpdate(DTO dto);
 	
+	public int doEarlyLeave(DTO dto);
+	
 	/**
 	 * 
 	 * Method Name:doDelete

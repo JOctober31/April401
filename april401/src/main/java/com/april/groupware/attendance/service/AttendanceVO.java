@@ -39,7 +39,7 @@ public class AttendanceVO extends DTO {
 	private String leaveYN;
 	/**출결 상태*/
 	private String state;
-	/**근무시간*/
+	/**근무 시간*/
 	private String workTime;
 	/**작성자*/
 	private String regId;
@@ -49,13 +49,15 @@ public class AttendanceVO extends DTO {
 	private String modId;
 	/**수정일*/
 	private String modDate;
+	/**근무 시간 누적 합계*/
+	private String workTimeSum;
 	
 	public AttendanceVO() {
 		
 	}
 
 	public AttendanceVO(String id, String seq, String attendTime, String leaveTime, String attendYN, String leaveYN,
-			String state, String workTime, String regId, String modId, String regDate, String modDate) {
+			String state, String workTime, String regId, String regDate, String modId, String modDate) {
 		super();
 		this.id = id;
 		this.seq = seq;
@@ -66,9 +68,28 @@ public class AttendanceVO extends DTO {
 		this.state = state;
 		this.workTime = workTime;
 		this.regId = regId;
-		this.modId = modId;
 		this.regDate = regDate;
+		this.modId = modId;
 		this.modDate = modDate;
+	}
+
+	public AttendanceVO(String id, String seq, String attendTime, String leaveTime, String attendYN, String leaveYN,
+			String state, String workTime, String regId, String regDate, String modId, String modDate,
+			String workTimeSum) {
+		super();
+		this.id = id;
+		this.seq = seq;
+		this.attendTime = attendTime;
+		this.leaveTime = leaveTime;
+		this.attendYN = attendYN;
+		this.leaveYN = leaveYN;
+		this.state = state;
+		this.workTime = workTime;
+		this.regId = regId;
+		this.regDate = regDate;
+		this.modId = modId;
+		this.modDate = modDate;
+		this.workTimeSum = workTimeSum;
 	}
 
 	public String getId() {
@@ -167,12 +188,20 @@ public class AttendanceVO extends DTO {
 		this.modDate = modDate;
 	}
 
+	public String getWorkTimeSum() {
+		return workTimeSum;
+	}
+
+	public void setWorkTimeSum(String workTimeSum) {
+		this.workTimeSum = workTimeSum;
+	}
+
 	@Override
 	public String toString() {
 		return "AttendanceVO [id=" + id + ", seq=" + seq + ", attendTime=" + attendTime + ", leaveTime=" + leaveTime
 				+ ", attendYN=" + attendYN + ", leaveYN=" + leaveYN + ", state=" + state + ", workTime=" + workTime
 				+ ", regId=" + regId + ", regDate=" + regDate + ", modId=" + modId + ", modDate=" + modDate
-				+ ", toString()=" + super.toString() + "]";
+				+ ", workTimeSum=" + workTimeSum + ", toString()=" + super.toString() + "]";
 	}
-	
+
 }
