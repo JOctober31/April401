@@ -16,7 +16,7 @@
     - 5) 업무연락 : 김민지
     
 ### 3. 요구사항정의서
-![April_WBS](https://github.com/JOctober31/April401/blob/master/April401/src/main/webapp/WEB-INF/doc/APRIL_%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%EC%A0%95%EC%9D%98%EC%84%9C(SRS).PNG "April_SRS")
+![April_WBS](april401/src/main/webapp/WEB-INF/doc/APRIL_요구사항정의서(SRS).PNG "April_SRS")
 
 ### 4. WBS
 ![April_WBS](https://github.com/JOctober31/April401/blob/master/April401/src/main/webapp/WEB-INF/doc/April_WBS.png "April_WBS")
