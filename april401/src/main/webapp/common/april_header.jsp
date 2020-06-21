@@ -148,7 +148,7 @@
                  
                  
                  <!-- 해더 아이콘 -->
-             	 <li class="icons"><a href="${hContext}/member/login.jsp" >
+             	 <li class="icons"><a href="${hContext}/index.jsp" >
           				<button class="btn mb-3 btn-outline-primary" type="button">로그아웃</button>
           			</a>
                  </li>
