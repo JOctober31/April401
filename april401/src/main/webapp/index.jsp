@@ -63,10 +63,10 @@
         						<!-- 로그인 -->
                                 <form action="${hContext}/login/login.do" class="mt-5 mb-5 login-input" name="login_form" method="get">
                                     <div class="form-group">
-                                        <input type="text" name="id"id="id" class="form-control" placeholder="아이디" maxlength="20">
+                                        <input type="text" name="id" id="id" onkeyup="enterkey();" class="form-control" placeholder="아이디" maxlength="20">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="password" id="password" class="form-control" placeholder="패스워드" maxlength="50">
+                                        <input type="password" name="password" id="password" onkeyup="enterkey();" class="form-control" placeholder="패스워드" maxlength="50">
                                     </div>
                                 </form>
                                 
@@ -109,6 +109,7 @@
 	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 
 	<script type="text/javascript">
+		//로그인 리다이렉션
 	    function goRetrieve(id){
 		if (id == 'admin' || id == 'ADMIN') {
 				location.href = "${hContext}/dash/do_selectone.do";
@@ -118,35 +119,8 @@
 			}
 		}
 
-	    //엔터 키로 로그인
-	    //$("#member_login").keypress(function(e) {
-	    //	//console.log("member_login");
-	    //	var id = $("#id").val().trim();
-		//	if (null == id || id.length <= 1) {
-		//		$("#id").focus();
-		//		alert("아이디를 입력하세요.");
-		//		return;
-		//	}
-        //
-		//	var password = $("#password").val().trim();
-		//	if (null == password || password.length <= 1) {
-		//		$("#password").focus();
-		//		alert("패스워드를 입력하세요.");
-		//		return;
-		//	}
-        //
-		//	
-	    //	
-	    //    //'Enter' keycode : 13
-	    //    if(e.which == 13) {
-	    //        doRetrieve(id);
-	    //    }
-	    //});
-
-		$("#member_login").on("click", function() {
-			//console.log("member_login");
-			//document.login_form.submit();
-			
+		//로그인 함수
+		function login() {
 			var id = $("#id").val().trim();
 			if (null == id || id.length <= 1) {
 				$("#id").focus();
@@ -197,7 +171,19 @@
 					
 				}
 			});//--ajax
+		}
 
+		//엔터 키 로그인
+		function enterkey() {
+	        if (window.event.keyCode == 13) {
+	 			login();
+	        }
+		}
+
+		//버튼 로그인
+		$("#member_login").on("click", function() {
+			//console.log("member_login");
+			login();
 		});
 	</script>
 </body>

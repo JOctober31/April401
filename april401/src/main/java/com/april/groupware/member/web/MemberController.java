@@ -130,11 +130,11 @@ public class MemberController {
 				String today = format.format(date);
 				
 				//출근 성공
-				if(attendFlag == 1) {
+				if(flag == 1) {
 					messageVO.setMsgMsg(attendVO.getId()+"님 \n"+today+" 출근이 완료되었습니다.");
-					//출근 실패
-				} else {
-					messageVO.setMsgMsg("출근을 완료하지 못했습니다. \n관리자에게 문의해주세요.");
+				//출근 실패
+				} else if(flag == 0) {
+					messageVO.setMsgMsg("정상적인 출근 시간이 아닙니다. \n관리자에게 문의해주세요.");
 				}
 				/**--지은 출근 기록*/
 				
