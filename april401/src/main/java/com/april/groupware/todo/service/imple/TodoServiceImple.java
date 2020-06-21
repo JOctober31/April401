@@ -7,10 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.april.groupware.cmn.DTO;
 import com.april.groupware.todo.service.TodoDao;
 import com.april.groupware.todo.service.TodoService;
-import com.april.groupware.todo.service.TodoVO;
-import com.april.groupware.cmn.DTO;
 
 @Service
 public class TodoServiceImple implements TodoService {
@@ -49,8 +48,7 @@ public class TodoServiceImple implements TodoService {
 
 	@Override
 	public DTO doSelectOne(DTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.doSelectOne(dto);
 	}
 
 }

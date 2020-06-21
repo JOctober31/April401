@@ -7,16 +7,16 @@
 	<!-- Update : 수정 -->
 	<update id="orgDoUpdate" parameterType="OrgUpdateVO">
 		UPDATE organization	 
-		SET password = 		#{password},     
-		    mobile = 		#{mobile},       
-		    email = 		#{email},        
-		    address = 		#{address},      
+		SET password = 		#{password, jdbcType=VARCHAR},
+		    mobile = 		#{mobile, jdbcType=VARCHAR},       
+		    email = 		#{email, jdbcType=VARCHAR},
+		    address = 		#{address, jdbcType=VARCHAR},
 		    military_yn = 	#{militaryYN, jdbcType=VARCHAR},  
 		    dspsn_yn = 		#{dspsnYN, jdbcType=VARCHAR},     
-		    grade = 		#{grade},        
+		    grade = 		#{grade, jdbcType=VARCHAR},
 		    org_file_nm = 	#{orgFileName, jdbcType=VARCHAR},  
 		    save_file_nm = 	#{saveFileName, jdbcType=VARCHAR},  
-		    ext = 			#{ext},       
+		    ext = 			#{ext, jdbcType=VARCHAR},
 		    file_size = 	#{fileSize},
 		    mod_id = 		#{modId, jdbcType=VARCHAR},
 		    mod_date = 		sysdate

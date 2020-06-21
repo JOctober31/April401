@@ -1,9 +1,9 @@
 package com.april.groupware.todo;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.After;
@@ -14,16 +14,14 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.april.groupware.cmn.SearchVO;
 import com.april.groupware.todo.service.TodoVO;
 import com.april.groupware.todo.service.imple.TodoDaoImpl;
-import com.april.groupware.cmn.SearchVO;
 
 
 

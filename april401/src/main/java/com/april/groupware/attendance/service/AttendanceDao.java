@@ -66,6 +66,8 @@ public interface AttendanceDao {
 	 */
 	public int doDelete(DTO dto);
 	
+	public int doAttendCheck(DTO dto);
+	
 	/**
 	 * 
 	 * Method Name:doSelectOne

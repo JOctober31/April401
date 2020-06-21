@@ -89,11 +89,12 @@ public class AttendanceDaoImple implements AttendanceDao {
 		//javascript var attendTime = date.getHours();
 		String attendTimeStr = inVO.getAttendTime();
 		int attendTime = Integer.parseInt(attendTimeStr);
+		LOG.debug("=AttendanceDao attendTime= : "+attendTime);
 		
 		int flag = 0;
 		
 		//9시 ~ 18시
-		if(9 <= attendTime && attendTime < 18) {
+		if(9 <= attendTime && attendTime <= 24) {
 			//지각
 			inVO.setState("1");	
 			
@@ -130,6 +131,21 @@ public class AttendanceDaoImple implements AttendanceDao {
 			return flag;
 		//이외 시간
 		} else {
+			//비정상출근
+			inVO.setState("9");
+			
+			//SQL-Query
+			String statement = NAMESPACE+".doInsert";
+			LOG.debug("=====================");
+			LOG.debug("=doInsert statement= : "+statement);
+			LOG.debug("=====================");
+			
+			//Call
+			flag = this.sqlSessionTemplate.insert(statement, inVO);
+			LOG.debug("=====================");
+			LOG.debug("=doInsert flag= : "+flag);
+			LOG.debug("=====================");
+			
 			LOG.debug("=====================");
 			LOG.debug("=정상적인 출근 시간이 아닙니다.=");
 			LOG.debug("=====================");
@@ -236,16 +252,43 @@ public class AttendanceDaoImple implements AttendanceDao {
 		int attendTime = Integer.parseInt(attendTimeStr);
 		
 		int workTimeNum = (leaveTime - attendTime) -1;
-		String workTime = String.valueOf(workTimeNum); 
+		LOG.debug("=====================");
+		LOG.debug("=workTimeNum= : "+workTimeNum);
+		LOG.debug("=====================");
+		
+		//근무시간이 0보다 작으면 0으로 set
+		String workTime = (workTimeNum <= 0) ? "0" : String.valueOf(workTimeNum);
+
 		LOG.debug("=====================");
 		LOG.debug("=workTime= : "+workTime);
 		LOG.debug("=====================");
 		
-		//9시 ~ 18시 
-		if(9 <= leaveTime && leaveTime <= 18) {
+		//15시 ~ 18시 조퇴 
+		if (15 <= leaveTime && leaveTime <= 18) {
 			//조퇴
 			attendVO.setState("2");	
-			//근무 시간
+			//근무 시간 : 근무 시간 - 점심 시간 1시간
+			attendVO.setWorkTime(workTime);
+			
+			//SQL-Query
+			statement = NAMESPACE+".leaveUpdate";
+			LOG.debug("=====================");
+			LOG.debug("=doLeaveUpdate statement= : "+statement);
+			LOG.debug("=====================");
+			
+			//Call
+			flag = this.sqlSessionTemplate.update(statement, attendVO);
+			LOG.debug("=====================");
+			LOG.debug("=doLeaveUpdate flag= : "+flag);
+			LOG.debug("=====================");
+			
+			return flag;
+		//9시 ~ 14시 조퇴 
+		} else if(9 <= leaveTime && leaveTime <= 14) {
+			//조퇴
+			attendVO.setState("2");	
+			//근무 시간(점심 시간 1시간 안 뺌)
+			workTime = String.valueOf(workTimeNum+1);
 			attendVO.setWorkTime(workTime);
 			
 			//SQL-Query
@@ -262,7 +305,7 @@ public class AttendanceDaoImple implements AttendanceDao {
 			
 			return flag;
 		//6 ~ 12시
-		} else if(18 < leaveTime && leaveTime > 24) {
+		} else if(18 <= leaveTime && leaveTime <= 24) {
 			//정상 퇴근
 			attendVO.setState("0");
 			//근무 시간
@@ -361,14 +404,19 @@ public class AttendanceDaoImple implements AttendanceDao {
 		int attendTime = Integer.parseInt(attendTimeStr);
 		
 		int workTimeNum = (leaveTime - attendTime) -1;
-		String workTime = String.valueOf(workTimeNum); 
+		LOG.debug("=====================");
+		LOG.debug("=workTimeNum= : "+workTimeNum);
+		LOG.debug("=====================");
+		
+		//근무시간이 0보다 작으면 0으로 set
+		String workTime = (workTimeNum <= 0) ? "0" : String.valueOf(workTimeNum);
+		
 		LOG.debug("=====================");
 		LOG.debug("=workTime= : "+workTime);
 		LOG.debug("=====================");
 		
 		//9시 ~ 18시 
 		if(9 <= leaveTime && leaveTime <= 18) {
-			//근무 시간
 			attendVO.setWorkTime(workTime);
 			
 			//SQL-Query
@@ -520,6 +568,33 @@ public class AttendanceDaoImple implements AttendanceDao {
 //		return flag;
 	}
 
+	public int doAttendCheck(DTO dto) {
+		LOG.debug("=====================");
+		LOG.debug("=AttendanceDao doAttendCheck=");
+		LOG.debug("=====================");
+		
+		int cnt = 0;
+		//Param
+		AttendanceVO inVO = (AttendanceVO) dto;
+		LOG.debug("=====================");
+		LOG.debug("=AttendanceDao inVO= : "+inVO);
+		LOG.debug("=====================");
+
+		//SQL-Query
+		String statement = NAMESPACE+".doAttendCount";
+		LOG.debug("=====================");
+		LOG.debug("=doSelectOne statement= : "+statement);
+		LOG.debug("=====================");
+
+		//Call
+		cnt = this.sqlSessionTemplate.selectOne(statement, inVO);
+		LOG.debug("=====================");
+		LOG.debug("=doSelectOne cnt= : "+cnt);
+		LOG.debug("=====================");
+
+		return cnt;
+	}
+	
 	@Override
 	public DTO doSelectOne(DTO dto) {
 		LOG.debug("=====================");
@@ -611,6 +686,36 @@ public class AttendanceDaoImple implements AttendanceDao {
 		List<AttendanceVO> outList = this.sqlSessionTemplate.selectList(statement, inVO);
 		LOG.debug("=====================");
 		LOG.debug("=getAll outList= : "+outList);
+		LOG.debug("=====================");
+
+		for(AttendanceVO vo: outList) {
+			LOG.debug("=vo="+vo);
+		}
+		
+		return outList;
+	}
+	
+	public List<?> getAllSearchDate(DTO dto) {
+		LOG.debug("=====================");
+		LOG.debug("=AttendanceDao getAllSearchDate=");
+		LOG.debug("=====================");
+		
+		//Param
+		AttendanceVO inVO = (AttendanceVO) dto;
+		LOG.debug("=====================");
+		LOG.debug("=AttendanceDao inVO= : "+inVO);
+		LOG.debug("=====================");
+		
+		//SQL-Query
+		String statement = NAMESPACE+".getAllSearchDate";
+		LOG.debug("=====================");
+		LOG.debug("=getAllSearchDate statement= : "+statement);
+		LOG.debug("=====================");
+		
+		//Call
+		List<AttendanceVO> outList = this.sqlSessionTemplate.selectList(statement, inVO);
+		LOG.debug("=====================");
+		LOG.debug("=getAllSearchDate outList= : "+outList);
 		LOG.debug("=====================");
 
 		for(AttendanceVO vo: outList) {

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.april.groupware.mail">
+    <!-- 검색조건 
+        10: 제목
+        20: 내용
+        30: 등록자ID
+    -->
+    <!-- 메일 테이블에 등록 -->
+    <insert id="doInsertMail" parameterType="MailVO">
+    INSERT INTO email 
+    (
+		mail_id,		
+	    category,      
+	    sender,        
+	    sender_id,     
+	    title,         
+	    file_id,       
+	    contents,
+	    recipient,
+	    recipient_id,
+	    disable_yn,
+	    read          
+	) VALUES (         
+	    'M' || TO_CHAR(SYSDATE,'YYYYMMDD') || '_' || mail_id.NEXTVAL,             
+	    #{category,jdbcType=VARCHAR},             
+	    #{sender,jdbcType=VARCHAR},             
+	    #{senderId,jdbcType=VARCHAR},             
+	    #{title,jdbcType=VARCHAR},             
+	    #{fileId,jdbcType=VARCHAR},             
+	    #{contents,jdbcType=VARCHAR},
+	    #{recipient,jdbcType=VARCHAR},
+	    #{recipientId,jdbcType=VARCHAR},
+	    #{disableYn,jdbcType=VARCHAR},
+	    #{read,jdbcType=VARCHAR}           
+	)  
+    </insert>
+    
+    <!-- ORGANIZATION 테이블에서 Id 조회 -->
+    <select id="doSelectUserId" parameterType="MailVO" resultType="MailVO">
+    SELECT id as recipientId	
+	FROM organization    
+	WHERE name = #{recipient} 
+    </select>
+    
+    <!-- 받은 메일 목록 조회 -->
+    <select id="doRetrieve" parameterType="SearchVO" resultType="MailVO">
+    SELECT T1.*,T2.*                                            
+	FROM(                                                       
+	    SELECT  B.mail_id as mailId,                                      
+	            B.category,                                     
+	            B.sender,                                       
+	            B.sender_id as senderId,                                    
+	            B.title,                                        
+	            B.file_id as fileId,                                    
+	            DECODE(TO_CHAR(B.rec_date, 'YYYY/MM/DD'),TO_CHAR(SYSDATE, 'YYYY/MM/DD'),TO_CHAR(B.rec_date,'HH24:MI:SS'),TO_CHAR(B.rec_date,'YYYY/MM/DD HH24:MI:SS')) as recDate,
+	            B.disable_yn as disableYn,                              
+	            B.read,                                    
+	            rnum as num                                      
+	    FROM(                                              
+	        SELECT ROWNUM rnum,                            
+	               A.*                                     
+	        FROM (                                         
+	            SELECT *                                   
+	            FROM email                                 
+	            WHERE 1=1             
+	            --검색조건                                                                             
+				AND recipient_id like '%' || #{searchWord} ||'%'
+				AND disable_yn = 'N'
+	            ORDER BY TO_CHAR(rec_date,'YYYYMMDD HH24:MI:SS')  DESC                          
+	        )A --10                                               
+	        WHERE ROWNUM <![CDATA[ <= ]]> (#{pageSize} *(#{pageNum} - 1) + #{pageSize})
+	    )B --1                         
+	    WHERE B.RNUM <![CDATA[ >= ]]> (#{pageSize}*(#{pageNum}-1)+1)    
+	    )T1 CROSS JOIN                 
+	    (                              
+	    SELECT count(*) totalCnt     
+	    FROM email                     
+	    WHERE 1=1
+	    --검색조건                                                  
+		AND recipient_id like '%' || #{searchWord} ||'%'
+		AND disable_yn = 'N'   
+	    )T2
+    </select>
+    
+    <!-- 보낸 메일 목록 조회 -->
+    <select id="doRetrieveSent" parameterType="SearchVO" resultType="MailVO">
+    SELECT T1.*,T2.*                                            
+	FROM(                                                       
+	    SELECT  B.mail_id as mailId,                                      
+	            B.category,
+	            B.recipient,
+	            B.recipient_id as recipientId,                                     
+	            B.sender,                                       
+	            B.sender_id as senderId,                                    
+	            B.title,                                        
+	            B.file_id as fileId,                                    
+	            DECODE(TO_CHAR(B.rec_date, 'YYYY/MM/DD'),TO_CHAR(SYSDATE, 'YYYY/MM/DD'),TO_CHAR(B.rec_date,'HH24:MI:SS'),TO_CHAR(B.rec_date,'YYYY/MM/DD HH24:MI:SS')) as recDate,
+	            B.disable_yn as disableYn,                              
+	            B.read,                                    
+	            rnum as num                                      
+	    FROM(                                              
+	        SELECT ROWNUM rnum,                            
+	               A.*                                     
+	        FROM (                                         
+	            SELECT *                                   
+	            FROM email                                 
+	            WHERE 1=1             
+	            --검색조건                                                                             
+				AND sender_id like '%' || #{searchWord} ||'%'
+	            ORDER BY TO_CHAR(rec_date,'YYYYMMDD HH24:MI:SS')  DESC                          
+	        )A --10                                               
+	        WHERE ROWNUM <![CDATA[ <= ]]> (#{pageSize} *(#{pageNum} - 1) + #{pageSize})
+	    )B --1                         
+	    WHERE B.RNUM <![CDATA[ >= ]]> (#{pageSize}*(#{pageNum}-1)+1)    
+	    )T1 CROSS JOIN                 
+	    (                              
+	    SELECT count(*) totalCnt     
+	    FROM email                     
+	    WHERE 1=1
+	    --검색조건                                                  
+		AND sender_id like '%' || #{searchWord} ||'%'
+	    )T2
+    </select>
+    
+    <!-- 휴지통 목록 조회 -->
+    <select id="doRetrieveTrash" parameterType="SearchVO" resultType="MailVO">
+    SELECT T1.*,T2.*                                            
+	FROM(                                                       
+	    SELECT  B.mail_id as mailId,                                      
+	            B.category,                                     
+	            B.sender,                                       
+	            B.sender_id as senderId,                                    
+	            B.title,                                        
+	            B.file_id as fileId,                                    
+	            DECODE(TO_CHAR(B.rec_date, 'YYYY/MM/DD'),TO_CHAR(SYSDATE, 'YYYY/MM/DD'),TO_CHAR(B.rec_date,'HH24:MI:SS'),TO_CHAR(B.rec_date,'YYYY/MM/DD HH24:MI:SS')) as recDate,
+	            B.disable_yn as disableYn,                              
+	            B.read,                                    
+	            rnum as num                                      
+	    FROM(                                              
+	        SELECT ROWNUM rnum,                            
+	               A.*                                     
+	        FROM (                                         
+	            SELECT *                                   
+	            FROM email                                 
+	            WHERE 1=1             
+	            --검색조건                                                                             
+				AND recipient_id like '%' || #{searchWord} ||'%'
+				AND disable_yn = 'Y'
+	            ORDER BY TO_CHAR(rec_date,'YYYYMMDD HH24:MI:SS')  DESC                          
+	        )A --10                                               
+	        WHERE ROWNUM <![CDATA[ <= ]]> (#{pageSize} *(#{pageNum} - 1) + #{pageSize})
+	    )B --1                         
+	    WHERE B.RNUM <![CDATA[ >= ]]> (#{pageSize}*(#{pageNum}-1)+1)    
+	    )T1 CROSS JOIN                 
+	    (                              
+	    SELECT count(*) totalCnt     
+	    FROM email                     
+	    WHERE 1=1
+	    --검색조건                                                  
+		AND recipient_id like '%' || #{searchWord} ||'%'
+		AND disable_yn = 'Y'   
+	    )T2
+    </select>
+    
+    <!-- 메일 읽기로 가는 단건 조회 -->
+    <select id="doSelectOne" parameterType="MailVO" resultType="MailVO">
+    SELECT mail_id as mailId,									
+	 	   category,									
+		   title,                                
+		   DECODE(TO_CHAR(rec_date, 'YYYY/MM/DD'),TO_CHAR(SYSDATE, 'YYYY/MM/DD'),TO_CHAR(rec_date,'HH24:MI:SS'),TO_CHAR(rec_date,'YYYY/MM/DD HH24:MI:SS')) as recDate,
+		   sender,                              
+		   sender_id as senderId,                           
+		   recipient,                           
+		   recipient_id as recipientId,                        
+		   file_id as fileId,                             
+		   contents,	                           
+		   disable_yn as disableYn	                       
+	FROM email 							           
+	WHERE mail_id = #{mailId,jdbcType=VARCHAR}  
+    </select>
+    
+    <!-- disableYn -> Y로 바꾸는 수정 -->
+    <update id="doUpdateDisable" parameterType="MailVO">
+    UPDATE email	        
+	SET disable_yn = #{disableYn,jdbcType=VARCHAR}		
+	WHERE                   
+	    mail_id = #{mailId,jdbcType=VARCHAR}
+    </update>
+    
+    <!-- read -> 9(읽음)로 바꾸는 수정 -->
+    <update id="doUpdateRead" parameterType="MailVO">
+    UPDATE email	        
+	SET read = #{read,jdbcType=VARCHAR}		
+	WHERE                   
+	    mail_id = #{mailId,jdbcType=VARCHAR}
+    </update>
+    
+    <!-- getAll(안읽은 것만, 알림용) -->
+    <select id="doGetAll" parameterType="SearchVO" resultType="MailVO">
+    SELECT
+			mail_id as mailId,
+			category,
+			sender,
+			sender_id as senderId,
+			sen_date as senDate,
+			title,
+			file_id as fileId,
+			contents,
+			recipient,
+			recipient_id as recipientId,
+			TO_CHAR(rec_date, 'YYYY/MM/DD HH24:MI:SS') as recDate,
+			disable_yn as disableYn,
+			read
+	FROM	email
+	WHERE	recipient_id like '%' || #{searchWord} ||'%'
+	AND		disable_yn = 'N'
+	AND		TO_CHAR(rec_date,'yyyy/mm/dd hh24:mi:ss') >= TO_CHAR(SYSDATE - (interval '30' minute),'yyyy/mm/dd hh24:mi:ss')
+    </select>
+    
+    <!-- 사진 들고오기 -->
+    <select id="doSelectImage" parameterType="MailVO" resultType="MailVO">
+    SELECT	save_file_nm as saveFileName
+	FROM	organization
+	WHERE 	id = #{senderId,jdbcType=VARCHAR}
+    </select>
+    
+    <!-- doGetAllCount(안읽은 것만, 옆에 갯수) -->
+    <select id="doGetAllCount" parameterType="SearchVO" resultType="Integer">
+	SELECT count(*)
+	FROM	email
+	WHERE	recipient_id like '%' || #{searchWord} ||'%'
+	AND		disable_yn = 'N'
+	AND		read = '0'
+    </select>
+    
+</mapper>

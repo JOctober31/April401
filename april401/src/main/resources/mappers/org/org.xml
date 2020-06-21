@@ -62,7 +62,7 @@
     
     </select>
 
- 
+
     
 	<!-- 등록 : namespace+id = com.sist.ehr.board.doInsert -->
 	<insert id="doInsert" parameterType="OrgVO">
@@ -71,53 +71,23 @@
 				    password,
 				    dept_nm,
 				    dept_cd,
-				    parent_dept_cd,
 				    auth,
 				    name,
 				    position,
-				    mobile,
-				    email,
-				    address,
 				    hire_date,
-				    birth,
-				    vacation_cnt,
-				    military_yn,
-				    dspsn_yn,
-				    grade,
-				    org_file_nm,
-				    save_file_nm,
-				    ext,
-				    file_size,
 				    reg_id,
-				    reg_date,
-				    mod_id,
-				    mod_date
+				    mod_id
 		) VALUES (
-					#{id},			
-					#{password},
-					#{deptNm},
-					#{deptCd},
-					#{parentDeptCd},
-					#{auth},
-					#{name},
-					#{position},
-					#{mobile},
-					#{email},
-					#{address},
-					#{hiredate},
-					#{birth},
-					#{vacationCnt},
-					#{militaryYN},
-					#{dspsnYN},
-					#{grade},
-					#{orgFileName},
-					#{saveFileName},
-					#{ext},
-					#{fileSize},
-					#{regId},
-					sysdate, 
-					#{modId},
-					sysdate
+					#{id  , jdbcType=VARCHAR},			
+					#{password , jdbcType=VARCHAR},
+					#{deptNm , jdbcType=VARCHAR},
+					#{deptCd , jdbcType=VARCHAR},
+					#{auth , jdbcType=VARCHAR},
+					#{name , jdbcType=VARCHAR},
+					#{position , jdbcType=VARCHAR},
+					#{hiredate , jdbcType=VARCHAR},
+					#{id , jdbcType=VARCHAR},
+					#{modId , jdbcType=VARCHAR}
 		)
 		
 	</insert>
@@ -128,14 +98,11 @@
 		SET		    id = #{id},
 				    password = #{password},
 				    dept_nm = #{deptNm},
-				    dept_cd = #{deptCd},
-				    parent_dept_cd = #{parentDeptCd},
 				    auth = #{auth},
 				    name = #{name},
 				    position = #{position},
 				    hire_date = #{hiredate},
-				    vacation_cnt = #{vacationCnt},
-				    mod_id = #{modId},
+				    mod_id = #{id},
 				    mod_date = sysdate
 		 WHERE id = #{id}  
 			 

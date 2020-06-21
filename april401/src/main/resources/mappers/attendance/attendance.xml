@@ -16,15 +16,17 @@
 		    attend_yn,          
 		    lv_ffc_yn,          
 		    state,          
+		    work_time,
 		    reg_id,
 		    mod_id,
 		    reg_date,
 		    mod_date
 		) VALUES (              
-		    #{seq},                  
+		    ATTEND_SEQ.NEXTVAL,                  
 		    #{id},                  
+		    '1',                  
+		    '0',
 		    #{state},          
-		    '0',                  
 		    '0',                  
 		    #{regId},                  
 		    #{modId},                  
@@ -32,6 +34,14 @@
 		    sysdate             
 		)
 	</insert>
+	
+	<!-- 출근 Count -->
+	<select id="doAttendCount" parameterType="AttendanceVO" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM attendance
+		WHERE id = #{id}
+		AND TO_DATE(reg_date, 'YYYY/MM/DD') = TO_DATE(sysdate, 'YYYY/MM/DD')
+	</select>
 	
 	<!-- Update : 수정 -->
 	<!-- <update id="doUpdate" parameterType="AttendanceVO">
@@ -102,7 +112,7 @@
 		    attend_yn	AS attendYN,   											
 		    lv_ffc_yn	AS leaveYN,
 		    state,   											
-		    work_time	AS workTime,   											
+		    work_time 	AS workTime,   											
 		    reg_id		AS regId,      											
 		    TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI:SS') AS regDate,
 		    mod_id		AS modId,      											
@@ -113,9 +123,29 @@
 		ORDER BY seq desc
 	</select>
 	
-	<!-- SelectOne : 상세 조회 -->
+	<!-- getAll : 상세 목록 조회 -->
 	<select id="getAll" parameterType="AttendanceVO" resultType="AttendanceVO">
 		SELECT seq,
+			id,													
+		    TO_CHAR(attend_time, 'HH24:MI:SS') AS attendTime, 											
+		    TO_CHAR(lv_ffc_time, 'HH24:MI:SS') AS leaveTime,
+            DECODE(attend_yn,0,'출근 전',1,'완료') AS attendYN,
+            DECODE(lv_ffc_yn,0,'퇴근 전',1,'완료') AS leaveYN,
+            DECODE(state,0,'정상',1,'지각',2,'조퇴') AS state,
+		    work_time || '시간' AS workTime,   											
+		    reg_id		AS regId,
+            TO_CHAR(reg_date,'YYYY/MM/DD') AS regDate,
+		    mod_id		AS modId,      											
+		    CASE TO_CHAR(mod_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+                                                THEN TO_CHAR(SYSDATE,'HH24:MI') 
+			ELSE TO_CHAR(mod_date,'YYYY/MM/DD') END AS modDate,
+            SUM(work_time) OVER(PARTITION BY id ORDER BY seq) || '시간' AS workTimeSum
+		FROM attendance
+		WHERE id = #{id}
+		AND TO_DATE(#{searchDate}, 'YYYY/MM/DD') <![CDATA[<=]]> reg_date
+		AND reg_date <![CDATA[<=]]> LAST_DAY(TO_DATE(#{searchDate}, 'YYYY/MM/DD'))
+	</select>
+		<!-- SELECT seq,
 			id,													
 		    TO_CHAR(attend_time, 'HH24:MI:SS') AS attendTime, 											
 		    TO_CHAR(lv_ffc_time, 'HH24:MI:SS') AS leaveTime,
@@ -128,10 +158,30 @@
 		    mod_id		AS modId,      											
 		    CASE TO_CHAR(mod_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
                                                 THEN TO_CHAR(SYSDATE,'HH24:MI') 
-			ELSE TO_CHAR(mod_date,'YYYY/MM/DD') END AS modDate
+			ELSE TO_CHAR(mod_date,'YYYY/MM/DD') END AS modDate,
+            SUM(work_time) OVER(PARTITION BY id ORDER BY seq) AS workTimeSum
+		FROM attendance
+		WHERE id = #{id} -->
+	<select id="getAllSearchDate" parameterType="AttendanceVO" resultType="AttendanceVO">
+		SELECT seq,
+			id,													
+		    TO_CHAR(attend_time, 'HH24:MI:SS') AS attendTime, 											
+		    TO_CHAR(lv_ffc_time, 'HH24:MI:SS') AS leaveTime,
+            DECODE(attend_yn,0,'출근 전',1,'완료') AS attendYN,
+            DECODE(lv_ffc_yn,0,'퇴근 전',1,'완료') AS leaveYN,
+            DECODE(state,0,'정상',1,'지각',2,'조퇴') AS state,
+		    work_time || '시간' AS workTime,   											
+		    reg_id		AS regId,
+            TO_CHAR(reg_date,'YYYY/MM/DD') AS regDate,
+		    mod_id		AS modId,      											
+		    CASE TO_CHAR(mod_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+                                                THEN TO_CHAR(SYSDATE,'HH24:MI') 
+			ELSE TO_CHAR(mod_date,'YYYY/MM/DD') END AS modDate,
+            SUM(ROUND(work_time)) OVER(PARTITION BY id ORDER BY reg_date)  || '시간' AS workTimeSum
 		FROM attendance
 		WHERE id = #{id}
-		ORDER BY seq desc
+		AND TO_DATE(#{searchDate}, 'YYYY/MM/DD') <![CDATA[<=]]> reg_date
+		AND reg_date <![CDATA[<=]]> LAST_DAY(TO_DATE(#{searchDate}, 'YYYY/MM/DD'))
 	</select>
 	
 </mapper>

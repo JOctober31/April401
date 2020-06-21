@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.april.groupware.todo">
+<mapper namespace="com.april.groupware.todo.service">
     	
      <!-- 검색조건 
         10: 등록자ID
@@ -12,7 +12,7 @@
     <sql id="baseCondition">
         <choose>
             <when test="'10' == searchDiv">
-                AND reg_id like '%' || #{searchWord} || '%'
+                AND id like '%' || #{searchWord} || '%'
             </when>
             <when test="'20' == searchDiv">
                 AND p_title like '%' || #{searchWord} || '%'
@@ -87,7 +87,7 @@
 		    task_contents = #{taskContents},
 		    area =    #{area},
 		    working_form =   #{workingForm},
-		    mod_id =  #{modId},
+		    mod_id =  #{modId, jdbcType=VARCHAR},
 		    mod_date =  sysdate
 		WHERE id = #{id}  
     </update>
@@ -103,7 +103,7 @@
             working_form as workingForm,
             mod_id   as modId,
             reg_id   as regId,
-            TO_CHAR(reg_date,'YYYY/MM/DD HH24MISS') mogDate   
+            TO_CHAR(reg_date,'YYYY/MM/DD HH24MISS') regDate   
     </sql>
 
 <!-- 단건조회 : title-board_id -->
@@ -111,7 +111,7 @@
         SELECT
             <include refid="todoColumns"/>
         FROM todo
-        WHERE ID like  '%' || #{id} || '%'
+        WHERE id like  '%' || #{id} || '%'
     </select>
     
     <!-- 단건조회 -->
@@ -119,7 +119,7 @@
 		SELECT
 		    <include refid="todoColumns"/>
 		FROM todo
-		WHERE id = #{id}
+		WHERE id = #{id} 
     </select>
 
 
@@ -147,8 +147,8 @@
 	        #{taskContents },
 	        #{area },
 	        #{workingForm },
-	        #{regId , jdbcType=VARCHAR},
-	        #{regId , jdbcType=VARCHAR},
+	        #{id , jdbcType=VARCHAR},
+	        #{id , jdbcType=VARCHAR},
 	        sysdate
 		)
 	</insert>

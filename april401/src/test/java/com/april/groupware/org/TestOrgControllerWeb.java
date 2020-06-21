@@ -40,8 +40,6 @@ import com.april.groupware.org.service.OrgVO;
                                    })
 public class TestOrgControllerWeb {
 	
-	
-	
 	private final Logger  LOG = LoggerFactory.getLogger(TestOrgControllerWeb.class);
 	
 	@Autowired
@@ -76,8 +74,6 @@ public class TestOrgControllerWeb {
 		LOG.debug("=====================");	
 
 	}
-	
-	
 	   @Test
 	   public void doRetrieve() throws Exception { 
 	      // 1.전체삭제 //2.3건입력 //3.조회
@@ -103,7 +99,7 @@ public class TestOrgControllerWeb {
 	                     .andReturn()
 	                     .getResponse().getContentAsString();
 	               LOG.debug("=====================");
-	               LOG.debug("=result★="+result);
+	               LOG.debug("=result="+result);
 	               LOG.debug("=====================");
 	         }
 	

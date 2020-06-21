@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.april.groupware.nboard">
+
+    <!-- 검색조건 
+        10: 제목
+        20: 내용
+        30: 등록자ID
+    -->
+    <sql id="baseCondition">
+        <choose>
+            <when test="'10' == searchDiv">
+                AND nb_title like '%' || #{searchWord} || '%'
+            </when>
+            <when test="'20' == searchDiv">
+                AND nb_contents like '%' || #{searchWord} || '%'
+            </when>
+            <when test="'30' == searchDiv">
+                AND reg_id like '%' || #{searchWord} || '%'
+            </when>                     
+        </choose>
+    </sql>
+
+    <!-- 목록조회 -->
+    <select id="doRetrieve" parameterType="SearchVO" resultType="NBoardVO">
+        SELECT T1.*,T2.*                                                                  
+        FROM(                                                                               
+            SELECT                                                                          
+                   B.nb_no as nbNo,                                                                 
+                   B.nb_category as nbCategory,                                                           
+                   B.nb_title nbTitle,                                                              
+                   B.nb_contents nbContents,                                                           
+                   B.notice_yn as noticeYn,                                                             
+                   B.popup_yn as popupYn,                                                              
+                   B.file_id as fileId,                                                               
+                   B.read_cnt as readCnt,                                                              
+                   B.reg_id as regId,                                                                
+                   B.mod_id as modId,                                                                
+                   CASE TO_CHAR(B.reg_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+                                                       THEN TO_CHAR(SYSDATE,'HH24:MI')      
+                   ELSE TO_CHAR(B.reg_date,'YYYY/MM/DD') END regDate,                      
+                   CASE TO_CHAR(B.mod_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+                                                       THEN TO_CHAR(SYSDATE,'HH24:MI')      
+                   ELSE TO_CHAR(B.mod_date,'YYYY/MM/DD') END modDate                       
+            FROM(                                                                           
+                SELECT ROWNUM AS rnum,A.*                                                   
+                FROM (                                                                      
+                    SELECT *                                                                
+                    FROM noticeboard                                                        
+                    WHERE 1=1                                                               
+                            --검색조건
+                            <include refid="baseCondition"/>
+                    ORDER BY reg_date desc                                                  
+                        )A                                                                          
+                        WHERE ROWNUM  <![CDATA[ <= ]]> (#{pageSize} *(#{pageNum} - 1)+#{pageSize})
+                    )B
+                    WHERE rnum <![CDATA[ >= ]]> (#{pageSize}*(#{pageNum}-1)+1) 
+                )T1
+        NATURAL JOIN
+        (
+            SELECT COUNT(*) totalCnt
+            FROM noticeboard         
+            WHERE 1=1                
+             --검색조건
+            <include refid="baseCondition"/>
+        )T2
+    </select>
+    
+    <!-- 수정 : readCount-->
+    <update id="doUpdateReadCnt" parameterType="NBoardVO">
+        UPDATE noticeboard
+        SET read_cnt = (SELECT NVL(MAX(read_cnt),0)+1
+                        FROM noticeboard
+                        WHERE nb_no = #{nbNo})
+        WHERE nb_no = #{nbNo}  
+    </update>
+    
+    <!-- 수정 -->
+    <update id="doUpdate" parameterType="NBoardVO">
+        UPDATE noticeboard                            
+        SET nb_category = #{nbCategory,jdbcType=VARCHAR},                         
+            nb_title = #{nbTitle,jdbcType=VARCHAR},                            
+            nb_contents = #{nbContents,jdbcType=VARCHAR},                         
+            notice_yn = #{noticeYn,jdbcType=CHAR},                           
+            popup_yn = #{popupYn,jdbcType=CHAR},                            
+            file_id = #{fileId,jdbcType=VARCHAR},                             
+            read_cnt = (SELECT NVL(MAX(read_cnt),0)+1
+                        FROM noticeboard             
+                        WHERE nb_no = #{nbNo}),            
+            mod_id = #{modId,jdbcType=VARCHAR},                              
+            mod_date = SYSDATE                       
+        WHERE nb_no = #{nbNo}                              
+    </update>
+
+	<!-- 단건조회 : title-board_id -->
+	<select id="doSelectOneTitle" parameterType="NBoardVO" resultType="NBoardVO">  
+		SELECT
+                nb_no as nbNo,
+                nb_category as nbCategory,
+                nb_title as nbTitle,
+                nb_contents as nbContents,
+                notice_yn as noticeYn,
+                popup_yn as popupYn,
+                file_id as fileId,
+                read_cnt as readCnt,
+                reg_id as regId,
+                mod_id as modId,
+                TO_CHAR(reg_date,'YYYY/MM/DD HH24:MI:SS') regDate,
+                TO_CHAR(mod_date,'YYYY/MM/DD HH24:MI:SS') modDate
+         FROM NOTICEBOARD
+		WHERE nb_title like '%' || #{nbTitle} || '%'
+	</select>  
+          
+      <select id="doSelectOne" parameterType="NBoardVO" resultType="NBoardVO">
+        SELECT
+	            nb_no as nbNo,
+	            nb_category as nbCategory,
+	            nb_title as nbTitle,
+	            nb_contents as nbContents,
+	            notice_yn as noticeYn,
+	            popup_yn as popupYn,
+	            file_id as fileId,
+	            read_cnt as readCnt,
+	            reg_id as regId,
+	            mod_id as modId,
+	            TO_CHAR(reg_date,'YYYY/MM/DD HH24MISS') regDate,
+	            TO_CHAR(mod_date,'YYYY/MM/DD HH24MISS') modDate
+	     FROM NOTICEBOARD
+	        WHERE nb_no like '%' ||  #{nbNo} || '%'
+    </select>
+    
+
+    
+    <!-- 등록 : namespace+id = com.april.groupware.nboard.doInsert -->
+    <insert id="doInsert" parameterType="NBoardVO">
+         INSERT INTO noticeboard (  
+             nb_category,           
+             nb_title,              
+             nb_contents,           
+             reg_id                 
+         ) VALUES (                 
+             #{nbCategory,jdbcType=VARCHAR},                     
+             #{nbTitle,jdbcType=VARCHAR},                     
+             #{nbContents,jdbcType=VARCHAR},                     
+             #{regId,jdbcType=VARCHAR}                      
+         )                          
+    </insert>
+    
+    <!-- 삭제 : namespace+id = com.sist.ehr.board.doDelete 
+        <![CDATA[ >,<,>=,<= ]]>
+    -->
+    <delete id="doDelete" parameterType="NBoardVO">
+        <![CDATA[
+        DELETE FROM noticeboard WHERE nb_no = #{nbNo}
+        ]]>
+    </delete>
+    
+    <delete id="doDeleteAll">
+        <![CDATA[
+        DELETE FROM noticeboard
+        ]]>
+    </delete>
+</mapper>

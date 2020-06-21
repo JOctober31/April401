@@ -28,25 +28,6 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<!-- 로케일(locale [loukǽl] 로캘 / [loukάːl] 로칼)은
-	 사용자의 언어, 국가뿐 아니라 사용자 인터페이스에서 사용자가 선호하는 사항을 지정한 매개 변수의 모임이다.
-	 보통 로케일 증명자는 적어도 하나의 언어 증명자와 하나의 지역 증명자를 가지고 있다. 
-	 웹 브라우저 요청 : http 요청 헤더에 Locale 정보가 포함되어 서버로 전송 -->
-	<!-- id="localeResolver" -->
-	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></bean>
-		
-	<!-- 다국어 설정 -->
-	<!-- messageSource.properties -->
-	<!-- id="messageSource" -->
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basenames">
-			<list>
-				<value>message.messageSource</value>
-			</list>
-		</property>
-	</bean>
-	
-	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- FileUpload: -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	   <property name="defaultEncoding" value="UTF-8" />
@@ -92,3 +73,4 @@
 	</bean>
 	
 </beans>
+

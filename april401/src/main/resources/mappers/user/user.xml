@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.april.groupware.user">
+
+    <!-- id check -->
+    <select id="idCheck" parameterType="UserVO" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM organization
+		WHERE id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <!-- pass check -->
+    <select id="passCheck" parameterType="UserVO" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM organization
+		WHERE id   = #{id,jdbcType=VARCHAR}
+		AND   password = #{password,jdbcType=VARCHAR}
+    </select>
+    
+    
+    <!-- 단건조회 -->
+    <select id="doSelectOne" parameterType="UserVO" resultType="UserVO">
+		 SELECT
+			id,													
+		    password,        										
+		    dept_nm 		AS deptNm,         										
+		    dept_cd 		AS deptCd,         										
+		    parent_dept_cd 	AS parentDeptCd,  										
+		    auth,            										
+		    name,            										
+		    position,        										
+		    mobile,          										
+		    email,           										
+		    address,         										
+		    hire_date 		AS hiredate,       										
+		    birth,           										
+		    vacation_cnt 	AS vacationCnt,    										
+		    military_yn 	AS militaryYN,     										
+		    dspsn_yn 		AS dspsnYN,        										
+		    grade,           										
+		    org_file_nm 	AS orgFileName,     										
+		    save_file_nm 	AS saveFileName,     																			
+		    ext,             										
+		    file_size 		AS fileSize,       										
+		    reg_id 			AS regId,          										
+		    TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI:SS') AS regDate,
+		    mod_id 			AS modId,          										
+		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') AS modDate
+		FROM organization
+		WHERE id = 			#{id, jdbcType=VARCHAR} 
+    </select>
+    
+    
+</mapper>
+
+
+
+
+
+

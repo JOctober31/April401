@@ -21,10 +21,18 @@ package com.april.groupware.cmn;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.april.groupware.code.service.CodeVO;
 
 /**
  * 모든 메소드는 static method
@@ -33,6 +41,28 @@ import org.slf4j.LoggerFactory;
  */
 public class StringUtil {
 	private final static Logger LOG = LoggerFactory.getLogger(StringUtil.class);
+	
+	
+	public static Map<String, String> requestToMap(HttpServletRequest request) {
+		Map paramMap = new HashMap();
+		Map paramHashMap = request.getParameterMap();
+
+		Iterator it = paramHashMap.keySet().iterator();
+
+		while(it.hasNext()){
+			String key = it.next().toString();                          // 키 값 등록
+	        String [] parameters = request.getParameterValues(key);
+	        if(parameters.length>1){
+	        	paramMap.put(key,parameters);
+	        }else{                                                      // 아니면 그냥 저장.
+	            paramMap.put(key,request.getParameter(key));
+
+	        }
+		}
+
+		return paramMap;
+
+	}
 	
 	/**
 	 * UUID
@@ -164,6 +194,48 @@ public class StringUtil {
 	}
 	
 	/**
+	 * list,selectBoxName,selectNm,allYN
+	 *Method Name:makeSelectBox
+	 *작성일: 2020. 5. 19.
+	 *작성자: 양은영
+	 *설명:
+	 *@return
+	 */
+	public static String makeSelectBox(List<CodeVO> list
+			                           ,String selectBoxNm
+			                           ,String selectNm
+			                           ,boolean allYn
+			                           ) {
+		StringBuilder  sb=new StringBuilder();
+		sb.append("<select  class=\"form-control input-sm\" name='"+selectBoxNm+"' id='"+selectBoxNm+"' >\n");
+		
+		//전체
+		if(allYn==true) {
+			sb.append("<option value=''>전체</option>\n");
+		}
+		
+		//for
+		if(null !=list) {
+			for(CodeVO vo :list) {
+				sb.append("\t\t<option value='"+vo.getCodeId()+"'  ");
+				if(selectNm.equals(vo.getCodeId())) {
+					sb.append("selected");
+				}
+				
+				sb.append(">");
+				sb.append(vo.getCodeNm());
+				sb.append("</option>\n");
+			}
+		}
+		sb.append("</select> \n");
+		
+		LOG.debug("===========================");
+		LOG.debug(sb.toString());
+		LOG.debug("===========================");
+		return sb.toString();
+	}
+	
+	/**
 	 * 
 	 *Method Name:makeSelectBox
 	 *작성일: 2020. 2. 27.
@@ -231,4 +303,88 @@ public class StringUtil {
 		
 		return val;
 	}
+	
+	 public static String orgRenderPaging(int maxNum, int currPageNo, int rowPerPage, int bottomCount,
+			   String url, String scriptName) {
+
+			   /**
+			    * 총글수: 21
+			    * 현재페이지: 1
+			    * 한페이지에 보여질 행수: 10
+			    * 바닥에 보여질 페이지 수: 10
+			    * << < 1 2 3 4 5 6 7 8 9 10 > >>
+			    */
+
+
+			   int maxPageNo = ((maxNum - 1) / rowPerPage) + 1;//3
+			   int startPageNo = ((currPageNo - 1) / bottomCount) * bottomCount + 1;//1
+			   int endPageNo = ((currPageNo - 1) / bottomCount + 1) * bottomCount;//10
+			   
+			   int nowBlockNo = ((currPageNo - 1) / bottomCount) + 1;//1
+			   int maxBlockNo = ((maxNum - 1) / bottomCount) + 1;//3
+
+			   int inx = 0;
+			   StringBuilder html = new StringBuilder();
+			   if (currPageNo > maxPageNo) {
+			    return "";
+			   }
+
+			   html.append("<table border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">   \n");
+			   html.append("<tr>                       \n");
+			   html.append("<td align=\"center\">                                                                    \n");
+			   html.append("<ul class=\"pagination pagination-sm\">                                                  \n");
+			   
+			   // <<
+			   if (nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
+			    html.append("<li class=\"active\"> <a href=\"javascript:" + scriptName + "( '" + url+ "', 1 );\">  \n");
+			    html.append("&laquo;   \n");
+			    html.append("</a></li> \n");
+			   }
+
+			   // <
+			   if (startPageNo > bottomCount) {
+			    html.append("<li class=\"active\"> <a href=\"javascript:" + scriptName + "( '" + url + "'," + (startPageNo - 1)+ ");\"> \n");
+			    html.append("<        \n");
+			    html.append("</a></li>     \n");
+			   }
+
+
+			   // 1 2 3 ... 10 (숫자보여주기)
+			   for (inx = startPageNo; inx <= maxPageNo && inx <= endPageNo; inx++) {
+					if (inx == currPageNo) {// 현재 page
+						html.append("<li  class=\"paginate_button page-item previous disabled\"> &nbsp;&nbsp;");
+						html.append("<a  href=\"javascript:#\"  >  &nbsp;&nbsp;");
+						html.append(inx);
+						html.append("</a> \n");
+						html.append("</li>");
+					} else {
+						html.append("<li  class=\"active\"> &nbsp;&nbsp;");
+						html.append("<a  href=\"javascript:" + scriptName + "('" + url + "'," + inx + ");\"  > &nbsp;&nbsp;");
+						html.append(inx);
+						html.append("</a> \n");
+						html.append("</li>");
+					}
+			   }
+			   
+			   // >
+			   if (maxPageNo >= inx) {
+			    html.append("<li class=\"active\"><a href=\"javascript:" + scriptName + "('" + url + "',"+ ((nowBlockNo * bottomCount) + 1) + ");\"> \n");
+			    html.append(">                       \n");
+			    html.append("</a></li>              \n");
+			   }
+
+			   // >>
+			   if (maxPageNo >= inx) {
+			    html.append("<li class=\"active\"><a href=\"javascript:" + scriptName + "('" + url + "'," + maxPageNo+ ");\">      \n");
+			    html.append("&raquo;     \n");
+			    html.append("</a></li>    \n");
+			   }
+
+			   html.append("</td>   \n");
+			   html.append("</tr>   \n");
+			   html.append("</table>   \n");
+
+			   return html.toString();
+			  }
+
 }

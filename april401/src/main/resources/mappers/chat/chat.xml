@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.april.groupware.chat">
+
+
+ 	<sql id="baseCondition">
+        <choose>
+            <when test="'10' == searchDiv">
+                AND dept_nm = '부서명'
+            </when>
+            <when test="'20' == searchDiv">
+                AND dept_nm = '개발'
+            </when>
+            <when test="'30' == searchDiv">
+                AND dept_nm = '인사'
+            </when>
+            <when test="'40' == searchDiv">
+                AND dept_nm = '영업'
+            </when>
+        </choose>
+    </sql>
+    
+	<!-- 목록조회 -->
+    <select id="doRetrieve" parameterType="SearchVO" resultType="ChatVO">
+		SELECT T1.*,T2.* 
+		FROM(
+		    SELECT B.id,
+		            B.name,
+		            B.position,
+		            B.dept_nm,
+		            rnum
+		    FROM(
+		        SELECT ROWNUM rnum, A.*
+		        FROM (
+		            SELECT *
+		            FROM organization
+		            WHERE 1=1
+		            --검색조건
+		            <include refid="baseCondition"/>
+		            )A
+		        WHERE ROWNUM  <![CDATA[ <= ]]> (#{pageSize} *(#{pageNum} - 1)+#{pageSize})
+		    )B
+		    WHERE rnum <![CDATA[ >= ]]> (#{pageSize}*(#{pageNum}-1)+1)
+		    )T1
+		    NATURAL JOIN
+		(
+		    SELECT COUNT(*) totalCnt
+		    FROM organization
+		    WHERE 1=1
+		    --검색조건
+		    <include refid="baseCondition"/>
+		)T2
+    </select>
+
+ 
+  
+        
+    <!-- 단건조회 -->
+    <select id="doSelectOne" parameterType="ChatVO" resultType="ChatVO">
+		SELECT
+		    id,
+		    dept_nm,
+		    name,
+		    position
+		FROM organization
+		WHERE id = #{id}  
+    </select>
+    
+    
+    
+  
+</mapper>

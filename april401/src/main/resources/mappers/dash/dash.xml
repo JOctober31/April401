@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.april.groupware.dash">
+    
+    <!-- 단건조회 -->
+    <select id="doSelectOne" parameterType="DashTodoVO" resultType="DashTodoVO">
+		SELECT
+		    id,
+            dept_nm as deptNm,
+            p_title as pTitle,
+            p_type as pType,
+            customer,
+            task_contents as taskContents,
+            area,
+            working_form as workingForm,
+            mod_id   as modId,
+            reg_id   as regId,
+            TO_CHAR(reg_date,'YYYY/MM/DD HH24MISS') mogDate
+		FROM todo
+		WHERE dept_nm = #{deptNm, jdbcType=VARCHAR}
+		AND	p_type= 'main'
+    </select>
+    
+    <!-- 부서별 기술지원 건수 -->
+    <select id="doDeptSelectOne" parameterType="DashDeptVO" resultType="DashDeptVO">
+         SELECT
+		    to_char(COUNT(DECODE(to_char(reg_date,'mm'), '01', '1')),'99') AS "jan",
+		    to_char(COUNT(DECODE(to_char(reg_date,'mm'), '02', '1')),'99') AS "feb",
+		    to_char(COUNT(DECODE(to_char(reg_date,'mm'), '03', '1')),'99') AS "mar",
+		    to_char(COUNT(DECODE(to_char(reg_date,'mm'), '04', '1')),'99') AS "apr",
+		    to_char(COUNT(DECODE(to_char(reg_date,'mm'), '05', '1')),'99') AS "may"
+		FROM todo
+		WHERE dept_nm = #{deptNm, jdbcType=VARCHAR}
+    </select>
+   
+   
+    <sql id="baseCondition">
+        <choose>
+            <when test="'10' == searchDiv">
+                AND nb_title like '%' || #{searchWord} || '%'
+            </when>
+            <when test="'20' == searchDiv">
+                AND nb_contents like '%' || #{searchWord} || '%'
+            </when>
+            <when test="'30' == searchDiv">
+                AND reg_id like '%' || #{searchWord} || '%'
+            </when>                     
+        </choose>
+    </sql>
+
+    <!-- 목록조회 -->
+    <select id="doRetrieve" parameterType="SearchVO" resultType="DashNBoardVO">
+        SELECT T1.*,T2.*                                                                  
+        FROM(                                                                               
+            SELECT                                                                          
+                   B.nb_no as nbNo,                                                                 
+                   B.nb_category as nbCategory,                                                           
+                   B.nb_title nbTitle,                                                              
+                   B.nb_contents nbContents,                                                           
+                   B.notice_yn as noticeYn,                                                             
+                   B.popup_yn as popupYn,                                                              
+                   B.file_id as fileId,                                                               
+                   B.read_cnt as readCnt,                                                              
+                   B.reg_id as regId,                                                                
+                   B.mod_id as modId,                                                                
+                   CASE TO_CHAR(B.reg_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+                                                       THEN TO_CHAR(SYSDATE,'HH24:MI')      
+                   ELSE TO_CHAR(B.reg_date,'YYYY/MM/DD') END regDate,                      
+                   CASE TO_CHAR(B.mod_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+                                                       THEN TO_CHAR(SYSDATE,'HH24:MI')      
+                   ELSE TO_CHAR(B.mod_date,'YYYY/MM/DD') END modDate                       
+            FROM(                                                                           
+                SELECT ROWNUM AS rnum,A.*                                                   
+                FROM (                                                                      
+                    SELECT *                                                                
+                    FROM noticeboard                                                        
+                    WHERE 1=1                                                               
+                            --검색조건
+                            <include refid="baseCondition"/>
+                    ORDER BY reg_date desc                                                  
+                        )A                                                                          
+                        WHERE ROWNUM  <![CDATA[ <= ]]> (#{pageSize} *(#{pageNum} - 1)+#{pageSize})
+                    )B
+                    WHERE rnum <![CDATA[ >= ]]> (#{pageSize}*(#{pageNum}-1)+1) 
+                )T1
+        NATURAL JOIN
+        (
+            SELECT COUNT(*) totalCnt
+            FROM noticeboard         
+            WHERE 1=1                
+             --검색조건
+            <include refid="baseCondition"/>
+        )T2
+    </select>
+	
+	
+	
+</mapper>

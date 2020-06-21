@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +21,7 @@ import com.april.groupware.attendance.service.OrgUpdateDao;
 import com.april.groupware.attendance.service.OrgUpdateVO;
 import com.april.groupware.cmn.MessageVO;
 import com.april.groupware.cmn.StringUtil;
+import com.april.groupware.member.service.UserVO;
 import com.google.gson.Gson;
 
 @Controller
@@ -27,91 +29,94 @@ public class OrgUpdateController {
 	private final Logger LOG = LoggerFactory.getLogger(OrgUpdateController.class);
 	
 	//파일 저장 경로 : JIEUN 부분 -> sist
-	private final String PROFILE_UPLOAD_PATH ="C:\\Users\\HOME\\git\\April401\\april401\\src\\main\\webapp\\resources\\file_upload_img";
+	//private final String PROFILE_UPLOAD_PATH ="C:\\Users\\jieun\\git\\April\\aprilPrj\\src\\main\\webapp\\resources\\file_upload_img";
+	private final String PROFILE_UPLOAD_PATH ="/home/ubuntu/soc/apache-tomcat-9.0.35/webapps/ROOT/src/main/webapp/resources/file_upload_img";
 	
 	@Autowired
 	OrgUpdateDao orgUpdateDao;
 	
 	@RequestMapping(value="org/do_update.do", method=RequestMethod.POST, produces="application/json; charset=UTF-8")
-	@ResponseBody
-	public String doUpdate(OrgUpdateVO userOrg, MultipartHttpServletRequest mhsRequest, ModelAndView model) throws IllegalStateException, IOException {
-		LOG.debug("====================");
-		LOG.debug("=doUpdate user= : "+userOrg);
-		LOG.debug("====================");
+	public String doUpdate(MultipartHttpServletRequest mhsRequest, HttpSession session, ModelAndView model) throws IllegalStateException, IOException {
+		OrgUpdateVO orgVO = new OrgUpdateVO();
 		
-		if(userOrg.getId() == null) {
-			throw new IllegalArgumentException("ID를 입력하세요");
-		}
-		
-		userOrg.setId("kimjh1");
-		
-		OrgUpdateVO orgUpdateVO = (OrgUpdateVO) orgUpdateDao.doSelectOne(userOrg);
+		//로그인 세션
+		UserVO userInfo = (UserVO) session.getAttribute("user");
+		//orgVO.setId("kimjh1");
+		orgVO.setId(userInfo.getId());
 		LOG.debug("====================");
-		LOG.debug("=doSelectOne OrgUpdateVO= : "+orgUpdateVO);
+		LOG.debug("=doUpdate orgVO ID= : "+orgVO.getId());
 		LOG.debug("====================");
 		
-		//수정 불가 변수
-		String deptNm = userOrg.getDeptNm();
-		orgUpdateVO.setDeptNm(deptNm);
+		OrgUpdateVO orgUpdateVO = (OrgUpdateVO) orgUpdateDao.doSelectOne(orgVO);
+		LOG.debug("====================");
+		LOG.debug("=doUpdate orgUpdateVO DB= : "+orgUpdateVO);
+		LOG.debug("====================");
+		//DB에 있는 기존 정보
+		String dbPassword = orgUpdateVO.getPassword();
+		String dbEmail = orgUpdateVO.getEmail();
+		String dbMobile = orgUpdateVO.getMobile();
+		String dbAddress = orgUpdateVO.getAddress();
+		String dbGrade = orgUpdateVO.getGrade();
+		String dbMilitaryYN = orgUpdateVO.getMilitaryYN();
+		String dbDspsnYN = orgUpdateVO.getDspsnYN();
 		
-		String deptCd = userOrg.getDeptCd();
-		orgUpdateVO.setDeptCd(deptCd);;
+		//View에서 입력 받은 정보(수정 가능 변수) 
+		String inputPassword = mhsRequest.getParameter("password");
+		String inputEmail = mhsRequest.getParameter("email");
+		String inputMobile = mhsRequest.getParameter("mobile");
+		String inputAddress = mhsRequest.getParameter("address");
+		String inputGrade = mhsRequest.getParameter("grade")+","+mhsRequest.getParameter("grade_sc_name")+","+mhsRequest.getParameter("grade_dp_name");
+		String inputMilitaryYN = mhsRequest.getParameter("militaryYN");
+		String inputDspsnYN = mhsRequest.getParameter("dspsnYN");
 		
-		String parentDeptCd = userOrg.getParentDeptCd();
-		orgUpdateVO.setParentDeptCd(parentDeptCd);
+		LOG.debug("inputPassword "+inputPassword);
+		LOG.debug("inputEmail "+inputEmail);
+		LOG.debug("inputMobile "+inputMobile);
+		LOG.debug("inputAddress "+inputAddress);
+		LOG.debug("inputGrade "+inputGrade);
+		LOG.debug("inputMilitaryYN "+inputMilitaryYN);
+		LOG.debug("inputDspsnYN "+inputDspsnYN);
 		
-		String auth = userOrg.getAuth();
-		orgUpdateVO.setAuth(auth);
-		
-		String name = userOrg.getName();
-		orgUpdateVO.setName(name);
-		
-		String position = userOrg.getPosition();
-		orgUpdateVO.setPosition(position);
-		
-		String hiredate = userOrg.getHiredate();
-		orgUpdateVO.setHiredate(hiredate);
-		
-		String birth = userOrg.getBirth();
-		orgUpdateVO.setBirth(birth);
-		
-		String modId = userOrg.getId();
-		orgUpdateVO.setModId(modId);
-		
-		//수정 가능 변수
-		String password = userOrg.getPassword();
-		if(password!=null && !password.equals("")) {
-			orgUpdateVO.setPassword(password);
+		if(inputPassword.equals("") && inputPassword==null) {
+			orgUpdateVO.setPassword(dbPassword);
+		} else if(!inputPassword.equals("") && inputPassword!=null) {
+			orgUpdateVO.setPassword(inputPassword);
 		}
 		
-		String email = userOrg.getEmail();
-		if(email!=null && !email.equals("")) {
-			orgUpdateVO.setEmail(email);
+		if(inputEmail.equals("") && inputEmail==null) {
+			orgUpdateVO.setEmail(dbEmail);
+		} else if(!inputEmail.equals("") && inputEmail!=null) {
+			orgUpdateVO.setEmail(inputEmail);
 		}
 		
-		String mobile = userOrg.getMobile();
-		if(mobile!=null && !mobile.equals("")) {
-			orgUpdateVO.setMobile(mobile);
+		if(inputMobile.equals("") && inputMobile==null) {
+			orgUpdateVO.setMobile(dbMobile);
+		} else if(!inputMobile.equals("") && inputMobile!=null) {
+			orgUpdateVO.setMobile(inputMobile);
 		}
 		
-		String address = userOrg.getAddress();
-		if(address!=null && !address.equals("")) {
-			orgUpdateVO.setAddress(address);
+		if(inputAddress.equals("") && inputAddress==null) {
+			orgUpdateVO.setAddress(dbAddress);
+		} else if(!inputAddress.equals("") && inputAddress!=null) {
+			orgUpdateVO.setAddress(inputAddress);
 		}
 		
-		String grade = userOrg.getGrade();
-		if(grade!=null && !grade.equals("")) {
-			orgUpdateVO.setGrade(grade);
+		if(inputGrade.equals("") && inputGrade==null) {
+			orgUpdateVO.setGrade(dbGrade);
+		} else if(!inputGrade.equals("") && inputGrade!=null) {
+			orgUpdateVO.setGrade(inputGrade);
 		}
 		
-		String militaryYN = userOrg.getMilitaryYN();
-		if(militaryYN!=null && !militaryYN.equals("")) {
-			orgUpdateVO.setMilitaryYN(militaryYN);
+		if(inputMilitaryYN.equals("") && inputMilitaryYN==null) {
+			orgUpdateVO.setMilitaryYN(dbMilitaryYN);
+		} else if(!inputMilitaryYN.equals("") && inputMilitaryYN!=null) {
+			orgUpdateVO.setMilitaryYN(inputMilitaryYN);
 		}
 		
-		String dspsnYN = userOrg.getDspsnYN();
-		if(dspsnYN!=null && !dspsnYN.equals("")) {
-			orgUpdateVO.setDspsnYN(dspsnYN);
+		if(inputDspsnYN.equals("") && inputDspsnYN==null) {
+			orgUpdateVO.setDspsnYN(dbDspsnYN);
+		} else if(!inputDspsnYN.equals("") && inputDspsnYN!=null) {
+			orgUpdateVO.setDspsnYN(inputDspsnYN);
 		}
 		
 		/**프로필 이미지 파일 저장*/
@@ -205,9 +210,9 @@ public class OrgUpdateController {
 		message.setMsgId(String.valueOf(flag));
 		
 		if(flag == 1) {
-			message.setMsgMsg(userOrg.getId()+"님의 정보가 수정되었습니다");
+			message.setMsgMsg(orgVO.getId()+"님의 정보가 수정되었습니다");
 		} else {
-			message.setMsgMsg(userOrg.getId()+"님의 정보 수정을 실패했습니다");
+			message.setMsgMsg(orgVO.getId()+"님의 정보 수정을 실패했습니다");
 		}
 		
 		//Json(Gson)
@@ -218,11 +223,13 @@ public class OrgUpdateController {
 		LOG.debug("=doUpdate json= : "+json);
 		LOG.debug("====================");
 		
-		return json;
+//		return "/views/mypage_org";
+//		return "redirect:/org/do_select_one.do?id=kimjh1";
+		return "redirect:/org/do_select_one.do";
 	}
 
 	@RequestMapping(value="org/do_select_one.do", method=RequestMethod.GET, produces="application/json; charset=UTF-8")
-	public String doSelectOne(OrgUpdateVO userOrg, Model model) {
+	public String doSelectOne(OrgUpdateVO userOrg, HttpSession session, Model model) {
 		LOG.debug("====================");
 		LOG.debug("=doSelectOne user= : "+userOrg);
 		LOG.debug("====================");
@@ -231,7 +238,10 @@ public class OrgUpdateController {
 		//	throw new IllegalArgumentException("ID를 입력하세요");
 		//}
 		
-		userOrg.setId("kimjh1");
+		//로그인 세션
+		UserVO userInfo = (UserVO) session.getAttribute("user");
+		//orgVO.setId("kimjh1");
+		userOrg.setId(userInfo.getId());
 		
 		OrgUpdateVO outVO = (OrgUpdateVO) orgUpdateDao.doSelectOne(userOrg);
 		LOG.debug("====================");

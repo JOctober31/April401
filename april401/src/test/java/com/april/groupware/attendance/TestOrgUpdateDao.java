@@ -31,8 +31,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.april.groupware.attendance.service.OrgUpdateVO;
 import com.april.groupware.attendance.service.OrgUpdateDao;
+import com.april.groupware.attendance.service.OrgUpdateVO;
 
 /**
  * @author JIEUN 

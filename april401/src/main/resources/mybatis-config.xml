@@ -3,14 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<settings>
-		<!-- true : 전통적인 데이터베이스 칼럼명 형태인 A_COLUMN을 CamelCase형태의 자바 프로퍼티명 형태인 aColumn으로 자동으로 매핑하도록 함-->
-		<setting name="mapUnderscoreToCamelCase" value="false" />
-	</settings>
-	<!-- type 별칭 -->
-	<!-- parameterType="com.sist.ehr.board.service.BoardVO" - > parameterType="BoardVO" -->
+    <settings>
+        <!-- 전통적인 데이터베이스 칼럼명 형태인 A_COLUMN을 CamelCase형태의 자바 프로퍼티명 형태인 aColumn으로 자동으로 매핑하도록 함 -->
+        <setting name="mapUnderscoreToCamelCase" value="false"/>
+    </settings>
+    
+    <!-- Type 별칭  : parameterType="com.sist.ehr.board.service.BoardVO"-->
 	<typeAliases>
-        <!-- 공통 -->
+	
+	
+	   <!-- 공통 -->
         <typeAlias type="com.april.groupware.cmn.SearchVO" alias="SearchVO"/>  
         <typeAlias type="com.april.groupware.code.service.CodeVO" alias="CodeVO" />
         <!-- //공통 -->
@@ -20,6 +22,18 @@
 		<typeAlias type="com.april.groupware.attendance.service.OrgUpdateVO" alias="OrgUpdateVO"/>
 		<typeAlias type="com.april.groupware.attendance.service.AttendanceVO" alias="AttendanceVO"/>
 		<typeAlias type="com.april.groupware.reserve.service.ReservationVO" alias="ReservationVO"/>
-		
-	</typeAliases>
+		<typeAlias type="com.april.groupware.nboard.service.NBoardVO" alias="NBoardVO"/>
+		<typeAlias type="com.april.groupware.nboard.service.NBAnswerVO" alias="NBAnswerVO"/>
+        <typeAlias type="com.april.groupware.mail.service.MailVO" alias="MailVO"/>
+        <typeAlias type="com.april.groupware.chat.service.ChatVO" alias="ChatVO"/>
+        <typeAlias type="com.april.groupware.member.service.UserVO" alias="UserVO"/>
+        
+        
+         <!-- 대시보드 -->
+		<typeAlias type="com.april.groupware.dash.service.DashTodoVO" alias="DashTodoVO"/>
+		<typeAlias type="com.april.groupware.dash.service.DashDeptVO" alias="DashDeptVO"/>
+		<typeAlias type="com.april.groupware.dash.service.DashNBoardVO" alias="DashNBoardVO"/>
+	
+    </typeAliases>
+
 </configuration>

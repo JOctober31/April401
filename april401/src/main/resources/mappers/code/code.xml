@@ -3,17 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.april.groupware.code">
-
-	<!-- 목록 조회 -->
-	<select id="doRetrieve" parameterType="CodeVO" resultType="CodeVO">
-		SELECT t2.code_id AS codeId, 
-			t2.code_nm AS codeNm,
-			t2.seq
-		FROM code_type t1, code t2
-		WHERE t1.code_type_id = t2.code_type_id
-		AND t1.code_type_id = #{codeTypeId}
+ 
+    <!-- 목록조회 -->
+    <select id="doRetrieve" parameterType="CodeVO" resultType="CodeVO">
+		SELECT t2.code_id as codeId,
+		       t2.code_nm as codeNm,
+		       t2.seq
+		FROM CODE_TYPE T1 INNER JOIN CODE T2
+		ON t1.code_type_id = t2.code_type_id
+		WHERE t1.code_type_id = #{codeTypeId}
 		AND t2.use_yn = '1'
-		ORDER BY t2.seq asc
-	</select>
-	
+		ORDER BY t2.seq
+    
+    </select>
+
+   
 </mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.april.groupware.nbanswer">
+
+
+    <!-- 단건 조회 -->
+    <select id="doSelectOne" parameterType="NBAnswerVO" resultType="NBAnswerVO">
+	    SELECT
+		    aw_no as awNo,
+		    nb_no as nbNo,
+		    aw_contents as awContents,
+		    reg_id as regId,
+		    mod_id as modId,
+		    reg_date as regDate,
+		    mod_date as modDate
+		FROM
+		    nb_answer
+		WHERE aw_no = #{awNo}
+		AND nb_no= #{nbNo}
+	</select>
+
+    <!-- 목록조회 :  namespace+id = com.april.groupware.com.april.groupware.nbanswer.doRetrieve -->
+    <select id="doRetrieve" parameterType="NBAnswerVO" resultType="NBAnswerVO">
+	    SELECT 
+		    N.aw_no as awNo,
+		    N.nb_no as nbNo,
+		    N.aw_contents as awContents,
+		    N.reg_id as regId,
+		    N.mod_id as modId,
+		    CASE TO_CHAR(N.REG_DATE,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+		                                           THEN TO_CHAR(SYSDATE,'HH24:MI') 
+		    ELSE TO_CHAR(N.REG_DATE,'YYYY/MM/DD') END regDate,
+		    CASE TO_CHAR(N.MOD_DATE,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+		                                          THEN TO_CHAR(SYSDATE,'HH24:MI') 
+		    ELSE TO_CHAR(N.MOD_DATE,'YYYY/MM/DD') END modDate,
+		    O.id,
+		    O.name,
+		    O.dept_nm as deptNm,
+		    O.position
+		FROM
+		    nb_answer N, organization O
+        WHERE N.reg_id = O.id
+		AND N.nb_no = #{nbNo}
+	</select>
+
+
+    
+    <!-- 등록 : namespace+id = com.april.groupware.com.april.groupware.nbanswer.doInsert -->
+    <insert id="doInsert" parameterType="NBAnswerVO">
+        INSERT INTO nb_answer (
+		    aw_no,
+		    nb_no,
+		    aw_contents,
+		    reg_id
+		) VALUES (
+		    AW_NO_SEQ.NEXTVAL,
+		    #{nbNo}, 
+		    #{awContents,jdbcType=VARCHAR},                     
+            #{regId,jdbcType=VARCHAR}
+		
+		)
+    </insert>
+    
+    <!--단건 삭제 : namespace+id = com.april.groupware.com.april.groupware.nbanswer.doDelete -->
+    <delete id="doDelete" parameterType="NBAnswerVO">
+	    DELETE FROM nb_answer 
+		WHERE nb_no = #{nbNo}
+		AND aw_no = #{awNo}
+	</delete>
+	
+	<!-- 전체 삭제 -->
+	<delete id="doDeleteAll">
+        <![CDATA[
+        DELETE FROM nb_answer
+        ]]>
+    </delete>
+</mapper>

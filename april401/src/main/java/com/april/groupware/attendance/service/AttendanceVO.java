@@ -51,6 +51,12 @@ public class AttendanceVO extends DTO {
 	private String modDate;
 	/**근무 시간 누적 합계*/
 	private String workTimeSum;
+	/**월별 근태 조회*/
+	private String searchDate;
+	/**월별 근태 조회-연도*/
+	private String year;
+	/**월별 근태 조회-월*/
+	private String month;
 	
 	public AttendanceVO() {
 		
@@ -75,7 +81,7 @@ public class AttendanceVO extends DTO {
 
 	public AttendanceVO(String id, String seq, String attendTime, String leaveTime, String attendYN, String leaveYN,
 			String state, String workTime, String regId, String regDate, String modId, String modDate,
-			String workTimeSum) {
+			String workTimeSum, String searchDate, String year, String month) {
 		super();
 		this.id = id;
 		this.seq = seq;
@@ -90,6 +96,9 @@ public class AttendanceVO extends DTO {
 		this.modId = modId;
 		this.modDate = modDate;
 		this.workTimeSum = workTimeSum;
+		this.searchDate = searchDate;
+		this.year = year;
+		this.month = month;
 	}
 
 	public String getId() {
@@ -196,12 +205,37 @@ public class AttendanceVO extends DTO {
 		this.workTimeSum = workTimeSum;
 	}
 
+	public String getSearchDate() {
+		return searchDate;
+	}
+
+	public void setSearchDate(String searchDate) {
+		this.searchDate = searchDate;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
 	@Override
 	public String toString() {
 		return "AttendanceVO [id=" + id + ", seq=" + seq + ", attendTime=" + attendTime + ", leaveTime=" + leaveTime
 				+ ", attendYN=" + attendYN + ", leaveYN=" + leaveYN + ", state=" + state + ", workTime=" + workTime
 				+ ", regId=" + regId + ", regDate=" + regDate + ", modId=" + modId + ", modDate=" + modDate
-				+ ", workTimeSum=" + workTimeSum + ", toString()=" + super.toString() + "]";
+				+ ", workTimeSum=" + workTimeSum + ", searchDate=" + searchDate + ", year=" + year
+				+ ", month=" + month + ", toString()=" + super.toString() + "]";
 	}
 
 }
