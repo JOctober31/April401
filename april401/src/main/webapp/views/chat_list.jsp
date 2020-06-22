@@ -164,14 +164,23 @@ if (null != search) {
 			<!-- row -->
 			<div class="container-fluid">
 				<div class="row">
+				
 					<!-- 본인 정보란 -->
 					<div class="col-lg-6">
-						<div class="card" style="margin-bottom: 0px;">
-							<div class="card-body"
-								style="padding: 20px; padding-bottom: 38px;">
-								<div class="media align-items-center mb-4" style="padding-left: 20px; margin-bottom: 0px;">
-									<img class="mr-3" src="${hContext}/views/images/avatar/11.png"
-										width="80" height="80" alt="">
+						<div class="card">
+							<div class="card-body" style="margin-bottom: 0px; padding-bottom: 0px;">
+								<div class="media align-items-center mb-4" style="padding-left: 20px;">
+									<%-- <img class="mr-3" src="${hContext}/views/images/avatar/11.png"
+										width="80px" height="80px" alt=""> --%>
+									<c:choose>
+										<c:when test="${user.saveFileName==null || user.saveFileName.length()==0}">
+											<img class="mr-3" alt="profile" src="${hContext}/img_cmn/no_image.gif" width="100px" height="120px"/>
+										</c:when>
+										<c:otherwise>
+											<img class="mr-3" alt="profile" src="${hContext}/${user.saveFileName}" width="100px" height="120px"/>
+										</c:otherwise>
+									</c:choose>
+									
 									<div class="media-body" style="padding-left: 20px;">
 										<table>
 											<tbody>
@@ -194,6 +203,7 @@ if (null != search) {
 						</div>
 					</div>
 					<!-- /본인 정보란 -->
+					
 					<!-- 채팅방 -->
 					<div class="col-lg-3">
 						<div class="card text-center">
@@ -258,30 +268,29 @@ if (null != search) {
 														    <input type="hidden" id="id" name="id" value="${vo.id}" />
 															<td style="display: none;"><c:out value="${vo.id}" />
 															<td class="text-center"><c:out value="${vo.name }" />
-															<td class="text-center"><c:out value="${vo.dept_Nm }" />
+															<td class="text-center"><c:out value="${vo.deptNm }" />
 															<td class="text-center hidden-sm hidden-xs  "><c:out value="${vo.position }" />
 														</tr>
 													</c:forEach>
 												</c:when>
 												<c:otherwise>
 													<tr>
-														<td class="text-center">No data found.</td>
+														<td class="text-center" colspan="99">데이터를 찾을 수 없습니다.</td>
 													</tr>
 												</c:otherwise>
 											</c:choose>
 										</tbody>
 									</table>
 								</div>
-								<!-- pagenation -->
+								<!-- pagination -->
 								<nav>
 									<ul class="pagination justify-content-center">
-										<div class="text-center"
-											style="margin-top: 10px; margin-bottom: 10px;">
-											<%=StringUtil.renderPaging(maxNum, currPageNo, rowPerPage, bottomCount, url, scriptName)%>
+										<div id="page-color-font">
+										<%=StringUtil.renderPaging(maxNum, currPageNo, rowPerPage, bottomCount, url, scriptName) %>
 										</div>
 									</ul>
-								</nav>
-								<!--// pagenation -->
+								</nav> 
+								<!--//pagination -->
 							</div>
 						</div>
 						<!-- /사원목록테이블 -->

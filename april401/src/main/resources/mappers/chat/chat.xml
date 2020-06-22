@@ -7,7 +7,7 @@
  	<sql id="baseCondition">
         <choose>
             <when test="'10' == searchDiv">
-                AND dept_nm = '부서명'
+                AND dept_nm = '운영'
             </when>
             <when test="'20' == searchDiv">
                 AND dept_nm = '개발'
@@ -22,28 +22,38 @@
     </sql>
     
 	<!-- 목록조회 -->
+	
     <select id="doRetrieve" parameterType="SearchVO" resultType="ChatVO">
-		SELECT T1.*,T2.* 
+    SELECT T1.*,T2.* 
 		FROM(
 		    SELECT B.id,
-		            B.name,
-		            B.position,
-		            B.dept_nm,
-		            rnum
+		           B.dept_nm as deptNm,
+		           B.name,
+		           B.position,
+		           B.save_file_nm 	AS saveFileName,
+		           TO_CHAR(TO_DATE(B.hire_date), 'YYYY/MM/DD') AS hiredate,
+		           B.vacation_cnt as vacationCnt,
+		           B.REG_ID   as regId,
+		           CASE TO_CHAR(B.reg_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+		                                                 THEN TO_CHAR(SYSDATE,'HH24:MI') 
+		          										 ELSE TO_CHAR(B.reg_date,'YYYY/MM/DD') 
+		           END regDate,
+		           B.rnum as num
 		    FROM(
-		        SELECT ROWNUM rnum, A.*
+		        SELECT ROWNUM AS rnum,a.*
 		        FROM (
 		            SELECT *
 		            FROM organization
 		            WHERE 1=1
 		            --검색조건
 		            <include refid="baseCondition"/>
-		            )A
+		            ORDER BY auth desc, dept_nm 
+		        )A
 		        WHERE ROWNUM  <![CDATA[ <= ]]> (#{pageSize} *(#{pageNum} - 1)+#{pageSize})
 		    )B
-		    WHERE rnum <![CDATA[ >= ]]> (#{pageSize}*(#{pageNum}-1)+1)
-		    )T1
-		    NATURAL JOIN
+		    WHERE rnum <![CDATA[ >= ]]> (#{pageSize}*(#{pageNum}-1)+1) 
+		)T1
+		NATURAL JOIN
 		(
 		    SELECT COUNT(*) totalCnt
 		    FROM organization
@@ -52,22 +62,37 @@
 		    <include refid="baseCondition"/>
 		)T2
     </select>
-
- 
-  
         
     <!-- 단건조회 -->
     <select id="doSelectOne" parameterType="ChatVO" resultType="ChatVO">
 		SELECT
-		    id,
-		    dept_nm,
-		    name,
-		    position
+			id,													
+		    password,        										
+		    dept_nm 		AS deptNm,         										
+		    dept_cd 		AS deptCd,         										
+		    parent_dept_cd 	AS parentDeptCd,  										
+		    auth,            										
+		    name,            										
+		    position,        										
+		    mobile,          										
+		    email,           										
+		    address,         										
+		    TO_CHAR(TO_DATE(hire_date), 'YYYY/MM/DD') AS hiredate,       										
+		    birth,           										
+		    vacation_cnt 	AS vacationCnt,    										
+		    military_yn 	AS militaryYN,     										
+		    dspsn_yn 		AS dspsnYN,        										
+		    grade,           										
+		    org_file_nm 	AS orgFileName,     										
+		    save_file_nm 	AS saveFileName,     																			
+		    ext,             										
+		    file_size 		AS fileSize,       										
+		    reg_id 			AS regId,          										
+		    TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI:SS') AS regDate,
+		    mod_id 			AS modId,          										
+		    TO_CHAR(mod_date, 'YYYY/MM/DD HH24:MI:SS') AS modDate
 		FROM organization
-		WHERE id = #{id}  
+		WHERE id = 			#{id, jdbcType=VARCHAR}
     </select>
-    
-    
-    
-  
+
 </mapper>

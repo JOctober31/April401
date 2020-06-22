@@ -39,11 +39,11 @@
                    B.reg_id as regId,                                                                
                    B.mod_id as modId,                                                                
                    CASE TO_CHAR(B.reg_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
-                                                       THEN TO_CHAR(SYSDATE,'HH24:MI')      
-                   ELSE TO_CHAR(B.reg_date,'YYYY/MM/DD') END regDate,                      
+						THEN TO_CHAR(SYSDATE,'HH24:MI')      
+						ELSE TO_CHAR(B.reg_date,'YYYY/MM/DD') END regDate,                      
                    CASE TO_CHAR(B.mod_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
-                                                       THEN TO_CHAR(SYSDATE,'HH24:MI')      
-                   ELSE TO_CHAR(B.mod_date,'YYYY/MM/DD') END modDate                       
+						THEN TO_CHAR(SYSDATE,'HH24:MI')      
+						ELSE TO_CHAR(B.mod_date,'YYYY/MM/DD') END modDate                       
             FROM(                                                                           
                 SELECT ROWNUM AS rnum,A.*                                                   
                 FROM (                                                                      
@@ -125,8 +125,8 @@
 	            read_cnt as readCnt,
 	            reg_id as regId,
 	            mod_id as modId,
-	            TO_CHAR(reg_date,'YYYY/MM/DD HH24MISS') regDate,
-	            TO_CHAR(mod_date,'YYYY/MM/DD HH24MISS') modDate
+	            TO_CHAR(reg_date,'YYYY/MM/DD HH24:MI:SS') regDate,
+	            TO_CHAR(mod_date,'YYYY/MM/DD HH24:MI:SS') modDate
 	     FROM NOTICEBOARD
 	        WHERE nb_no like '%' ||  #{nbNo} || '%'
     </select>

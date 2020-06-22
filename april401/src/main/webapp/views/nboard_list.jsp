@@ -195,14 +195,13 @@
 						                    name="searchFrm" method="get">
 						                    <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
 						                    <input type="hidden" name="nbNo" id="nbNo" />
-						                        <button style="margin-right:0.5em; text-align:center; height: 40px; align-self: right;" class="btn mb-1 btn-light" type="button" disabled="disabled">총 글 수 ${totalCnt }개</button>
+						                        <button style="margin-right:0.5em; text-align:center; height: 40px; align-self: right;" class="btn mb-1 btn-light" type="button" disabled="disabled">총 게시글 수 ${totalCnt }개</button>
 						                        <%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>&nbsp;&nbsp;
 						                        <%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%>&nbsp;&nbsp;
-						                        <input type="text" style="height: 12px;" class="form-control input-sm"  
-						                        	id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
+						                        <input type="text" style="height: 12px;" class="form-control"  id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
 						                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
 						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" 
-						                        	class="btn mb-1 btn-info" type="button" onclick="doRetrieve();">조회</button> 
+						                        	class="btn mb-1 btn-info" type="button" onclick="doRetrieve();">검색</button> 
 												<!-- <button style="margin-right:0.5em; text-align:center; height: 40px;" 
 	                                			class="btn mb-1 btn-light" type="button" onclick="doRetrieve();">조회</button> -->
 						                        <!-- 마지막에 풀기 -->
@@ -228,8 +227,8 @@
 						                       <th class="text-center" width="120">글번호</th>
 						                       <th class="text-center" width="150">분류</th>
 						                       <th class="text-center" width="800">제목</th>
-						                       <th class="text-center">등록자</th>
-						                       <th class="text-center">등록일</th>
+						                       <th class="text-center">작성자</th>
+						                       <th class="text-center">작성일</th>
 						                       <th class="text-center">조회수</th>
 						                    </tr>
 						               </thead>
@@ -243,7 +242,7 @@
 						                                    <td class="text-left"><c:out value="${vo.nbTitle }" /></td>
 						                                    <td class="text-center"><c:out value="${vo.regId }" /></td>
 						                                    <td class="text-center hidden-sm hidden-xs"><c:out value="${vo.regDate }" /></td>
-						                                    <td class="text-right hidden-sm hidden-xs"><c:out value="${vo.readCnt }" /></td>
+						                                    <td class="text-center hidden-sm hidden-xs"><c:out value="${vo.readCnt }" /></td>
 						                                </tr>
 						                            </c:forEach>
 						                        </c:when>

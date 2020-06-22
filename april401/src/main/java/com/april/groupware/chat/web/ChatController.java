@@ -22,8 +22,7 @@ import com.april.groupware.code.service.CodeVO;
 
 @Controller
 public class ChatController {
-
-	Logger  LOG = LoggerFactory.getLogger(this.getClass());
+	Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	ChatService chatService;
@@ -74,12 +73,12 @@ public class ChatController {
 	
 	@RequestMapping(value = "chat/do_retrieve.do",method = RequestMethod.GET)
 	public String doRetrieve(SearchVO search, Model model) {
-		if(search.getPageNum()==0) {
+		if(search.getPageNum() == 0) {
 			search.setPageNum(1);
 		}
 		
-		if(search.getPageSize()==0) {
-			search.setPageSize(10);
+		if(search.getPageSize() == 0) {
+			search.setPageSize(15);
 		}
 		
 		search.setSearchDiv(StringUtil.nvl(search.getSearchDiv()));
@@ -88,20 +87,19 @@ public class ChatController {
 		LOG.debug("1=================");
 		LOG.debug("1=param="+search);
 		LOG.debug("1=================");
-		//검색조건 화면으로 전달.
+		//검색조건 화면으로 전달
 		model.addAttribute("vo", search);
 		
-		//TODO: codeTable : 검색조건,페이지 사이즈
 		//검색조건
-		CodeVO code=new CodeVO();
+		CodeVO code = new CodeVO();
 		code.setCodeTypeId("CHAT_SEARCH");
-		List<CodeVO> searchList=(List<CodeVO>) this.codeService.doRetrieve(code);
+		List<CodeVO> searchList = (List<CodeVO>) this.codeService.doRetrieve(code);
 		LOG.debug("1.1=searchList="+searchList);
 		model.addAttribute("searchList", searchList);
 		
 		//페이지 사이즈: PAGE_SIZE
 		code.setCodeTypeId("PAGE_SIZE");
-		List<CodeVO> pageSizeList=(List<CodeVO>) this.codeService.doRetrieve(code);
+		List<CodeVO> pageSizeList = (List<CodeVO>) this.codeService.doRetrieve(code);
 		LOG.debug("1.1=pageSizeList="+pageSizeList);
 		model.addAttribute("pageSizeList", pageSizeList);
 		
@@ -114,17 +112,17 @@ public class ChatController {
 		
 		//총건수
 		int totalCnt = 0;
-		if(null !=list &&  list.size()>0) {
+		if(null !=list && list.size()>0) {
 			totalCnt = list.get(0).getTotalCnt();
 		}
 		
 		LOG.debug("1.2=================");
 		LOG.debug("1.2=totalCnt="+totalCnt);
 		LOG.debug("1.2=================");
-		//조회결과 화면 전달
+		
+		//조회 결과 화면 전달
 		model.addAttribute("totalCnt", totalCnt);
 		return "views/chat_list";// /board/board_list.jsp
-	
 	}
 	
 	
@@ -136,10 +134,11 @@ public class ChatController {
 		LOG.debug("1=param="+user);
 		LOG.debug("1=================");
 		
-		ChatVO outVO =(ChatVO) this.chatService.doSelectOne(user);
+		ChatVO outVO = (ChatVO) this.chatService.doSelectOne(user);
 		LOG.debug("1.1.=================");
 		LOG.debug("1.1=outVO="+outVO);
-		LOG.debug("1.1=================");	
+		LOG.debug("1.1=================");
+		
 		model.addAttribute("vo", outVO);
 		
 		//여기에 자동으로 /+

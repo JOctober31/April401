@@ -45,7 +45,7 @@ Logger  LOG = LoggerFactory.getLogger(this.getClass());
 		}
 		
 		if(search.getPageSize()==0) {
-			search.setPageSize(10);
+			search.setPageSize(15);
 		}
 		
 		
@@ -182,19 +182,18 @@ Logger  LOG = LoggerFactory.getLogger(this.getClass());
 	}
 	
 	//단건조회 - 상세페이지 조회
-	@RequestMapping(value = "admin/do_selectone.do",method = RequestMethod.GET)
-	public String doSelectOne(OrgVO  orgVO,Locale locale,Model model) {
+	@RequestMapping(value = "admin/do_selectone.do", method = RequestMethod.GET)
+	public String doSelectOne(OrgVO orgVO,Locale locale, Model model) {
 		//param ID
 		LOG.debug("1=====OrgContoller=doSelectOne===========");
 		LOG.debug("1=param="+orgVO);
 		LOG.debug("1=================");
 		
-		if( null == orgVO.getId()) {
-
-			throw new IllegalArgumentException("ID를 확인 하세요.");			
+		if(orgVO.getId() == null) {
+			throw new IllegalArgumentException("아이디를 확인하세요.");			
 		}
 		
-		OrgVO  outVO =(OrgVO) this.orgService.doSelectOne(orgVO);
+		OrgVO outVO = (OrgVO) this.orgService.doSelectOne(orgVO);
 		LOG.debug("1.1.======OrgContoller=doSelectOne==========");
 		LOG.debug("1.1=outVO="+outVO);
 		LOG.debug("1.1=================");	

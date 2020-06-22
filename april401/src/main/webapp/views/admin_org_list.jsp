@@ -26,7 +26,7 @@
 <%@ include file="/common/common.jsp"%>
 <%
     //페이지 사이즈
-    String pageSize = "10";
+    String pageSize = "15";
     
     //페이지 num
     String pageNum = "1";
@@ -210,7 +210,7 @@
 						                        
 						                        <input type="text" style="height: 12px;" class="form-control"  id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
 						                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
-						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-primary" type="button" onclick="doRetrieve();">조회</button> 
+						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-primary" type="button" onclick="doRetrieve();">검색</button> 
 						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-danger" type="button" onclick="doInsertView();">등록</button>
 						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-success" type="button" disabled="disabled">사원수 ${totalCnt } 명</button>
 		                					</form>

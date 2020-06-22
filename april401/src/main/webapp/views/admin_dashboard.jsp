@@ -294,9 +294,11 @@
                                 <div class="active-member">
                                     <div class="table-responsive">
                                         <table class="table table-xs mb-0">
+                                            <h4 class="card-title" align="center">전사게시판</h4>
+                                            <div style="text-align: right;">
+                                            <a href="${hContext}/nboard/do_retrieve.do?pageNum=1&pageSize=15&searchDiv=&searchWord=">더보기 ></a>
+                                            </div>
                                             <thead class="bg-primary" style="text-align: center; color:white;">
-                                            
-                                            <h4 class="card-title" align="center">전사 게시판</h4>
                                                 <tr style="text-align: center">
                                                     <th>글번호</th>
                                                     <th>분류</th>

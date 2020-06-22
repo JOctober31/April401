@@ -165,7 +165,7 @@
 											<label class="col-lg-4 col-form-label">패스워드 확인 <span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-6">
-												<input type="password" class="form-control" id="password_check" name="password_check" placeholder="패스워드 확인하세요">
+												<input type="password" class="form-control" id="password_check" name="password_check" placeholder="패스워드를 재입력하세요">
 											</div>
 										</div>
 										
@@ -174,7 +174,7 @@
 												class="text-danger">*</span>
 											</label>
 											<div class="col-lg-6">
-												<input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력하세요">
+												<input type="text" class="form-control" id="name" name="name" placeholder="${vo.name}">
 											</div>
 										</div>	
 
@@ -182,12 +182,19 @@
 											<label class="col-lg-4 col-form-label">부서명 <span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-6">
-												<select class="form-control" id="dept_nm" name="dept_nm">
+												<%-- <select class="form-control" id="dept_nm" name="dept_nm">
 													<option value="">부서 선택</option>
 													<option value="인사">인사</option>
 													<option value="영업">영업</option>
 													<option value="개발">개발</option>
 													<option value="운영">운영</option>
+												</select> --%>
+												<select class="form-control" id="dept_nm" name="dept_nm">
+													<option value="">부서 선택</option>
+													<option value="인사" <c:if test="${vo.deptNm == '인사'}"> selected="selected"</c:if>>인사</option>
+													<option value="영업" <c:if test="${vo.deptNm == '영업'}"> selected="selected"</c:if>>영업</option>
+													<option value="개발" <c:if test="${vo.deptNm == '개발'}"> selected="selected"</c:if>>개발</option>
+													<option value="운영" <c:if test="${vo.deptNm == '운영'}"> selected="selected"</c:if>>운영</option>
 												</select>
 											</div>
 										</div>
@@ -196,20 +203,24 @@
 											<label class="col-lg-4 col-form-label">권한 <span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-6">
-												<select class="form-control" id="auth" name="auth">
+												<%-- <select class="form-control" id="auth" name="auth">
 													<option value="">권한 선택</option>
 													<option value="1">사용자</option>
 													<option value="9">결재자</option>
+												</select> --%>
+												<select class="form-control" id="auth" name="auth">
+													<option value="">권한 선택</option>
+													<option value="1" <c:if test="${vo.auth == '1'}"> selected="selected"</c:if>>사용자</option>
+													<option value="9" <c:if test="${vo.auth == '9'}"> selected="selected"</c:if>>결재자</option>
 												</select>
 											</div>
 										</div>
-
 
 										<div class="form-group row">
 											<label class="col-lg-4 col-form-label">직급 <span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-6">
-												<select class="form-control" id="position" name="position">
+												<%-- <select class="form-control" id="position" name="position">
 													<option value="">직급선택</option>
 													<option value="사원">사원</option>
 													<option value="과장">과장</option>
@@ -217,16 +228,24 @@
 													<option value="부장">부장</option>
 													<option value="이사">이사</option>
 													<option value="대표이사">대표이사</option>
+												</select> --%>
+												<select class="form-control" id="position" name="position">
+													<option value="">직급 선택</option>
+													<option value="사원" <c:if test="${vo.position == '사원'}"> selected="selected"</c:if>>사원</option>
+													<option value="과장" <c:if test="${vo.position == '과장'}"> selected="selected"</c:if>>과장</option>
+													<option value="차장" <c:if test="${vo.position == '차장'}"> selected="selected"</c:if>>차장</option>
+													<option value="부장" <c:if test="${vo.position == '부장'}"> selected="selected"</c:if>>부장</option>
+													<option value="이사" <c:if test="${vo.position == '이사'}"> selected="selected"</c:if>>이사</option>
+													<option value="대표이사" <c:if test="${vo.position == '대표이사'}"> selected="selected"</c:if>>대표이사</option>
 												</select>
 											</div>
 										</div>
-
 
 										<div class="form-group row">
 											<label class="col-lg-4 col-form-label" for="val-currency">입사일<span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-6">
-												<input type="text" class="form-control" id="hire_date" name="hire_date" placeholder="ex) 20200508">
+												<input type="text" class="form-control" id="hire_date" name="hire_date" placeholder="${vo.hiredate}">
 											</div>
 										</div>
 

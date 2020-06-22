@@ -18,7 +18,7 @@
 <%@page import="org.slf4j.Logger"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<c:set var="hContext" value="${pageContext.request.contextPath }"></c:set>    
+<c:set var="hContext" value="${pageContext.request.contextPath}"></c:set>    
 <%
     final String H_PATH = request.getContextPath();
     Logger  LOG = LoggerFactory.getLogger(this.getClass());

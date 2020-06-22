@@ -400,11 +400,5 @@ public class OrgVO extends DTO {
 				+ ", ext=" + ext + ", fileSize=" + fileSize + ", regId=" + regId + ", regDate=" + regDate + ", modId="
 				+ modId + ", modDate=" + modDate + "]";
 	}
-	
-	
-	
-
-	
-	
 
 }

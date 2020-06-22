@@ -29,9 +29,9 @@
 		           B.dept_nm as deptNm,
 		           B.name,
 		           B.position,
-		           B.hire_date as hireDate,
+		           TO_CHAR(TO_DATE(B.hire_date), 'YYYY/MM/DD') AS hiredate,
 		           B.vacation_cnt as vacationCnt,
-		           B.REG_ID   as regId,
+		           B.reg_id   as regId,
 		           CASE TO_CHAR(B.reg_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
 		                                                 THEN TO_CHAR(SYSDATE,'HH24:MI') 
 		          										 ELSE TO_CHAR(B.reg_date,'YYYY/MM/DD') 
@@ -124,7 +124,7 @@
 		    mobile,          										
 		    email,           										
 		    address,         										
-		    hire_date 		AS hiredate,       										
+		    TO_CHAR(TO_DATE(hire_date), 'YYYY/MM/DD') AS hiredate,       										
 		    birth,           										
 		    vacation_cnt 	AS vacationCnt,    										
 		    military_yn 	AS militaryYN,     										
@@ -148,6 +148,5 @@
 		  DELETE FROM organization WHERE id = #{id}
 		]]>
 	</delete>
-    
     
 </mapper>

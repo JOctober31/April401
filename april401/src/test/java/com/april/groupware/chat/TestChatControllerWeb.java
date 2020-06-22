@@ -67,7 +67,7 @@ public class TestChatControllerWeb {
 //            );
 
       chatList = Arrays.asList(
-              new ChatVO("kimjh1","부서명","이름","직급")
+              new ChatVO()
             );
 				
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();

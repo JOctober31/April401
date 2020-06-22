@@ -188,39 +188,35 @@ public class StringUtil {
 	 *설명:
 	 *@return
 	 */
-	public static String makeSelectBox(List<CodeVO> list, String selectBoxName, String selectNm, boolean allYN) {
+	public static String makeSelectBox(List<CodeVO> list, String selectBoxNm, String selectNm, boolean allYn) {
 		StringBuilder sb = new StringBuilder();
-		// <select name="search_div" id="search_div">
-		// <option value="" >전체</option>
-		// <option value="10" <%if(searchDiv.equals("10"))out.print("selected"); %>
-		// >제목</option>
-		// <option value="20" <%if(searchDiv.equals("20"))out.print("selected"); %>
-		// >내용</option>
-		// <option value="30" <%if(searchDiv.equals("30"))out.print("selected"); %>
-		// >등록자</option>
-		// </select>
-		sb.append(
-				"\n<select class=\"form-control input-sm\" name='" + selectBoxName + "' id='" + selectBoxName + "'>\n");
-		// 전체
-		if (allYN == true) {
-			sb.append("<option value='' >전체</option>\n");
+		sb.append("<select class=\"form-control input-sm\" name='"+selectBoxNm+"' id='"+selectBoxNm+"' >\n");
+		
+		//전체
+		if(allYn == true) {
+			sb.append("<option value=''>전체</option>\n");
 		}
-		// 10, 20, 30
-		if (list != null) {
-			for (CodeVO vo : list) {
-				sb.append("<option value='" + vo.getCodeId() + "'  ");
-				if (selectNm.equals(vo.getCodeId())) {
-					sb.append("selected='selected'");
+		
+		//for
+		if(list != null) {
+			for(CodeVO vo :list) {
+				sb.append("\t\t<option value='"+vo.getCodeId()+"'  ");
+				
+				if(selectNm.equals(vo.getCodeId())) {
+				sb.append("selected");
 				}
+		
 				sb.append(">");
 				sb.append(vo.getCodeNm());
 				sb.append("</option>\n");
 			}
 		}
-		sb.append("</select>\n");
-
-		LOG.debug("=sb.toString()=" + sb.toString());
-
+		sb.append("</select> \n");
+		
+		LOG.debug("===========================");
+		LOG.debug(sb.toString());
+		LOG.debug("===========================");
+	
 		return sb.toString();
 	}
 	

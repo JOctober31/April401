@@ -179,7 +179,7 @@
                         <div class="card">
                             <div class="card-body">
 	                            <div class="card-title">
-	                                <h4>TODO 게시판</h4><hr/>
+	                                <h4>TODO게시판</h4><hr/>
 	                            </div>
 								<!--// div title -->
 								

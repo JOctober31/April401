@@ -111,7 +111,7 @@
 	<script type="text/javascript">
 		//로그인 리다이렉션
 	    function goRetrieve(id){
-		if (id == 'admin' || id == 'ADMIN') {
+			if (id == 'admin' || id == 'ADMIN') {
 				location.href = "${hContext}/dash/do_selectone.do";
 			} else {
 				//location.href = "${hContext}/views/attendance.jsp";
