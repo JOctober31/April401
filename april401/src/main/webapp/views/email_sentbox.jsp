@@ -23,49 +23,49 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/common/common.jsp"%>
-<c:set var="aprilContext" value="${pageContext.request.contextPath }"></c:set>
+
 <%
 	//페이지 사이즈
-String pageSize = "10";
-
-//페이지 num
-String pageNum = "1";
-
-//검색구분
-String searchDiv = "";
-
-//검색어
-String searchWord = "kimmj";
-
-SearchVO search = (SearchVO) request.getAttribute("vo");
-if (search != null) {
-	pageSize = String.valueOf(search.getPageSize());
-	pageNum = String.valueOf(search.getPageNum());
-	searchDiv = String.valueOf(search.getSearchDiv());
-	searchWord = String.valueOf(search.getSearchWord());
-
-}
-//out.print("search: "+search);
-
-int totalCnt = 0;
-totalCnt = (Integer) request.getAttribute("totalCnt");
-//out.print("**totalCnt**"+totalCnt);
-
-//paging (StringUtil render참고)
-//int maxNum_i, int currPageNoIn_i, int rowsPerPage_i, int bottomCount_i, String url_i, String scriptName_i
-String url = H_PATH + "/mail/do_retrieveSent.do"; //H_PATH: common.jsp에 있음(ehr)
-String scriptName = "doSearchPage";
-int maxNum = 0; //총글수
-int currPageNo = 1; //현재 페이지
-int rowPerPage = 10;
-int bottomCount = 7; //바닥에 보여지는 글 수
-
-if (search != null) {
-	currPageNo = search.getPageNum();
-	rowPerPage = search.getPageSize();
-	maxNum = totalCnt;
-}
-//--//paging
+	String pageSize = "15";
+	
+	//페이지 num
+	String pageNum = "1";
+	
+	//검색구분
+	String searchDiv = "";
+	
+	//검색어
+	String searchWord = "kimmj";
+	
+	SearchVO search = (SearchVO) request.getAttribute("vo");
+	if (search != null) {
+		pageSize = String.valueOf(search.getPageSize());
+		pageNum = String.valueOf(search.getPageNum());
+		searchDiv = String.valueOf(search.getSearchDiv());
+		searchWord = String.valueOf(search.getSearchWord());
+	}
+	
+	//out.print("search: "+search);
+	
+	int totalCnt = 0;
+	totalCnt = (Integer) request.getAttribute("totalCnt");
+	//out.print("**totalCnt**"+totalCnt);
+	
+	//paging (StringUtil render참고)
+	//int maxNum_i, int currPageNoIn_i, int rowsPerPage_i, int bottomCount_i, String url_i, String scriptName_i
+	String url = H_PATH + "/mail/do_retrieveSent.do"; //H_PATH: common.jsp에 있음(ehr)
+	String scriptName = "doSearchPage";
+	int maxNum = 0; //총글수
+	int currPageNo = 1; //현재 페이지
+	int rowPerPage = 10;
+	int bottomCount = 7; //바닥에 보여지는 글 수
+	
+	if (search != null) {
+		currPageNo = search.getPageNum();
+		rowPerPage = search.getPageSize();
+		maxNum = totalCnt;
+	}
+	//--//paging
 %>
 <!DOCTYPE html>
 <html>
@@ -154,19 +154,28 @@ if (search != null) {
                         <div class="card">
                             <div class="card-body">
                                 <div class="email-left-box">
-                                	<a href="${aprilContext}/views/email_compose.jsp" class="btn btn-primary btn-block">메일 쓰기</a>
-                                    <div class="mail-list mt-4">
-                                    	<a href="${aprilContext}/mail/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" class="list-group-item border-0 p-r-0"><i class="fa fa-inbox font-18 align-middle mr-2"></i> 
-	                                    	<b>받은 메일함</b> 
-	                                    	<span class="badge badge-primary badge-sm float-right m-t-5"><c:out value="${count}"></c:out></span> 
-                                    	</a>
-                                        <a href="${aprilContext}/mail/do_retrieveSent.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" class="list-group-item border-0 text-primary p-r-0"><i class="fa fa-paper-plane font-18 align-middle mr-2"></i>보낸 메일함</a>  
-                                        <!-- 
+									<a href="${aprilContext}/views/email_compose.jsp" class="btn btn-primary btn-block">메일 쓰기</a>
+									<div class="mail-list mt-4">
+										<a href="${aprilContext}/mail/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" 
+											class="list-group-item border-0 text-primary p-r-0">
+											<i class="fa fa-inbox font-18 align-middle mr-2"></i>받은메일함
+											<span class="badge badge-primary badge-sm float-right m-t-5">
+												<c:out value="${count}"></c:out>
+											</span>
+										</a>
+										<a href="${aprilContext}/mail/do_retrieveSent.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}"
+											class="list-group-item border-0 p-r-0">
+											<i class="fa fa-paper-plane font-18 align-middle mr-2"></i>보낸메일함
+										</a> 
+										<!-- 
                                         <a href="#" class="list-group-item border-0 p-r-0"><i class="mdi mdi-file-document-box font-18 align-middle mr-2"></i>Draft</a>
                                          -->
-                                        <a href="${aprilContext}/mail/do_retrieveTrash.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" class="list-group-item border-0 p-r-0"><i class="fa fa-trash font-18 align-middle mr-2"></i>휴지통</a>
-                                    </div>
-                                    <!-- 
+										<a href="${aprilContext}/mail/do_retrieveTrash.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" 
+											class="list-group-item border-0 p-r-0">
+											<i class="fa fa-trash font-18 align-middle mr-2"></i>휴지통
+										</a>
+									</div>
+									<!-- 
                                     <h5 class="mt-5 m-b-10">카테고리</h5>
                                     <div class="list-group mail-list">
                                     	<a href="#" class="list-group-item border-0"><span class="fa fa-briefcase f-s-14 mr-2"></span>Work</a>  
@@ -175,7 +184,7 @@ if (search != null) {
                                     	<a href="#" class="list-group-item border-0"><span class="fa fa-tags f-s-14 mr-2"></span>Social</a>
                                     </div>
                                      -->
-                                </div>
+								</div>
                                 <div class="email-right-box">
                                     <div role="toolbar" class="toolbar">
                                     	<!-- <div class="btn-group">
@@ -186,43 +195,84 @@ if (search != null) {
                                         	<button aria-expanded="false" data-toggle="dropdown" class="btn btn-dark dropdown-toggle" type="button">More <span class="caret m-l-5"></span>
                                             </button>
                                     	</div> -->
-										<table class="table table-striped table-bordered sung">
-										<!-- hidden-sm hidden-xs 숨기기 -->
-											<thead class="bg-primary" style="text-align: center; color:white;">
-												<th width="15%" style="">작성일</th>
-												<th width="10%" >수신자</th>
-												<th width="55%">제목</th>
-												<th width="10%">읽음 여부</th>
-											</thead>
-										</table>
-                                    </div>
-                                    <hr>
-                                    <div class="email-list m-t-15">
+ 										<div>
+                                    		<h4>보낸메일함</h4><hr/>
+                                    	</div>
+	                                    <div class="email-list m-t-15">
+											<!-- <table class="table table-striped table-bordered sung"> -->
                                     	<form action="" name="mailFrm">
 											<input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum}" />
 											<input type="hidden" id="searchWord" name="searchWord"value="kimmj" />
 											<table id="listTable" class="table table-striped table-bordered">
-												
+												<thead class="bg-primary" style="text-align:center; color:white;">
+													<tr>
+														<th width="10%">수신자</th>
+														<th width="55%">제목</th>
+														<th width="10%">읽음 여부</th>
+														<th width="15%">작성일</th>
+													</tr>
+												</thead>
 												<tbody>
 													<c:choose>
 														<c:when test="${list.size()>0 }">
 															<c:forEach var="vo" items="${list}">
 																<tr style="text-align: center;">
-																	<td width="15%"><c:out value="${vo.recDate}"></c:out></td>
-																	<td width="10%"><c:out value="${vo.recipient}"></c:out></td>
-																	<td width="55%" style="text-align: left;"><c:out value="${vo.title}"></c:out></td>
 																	<td width="10%">
 																		<c:choose>
-																				<c:when test="${vo.read =='9'}">
-																					<c:out value="읽음"></c:out>
-																				</c:when>
-																				<c:otherwise>
-																					<c:out value="읽지 않음"></c:out>
-																				</c:otherwise>
+																			<c:when test="${vo.read =='9'}">
+																				<c:out value="${vo.recipient}"></c:out>
+																			</c:when>
+																			<c:otherwise>
+																				<b style="color: #7571F9">
+																				<c:out value="${vo.recipient}"></c:out></b>
+																			</c:otherwise>
 																		</c:choose>
 																	</td>
-																	<td style="display: none;"><c:out value="${vo.mailId}" />
+																	<td width="55%" style="text-align: left;">
+																		<c:choose>
+																			<c:when test="${vo.read =='9'}">
+																				<c:out value="${vo.title}"></c:out>
+																			</c:when>
+																			<c:otherwise>
+																				<b style="color: #7571F9">
+																				<c:out value="${vo.title}"></c:out></b>
+																			</c:otherwise>
+																		</c:choose>
+																	</td>
+																	<td width="10%">
+																		<c:choose>
+																			<c:when test="${vo.read =='9'}">
+																				<i class="fa fa-envelope-open-o font-18 align-middle mr-10">
+																				<c:out value="읽음"></c:out></i>
+																			</c:when>
+																			<c:otherwise>
+																				<i class="fa fa-envelope font-18 align-middle mr-10" style="color: #7571F9">
+																				<c:out value="읽지 않음"></c:out></i>
+																			</c:otherwise>
+																		</c:choose>
+																	</td>
+																	<td width="15%">
+																		<c:choose>
+																			<c:when test="${vo.read =='9'}">
+																				<c:out value="${vo.recDate}"></c:out>
+																			</c:when>
+																			<c:otherwise>
+																				<b style="color: #7571F9">
+																				<c:out value="${vo.recDate}"></c:out></b>
+																			</c:otherwise>
+																		</c:choose>
+																	</td>
+																	<td style="display: none;">
 																		<input type="hidden" id="mailId" name="mailId" value="${vo.mailId}" />
+																		<c:choose>
+																			<c:when test="${vo.read =='9'}">
+																				<c:out value="${vo.mailId}"></c:out>
+																			</c:when>
+																			<c:otherwise>
+																				<b style="color: #7571F9">
+																				<c:out value="${vo.mailId}"></c:out></b>
+																			</c:otherwise>
+																		</c:choose>																	
 																	</td>
 																</tr>
 															</c:forEach>
@@ -236,8 +286,9 @@ if (search != null) {
 												</tbody>
 											</table>
 										</form>
+										</div>
                                     </div>
-                                    <!-- panel -->
+
                                     <!-- pagination -->
 									<nav>
 										<ul class="pagination justify-content-center">

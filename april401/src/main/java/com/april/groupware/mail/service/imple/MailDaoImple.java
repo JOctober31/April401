@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.april.groupware.attendance.service.AttendanceVO;
 import com.april.groupware.cmn.DTO;
 import com.april.groupware.cmn.SearchVO;
 import com.april.groupware.mail.service.MailDao;
@@ -472,6 +473,5 @@ public class MailDaoImple implements MailDao {
 		
 		return flag;
 	}
-
 
 }

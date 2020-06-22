@@ -23,7 +23,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ include file="/views/common/common.jsp"%>
+<%@ include file="/common/common.jsp"%>
 <%
 	//페이지 사이즈
 String pageSize = "10";

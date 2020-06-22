@@ -67,7 +67,7 @@
 	            FROM email                                 
 	            WHERE 1=1             
 	            --검색조건                                                                             
-				AND recipient_id like '%' || #{searchWord} ||'%'
+				AND recipient_id = #{searchWord}
 				AND disable_yn = 'N'
 	            ORDER BY TO_CHAR(rec_date,'YYYYMMDD HH24:MI:SS')  DESC                          
 	        )A --10                                               
@@ -80,7 +80,7 @@
 	    FROM email                     
 	    WHERE 1=1
 	    --검색조건                                                  
-		AND recipient_id like '%' || #{searchWord} ||'%'
+		AND recipient_id = #{searchWord}
 		AND disable_yn = 'N'   
 	    )T2
     </select>
@@ -109,7 +109,7 @@
 	            FROM email                                 
 	            WHERE 1=1             
 	            --검색조건                                                                             
-				AND sender_id like '%' || #{searchWord} ||'%'
+				AND sender_id = #{searchWord}
 	            ORDER BY TO_CHAR(rec_date,'YYYYMMDD HH24:MI:SS')  DESC                          
 	        )A --10                                               
 	        WHERE ROWNUM <![CDATA[ <= ]]> (#{pageSize} *(#{pageNum} - 1) + #{pageSize})
@@ -121,7 +121,7 @@
 	    FROM email                     
 	    WHERE 1=1
 	    --검색조건                                                  
-		AND sender_id like '%' || #{searchWord} ||'%'
+		AND sender_id = #{searchWord}
 	    )T2
     </select>
     
@@ -147,7 +147,7 @@
 	            FROM email                                 
 	            WHERE 1=1             
 	            --검색조건                                                                             
-				AND recipient_id like '%' || #{searchWord} ||'%'
+				AND recipient_id = #{searchWord}
 				AND disable_yn = 'Y'
 	            ORDER BY TO_CHAR(rec_date,'YYYYMMDD HH24:MI:SS')  DESC                          
 	        )A --10                                               
@@ -160,7 +160,7 @@
 	    FROM email                     
 	    WHERE 1=1
 	    --검색조건                                                  
-		AND recipient_id like '%' || #{searchWord} ||'%'
+		AND recipient_id = #{searchWord}
 		AND disable_yn = 'Y'   
 	    )T2
     </select>
@@ -215,7 +215,7 @@
 			disable_yn as disableYn,
 			read
 	FROM	email
-	WHERE	recipient_id like '%' || #{searchWord} ||'%'
+	WHERE	recipient_id = #{searchWord}
 	AND		disable_yn = 'N'
 	AND		TO_CHAR(rec_date,'yyyy/mm/dd hh24:mi:ss') >= TO_CHAR(SYSDATE - (interval '30' minute),'yyyy/mm/dd hh24:mi:ss')
     </select>
@@ -231,7 +231,7 @@
     <select id="doGetAllCount" parameterType="SearchVO" resultType="Integer">
 	SELECT count(*)
 	FROM	email
-	WHERE	recipient_id like '%' || #{searchWord} ||'%'
+	WHERE	recipient_id = #{searchWord}
 	AND		disable_yn = 'N'
 	AND		read = '0'
     </select>

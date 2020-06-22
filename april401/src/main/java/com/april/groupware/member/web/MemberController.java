@@ -158,7 +158,7 @@ public class MemberController {
 				if(vo.getRead().equals("0")) {
 					totalCntNotRead++;
 					
-					MailVO imgVO = (MailVO)this.mailService.doSelectImage(vo);
+					MailVO imgVO = (MailVO) this.mailService.doSelectImage(vo);
 					img = "/groupware/"+ imgVO.getSaveFileName();
 					vo.setSaveFileName(img);
 					LOG.debug("** alarmList(SaveFileName) : "+vo);

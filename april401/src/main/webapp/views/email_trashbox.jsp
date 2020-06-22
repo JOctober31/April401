@@ -28,48 +28,48 @@
 <c:set var="aprilContext" value="${pageContext.request.contextPath }"></c:set>
 <%
 	//페이지 사이즈
-String pageSize = "10";
-
-//페이지 num
-String pageNum = "1";
-
-//검색구분
-String searchDiv = "";
-
-UserVO userVO = (UserVO)session.getAttribute("user");
-
-//검색어
-String searchWord = userVO.getId();
-
-SearchVO search = (SearchVO) request.getAttribute("vo");
-if (search != null) {
-	pageSize = String.valueOf(search.getPageSize());
-	pageNum = String.valueOf(search.getPageNum());
-	searchDiv = String.valueOf(search.getSearchDiv());
-	searchWord = String.valueOf(search.getSearchWord());
-
-}
-//out.print("search: "+search);
-
-int totalCnt = 0;
-totalCnt = (Integer) request.getAttribute("totalCnt");
-//out.print("**totalCnt**"+totalCnt);
-
-//paging (StringUtil render참고)
-//int maxNum_i, int currPageNoIn_i, int rowsPerPage_i, int bottomCount_i, String url_i, String scriptName_i
-String url = H_PATH + "/mail/do_retrieveTrash.do"; //H_PATH: common.jsp에 있음(ehr)
-String scriptName = "doSearchPage";
-int maxNum = 0; //총글수
-int currPageNo = 1; //현재 페이지
-int rowPerPage = 10;
-int bottomCount = 7; //바닥에 보여지는 글 수
-
-if (search != null) {
-	currPageNo = search.getPageNum();
-	rowPerPage = search.getPageSize();
-	maxNum = totalCnt;
-}
-//--//paging
+	String pageSize = "10";
+	
+	//페이지 num
+	String pageNum = "1";
+	
+	//검색구분
+	String searchDiv = "";
+	
+	UserVO userVO = (UserVO)session.getAttribute("user");
+	
+	//검색어
+	String searchWord = userVO.getId();
+	
+	SearchVO search = (SearchVO) request.getAttribute("vo");
+	if (search != null) {
+		pageSize = String.valueOf(search.getPageSize());
+		pageNum = String.valueOf(search.getPageNum());
+		searchDiv = String.valueOf(search.getSearchDiv());
+		searchWord = String.valueOf(search.getSearchWord());
+	
+	}
+	//out.print("search: "+search);
+	
+	int totalCnt = 0;
+	totalCnt = (Integer) request.getAttribute("totalCnt");
+	//out.print("**totalCnt**"+totalCnt);
+	
+	//paging (StringUtil render참고)
+	//int maxNum_i, int currPageNoIn_i, int rowsPerPage_i, int bottomCount_i, String url_i, String scriptName_i
+	String url = H_PATH + "/mail/do_retrieveTrash.do"; //H_PATH: common.jsp에 있음(ehr)
+	String scriptName = "doSearchPage";
+	int maxNum = 0; //총글수
+	int currPageNo = 1; //현재 페이지
+	int rowPerPage = 10;
+	int bottomCount = 7; //바닥에 보여지는 글 수
+	
+	if (search != null) {
+		currPageNo = search.getPageNum();
+		rowPerPage = search.getPageSize();
+		maxNum = totalCnt;
+	}
+	//--//paging
 %>
 <!DOCTYPE html>
 <html>
@@ -161,20 +161,26 @@ if (search != null) {
 						<div class="card">
 							<div class="card-body">
 								<div class="email-left-box">
-									<a href="${aprilContext}/views/email_compose.jsp"
-										class="btn btn-primary btn-block">메일 쓰기</a>
+									<a href="${aprilContext}/views/email_compose.jsp" class="btn btn-primary btn-block">메일 쓰기</a>
 									<div class="mail-list mt-4">
-										<a href="${aprilContext}/mail/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}"
-											class="list-group-item border-0 text-primary p-r-0"><i
-											class="fa fa-inbox font-18 align-middle mr-2"></i> <b>받은
-												메일함</b> <span
-											class="badge badge-primary badge-sm float-right m-t-5"><c:out value="${count}"></c:out></span>
-										</a> <a href="${aprilContext}/mail/do_retrieveSent.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}"
-											class="list-group-item border-0 p-r-0"><i
-											class="fa fa-paper-plane font-18 align-middle mr-2"></i>보낸
-											메일함</a> 
-										<a href="${aprilContext}/mail/do_retrieveTrash.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" class="list-group-item border-0 p-r-0"><i
-											class="fa fa-trash font-18 align-middle mr-2"></i>휴지통</a>
+										<a href="${aprilContext}/mail/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" 
+											class="list-group-item border-0 text-primary p-r-0">
+											<i class="fa fa-inbox font-18 align-middle mr-2"></i>받은메일함
+											<span class="badge badge-primary badge-sm float-right m-t-5">
+												<c:out value="${count}"></c:out>
+											</span>
+										</a>
+										<a href="${aprilContext}/mail/do_retrieveSent.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}"
+											class="list-group-item border-0 p-r-0">
+											<i class="fa fa-paper-plane font-18 align-middle mr-2"></i>보낸메일함
+										</a> 
+										<!-- 
+                                        <a href="#" class="list-group-item border-0 p-r-0"><i class="mdi mdi-file-document-box font-18 align-middle mr-2"></i>Draft</a>
+                                         -->
+										<a href="${aprilContext}/mail/do_retrieveTrash.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" 
+											class="list-group-item border-0 p-r-0">
+											<i class="fa fa-trash font-18 align-middle mr-2"></i>휴지통
+										</a>
 									</div>
 									<!-- 
                                     <h5 class="mt-5 m-b-10">카테고리</h5>
@@ -188,42 +194,39 @@ if (search != null) {
 								</div>
 								<div class="email-right-box">
 									<div class="toolbar" role="toolbar">
-                                    	<div role="toolbar" class="toolbar">
-                                    		<div class="media mb-4 mt-1">
-	                                            <div class="media-body">
-	                                                <h2 class="m-0 text-primary"><b>휴지통</b></h2>
-	                                            </div>
-                                        	</div>
-	                                        <!-- <div class="btn-group">
-	                                        	<button type="button" id="reSend_btn" class="btn btn-light"><i class="fa fa-mail-reply font-18 align-middle mr-2"></i>답장</button>
-	                                        	<button type="button" id="delete_btn" class="btn btn-light"><i class="fa fa-trash font-18 align-middle mr-2"></i>삭제</button>
-	                                        	<button type="button" class="btn btn-light"><i class="fa fa-mail-forward font-18 align-middle mr-2"></i>전달</button>
-	                                        </div> -->
-	                                    </div>
+                                   		<h4>휴지통</h4><hr/>
+                                   		<%-- <div class="media mb-4 mt-1">
+                                            <div class="media-body">
+                                                <h2 class="m-0 text-primary"><b>휴지통</b></h2>
+                                            </div>
+                                       	</div>  --%>
+                                        <!-- <div class="btn-group">
+                                        	<button type="button" id="reSend_btn" class="btn btn-light"><i class="fa fa-mail-reply font-18 align-middle mr-2"></i>답장</button>
+                                        	<button type="button" id="delete_btn" class="btn btn-light"><i class="fa fa-trash font-18 align-middle mr-2"></i>삭제</button>
+                                        	<button type="button" class="btn btn-light"><i class="fa fa-mail-forward font-18 align-middle mr-2"></i>전달</button>
+                                        </div> -->
                                     </div>
-									<hr>
 									<div class="email-list m-t-15">
 										<form action="" name="mailFrm">
 											<input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum}" />
 											<input type="hidden" id="searchWord" name="searchWord" value="${user.id}" />
-											<table id="listTable"
-												class="table table-striped table-bordered">
+											<table id="listTable" class="table table-striped table-bordered">
+												<thead class="bg-primary" style="text-align:center; color:white;">
+													<tr>
+														<th width="3%"><input type="checkbox" onclick="event.cancelBubble=true"></th>
+														<th width="10%">발신자</th>
+														<th width="55%">제목</th>
+														<th width="10%">읽음 여부</th>
+														<th width="15%">작성일</th>
+													<tr>
+												</thead>
 												<tbody>
 													<c:choose>
 														<c:when test="${list.size()>0 }">
 															<c:forEach var="vo" items="${list}">
 																<tr style="text-align: center;">
-																	<td width="3%"><input type="checkbox" onclick="event.cancelBubble=true" name="checkbox" value="${vo.mailId}">
-																	</td>
-																	<td width="4%">
-																		<c:choose>
-																			<c:when test="${vo.read =='9'}">
-																				<i class="fa fa-envelope-open-o font-18 align-middle mr-10"></i>
-																			</c:when>
-																			<c:otherwise>
-																				<i class="fa fa-envelope font-18 align-middle mr-10" style="color: #7571F9"></i>
-																			</c:otherwise>
-																		</c:choose>
+																	<td width="3%">
+																		<input type="checkbox" onclick="event.cancelBubble=true" name="checkbox" value="${vo.mailId}">
 																	</td>
 																	<td width="10%">
 																		<c:choose>
@@ -231,28 +234,39 @@ if (search != null) {
 																				<c:out value="${vo.sender}" />
 																			</c:when>
 																			<c:otherwise>
-																				<b style="color: #7571F9"><c:out
-																						value="${vo.sender}" /></b>
+																				<b style="color: #7571F9"><c:out value="${vo.sender}" /></b>
 																			</c:otherwise>
-																		</c:choose></td>
+																		</c:choose>
+																	</td>
 																	<td width="55%" style="text-align: left;">
 																		<c:choose>
 																			<c:when test="${vo.read =='9'}">
 																				<c:out value="${vo.title}" />
 																			</c:when>
 																			<c:otherwise>
-																				<b style="color: #7571F9"><c:out
-																						value="${vo.title}" /></b>
+																				<b style="color: #7571F9"><c:out value="${vo.title}" /></b>
 																			</c:otherwise>
-																		</c:choose></td>
+																		</c:choose>
+																	</td>
+																	<td width="10%">
+																		<c:choose>
+																			<c:when test="${vo.read =='9'}">
+																				<i class="fa fa-envelope-open-o font-18 align-middle mr-10">
+																				<c:out value="읽음"></c:out></i>
+																			</c:when>
+																			<c:otherwise>
+																				<i class="fa fa-envelope font-18 align-middle mr-10" style="color: #7571F9">
+																				<c:out value="읽지 않음"></c:out></i>
+																			</c:otherwise>
+																		</c:choose>
+																	</td>
 																	<td width="15%">
 																		<c:choose>
 																			<c:when test="${vo.read =='9'}">
 																				<c:out value="${vo.recDate}" />
 																			</c:when>
 																			<c:otherwise>
-																				<b style="color: #7571F9"><c:out
-																						value="${vo.recDate}" /></b>
+																				<b style="color: #7571F9"><c:out value="${vo.recDate}" /></b>
 																			</c:otherwise>
 																		</c:choose>
 																	</td>

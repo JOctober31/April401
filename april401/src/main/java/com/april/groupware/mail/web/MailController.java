@@ -36,8 +36,7 @@ public class MailController {
 	 * 
 	 * @throws java.lang.Exception
 	 */
-	@RequestMapping(value = "mail/do_insert.do",method = RequestMethod.POST
-			,produces = "application/json; charset=UTF-8")
+	@RequestMapping(value = "mail/do_insert.do",method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
 	@ResponseBody 
 	public String doInsert(MailVO mail) {
 		LOG.debug("=====MailController [doInsert] Start=====");

@@ -95,5 +95,6 @@ public interface MailDao {
 	 * @param dto
 	 * @return
 	 */
-	public int getAllCount(DTO dto);	   
+	public int getAllCount(DTO dto);
+	   
 }
