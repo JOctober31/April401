@@ -465,7 +465,18 @@ public class AttendanceController {
 		//today ex)2020/05/01
 		List<AttendanceVO> outVO = (List<AttendanceVO>) attendanceDao.getAll(attendVO);
 		
-		if(outVO.size() > 0) {
+		if(outVO.size() <= 0) {
+			MessageVO messageVO = new MessageVO();
+			
+			//Json(Gson)
+			Gson gson = new Gson();
+			String json = gson.toJson(99);
+			
+			LOG.debug("====================");
+			LOG.debug("=doSelectOne json= : "+json);
+			LOG.debug("====================");
+			
+		} else if(outVO.size() > 0) {
 			//View에 연도 출력
 	//		outVO.setYear(year);
 			outVO.get(outVO.size()-1).setYear(year);

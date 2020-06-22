@@ -41,11 +41,11 @@ public class TodoController {
 	public String doRetrieve(SearchVO  search,Model model) {
 		//param 기본값 처리
 		if(search.getPageNum()==0) {
-			search.setPageNum(1);;
+			search.setPageNum(1);
 		}
 		
 		if(search.getPageSize()==0) {
-			search.setPageSize(10);
+			search.setPageSize(15);
 		}
 		
 //		search.setSearchDiv("10");
@@ -61,39 +61,39 @@ public class TodoController {
 		//TODO: codeTable : 검색조건,페이지 사이즈
 		
 		//검색조건
-				CodeVO  code=new CodeVO();
-				code.setCodeTypeId("TODO_SEARCH");
-				List<CodeVO> searchList=(List<CodeVO>) this.codeService.doRetrieve(code);
-				LOG.debug("1.1=searchList="+searchList);
-				model.addAttribute("searchList", searchList);
-				
-				//페이지 사이즈: PAGE_SIZE
-				code.setCodeTypeId("PAGE_SIZE");
-				List<CodeVO> pageSizeList=(List<CodeVO>) this.codeService.doRetrieve(code);
-				LOG.debug("1.1=pageSizeList="+pageSizeList);
-				model.addAttribute("pageSizeList", pageSizeList);
-				
-				
-				List<TodoVO> list = (List<TodoVO>) this.todoService.doRetrieve(search);
-				//조회결과 화면 전달
-				model.addAttribute("list", list);
-				for(TodoVO vo:list) {
-					LOG.debug("1.1=out="+vo);
-				}
-				
-				//총건수
-				int totalCnt = 0;
-				if(null !=list &&  list.size()>0) {
-					totalCnt = list.get(0).getTotalCnt();
-				}
-				
-				LOG.debug("1.2=================");
-				LOG.debug("1.2=totalCnt="+totalCnt);
-				LOG.debug("1.2=================");
-				//조회결과 화면 전달
-				model.addAttribute("totalCnt", totalCnt);
-				return "views/todo_list";// "/board/board_list.jsp
-			}
+		CodeVO  code=new CodeVO();
+		code.setCodeTypeId("TODO_SEARCH");
+		List<CodeVO> searchList=(List<CodeVO>) this.codeService.doRetrieve(code);
+		LOG.debug("1.1=searchList="+searchList);
+		model.addAttribute("searchList", searchList);
+		
+		//페이지 사이즈: PAGE_SIZE
+		code.setCodeTypeId("PAGE_SIZE");
+		List<CodeVO> pageSizeList=(List<CodeVO>) this.codeService.doRetrieve(code);
+		LOG.debug("1.1=pageSizeList="+pageSizeList);
+		model.addAttribute("pageSizeList", pageSizeList);
+		
+		
+		List<TodoVO> list = (List<TodoVO>) this.todoService.doRetrieve(search);
+		//조회결과 화면 전달
+		model.addAttribute("list", list);
+		for(TodoVO vo:list) {
+			LOG.debug("1.1=out="+vo);
+		}
+		
+		//총건수
+		int totalCnt = 0;
+		if(null !=list &&  list.size()>0) {
+			totalCnt = list.get(0).getTotalCnt();
+		}
+		
+		LOG.debug("1.2=================");
+		LOG.debug("1.2=totalCnt="+totalCnt);
+		LOG.debug("1.2=================");
+		//조회결과 화면 전달
+		model.addAttribute("totalCnt", totalCnt);
+		return "views/todo_list";// "/board/board_list.jsp
+	}
 	
 	@RequestMapping(value = "todo/do_update.do",method = RequestMethod.POST
 			,produces = "application/json; charset=UTF-8")

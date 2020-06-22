@@ -24,7 +24,7 @@
 	<!-- sidebar start  -->
 	<div class="nk-nav-scroll">
 		<ul class="metismenu" id="menu">
-			<li class="nav-label">${user.name}님 환영합니다</li>
+			<li class="nav-label"><span><strong>${user.name}</strong>님 환영합니다</span></li>
 			
 			<!-- 관리자페이지 네비게이션 시작 -->
 			<li>
@@ -36,7 +36,7 @@
 		               <c:choose>
 		                  <c:when test="${orgId eq 'admin'}">
 		                     <li><a href="${hContext}/dash/do_selectone.do">대시보드</a></li>
-		                     <li><a href="${hContext}/admin/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=">조직데이터</a></li>
+		                     <li><a href="${hContext}/admin/do_retrieve.do?pageNum=1&pageSize=15&searchDiv=&searchWord=">인사 조직 관리</a></li>
 		                  </c:when>
 		               </c:choose>
 			        <%-- <li><a href="${hContext}/dash/do_selectone.do">대시보드</a></li>
@@ -44,42 +44,7 @@
 			    </ul>
 			</li>
 			<!-- 관리자페이지 네비게이션 끝 -->
-			  
-			<!-- 전사게시판 네비게이션 시작 --> 
-            <li class="mega-menu mega-menu-sm">
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-screen-tablet menu-icon"></i><span class="nav-text">게시판</span>
-                </a>
-                <ul aria-expanded="false">
-                     <li><a href="${hContext}/nboard/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=">전사게시판</a></li>
-                </ul>
-            </li>
-            <!-- 전사게시판 네비게이션 끝 --> 
-			
-			<!-- 이메일페이지 네비게이션 시작 -->
-			<li class="mega-menu mega-menu-sm">
-			    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-			        <i class="icon-envelope menu-icon"></i><span class="nav-text">메일</span>
-			    </a>
-			    <ul aria-expanded="false">
-			        <li><a href="${hContext}/mail/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}">받은 메일함</a></li>
-			        <li><a href="${hContext}/mail/do_retrieveSent.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}">보낸 메일함</a></li>
-			        <li><a href="${hContext}/mail/do_retrieveTrash.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}">휴지통 </a></li>
-			    </ul>
-			</li>
-			<!-- 이메일페이지 네비게이션 끝 -->
-			
-			<!-- Todo페이지 네비게이션 시작 -->
-			<li class="mega-menu mega-menu-sm">
-			    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-			        <i class="icon-globe-alt menu-icon"></i><span class="nav-text">업무등록</span>
-			    </a>
-			    <ul aria-expanded="false">
-			          <li><a href="${hContext}/todo/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=">Todo</a></li>
-			    </ul>
-			</li>
-			<!-- Todo페이지 네비게이션 끝 -->
-           
+
 			<!-- 마이페이지 네비게이션 시작 -->
 			<li class="mega-menu mega-menu-sm">
 			    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -91,18 +56,55 @@
 			    </ul>
 			</li>
 			<!-- 마이페이지 네비게이션 끝 -->
+			  
+			<!-- 전사게시판 네비게이션 시작 --> 
+            <li class="mega-menu mega-menu-sm">
+                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="icon-screen-tablet menu-icon"></i><span class="nav-text">커뮤니티</span>
+                </a>
+                <ul aria-expanded="false">
+                     <li><a href="${hContext}/nboard/do_retrieve.do?pageNum=1&pageSize=15&searchDiv=&searchWord=">전사게시판</a></li>
+                     <li><a href="${hContext}/chat/do_retrieve.do?pageNum=1&pageSize=15&searchDiv=&searchWord=${user.id}">채팅</a></li>
+                </ul>
+            </li>
+            <!-- 전사게시판 네비게이션 끝 --> 
+			
+			<!-- 이메일페이지 네비게이션 시작 -->
+			<li class="mega-menu mega-menu-sm">
+			    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+			        <i class="icon-envelope menu-icon"></i><span class="nav-text">메일</span>
+			    </a>
+			    <ul aria-expanded="false">
+			        <li><a href="${hContext}/mail/do_retrieve.do?pageNum=1&pageSize=15&searchDiv=&searchWord=${user.id}">받은 메일함</a></li>
+			        <li><a href="${hContext}/mail/do_retrieveSent.do?pageNum=1&pageSize=15&searchDiv=&searchWord=${user.id}">보낸 메일함</a></li>
+			        <li><a href="${hContext}/mail/do_retrieveTrash.do?pageNum=1&pageSize=15&searchDiv=&searchWord=${user.id}">휴지통 </a></li>
+			    </ul>
+			</li>
+			<!-- 이메일페이지 네비게이션 끝 -->
+			
+			<!-- Todo페이지 네비게이션 시작 -->
+			<li class="mega-menu mega-menu-sm">
+			    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+			        <i class="icon-globe-alt menu-icon"></i><span class="nav-text">업무등록</span>
+			    </a>
+			    <ul aria-expanded="false">
+			          <li><a href="${hContext}/todo/do_retrieve.do?pageNum=1&pageSize=15&searchDiv=&searchWord=">TODO게시판</a></li>
+			    </ul>
+			</li>
+			<!-- Todo페이지 네비게이션 끝 -->
+           
            
 			<!-- 채팅페이지 네비게이션 시작 -->
-			<li class="mega-menu mega-menu-sm">
+			<%-- <li class="mega-menu mega-menu-sm">
 			    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
 			        <i class="icon-globe-alt menu-icon"></i><span class="nav-text">커뮤니티</span>
 			    </a>
 			    <ul aria-expanded="false">
 			        <li><a href="${hContext}/chat/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}">채팅</a></li>
 			    </ul>
-			</li>
+			</li> --%>
 			<!-- 채팅페이지 네비게이션 끝 -->
 			
-       </ul>
-   </div>
+    	</ul>
+	</div>
 	<!--/ sidebar end  -->

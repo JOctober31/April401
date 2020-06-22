@@ -25,7 +25,7 @@
 <%@ include file="/common/common.jsp"%>
 <%
 		//페이지 사이즈
-	String pageSize = "10";
+	String pageSize = "15";
 	
 	//페이지 num
 	String pageNum = "1";
@@ -119,13 +119,13 @@
     ***********************************-->
     <div id="main-wrapper">
 
-      <!--**********************************
-            Nav header start
-        ***********************************-->
-       <div class="nav-header">
+		<!--**********************************
+		    Nav header start
+		***********************************-->
+        <div class="nav-header">
             <div class="brand-logo">
                 <a>
-                    <b class="logo-abbr"><img src="${hContext}/views/images/logo.png" alt=""> </b>
+                    <b class="logo-abbr"><img src="${hContext}/views/images/logo.png" alt=""></b>
                     <span class="logo-compact"><img src="${hContext}/views/images/logo-compact.png" alt=""></span>
                     <span class="brand-title">
                         <img src="${hContext}/views/images/april_logo.png" alt="">
@@ -140,9 +140,9 @@
         <!--**********************************
             Header start
         ***********************************-->
-           <div class="header">    
-         		<%@ include file="/common/april_header.jsp" %>
-       	   </div>
+        <div class="header">    
+      		<%@ include file="/common/april_header.jsp" %>
+		</div>
         <!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -160,16 +160,14 @@
         <!--**********************************
             Content body start
         ***********************************-->
-      <div class="content-body">
+		<div class="content-body">
 
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Apps</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Email</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">업무등록</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">TODO게시판</a></li>
                     </ol>
-                    
-                    
                 </div>
             </div>
             <!-- row -->
@@ -180,111 +178,96 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                            <div class="card-title">
-                                    <h4>TODO 게시판</h4><hr/>
-                                </div>
-		<!--// div title -->
-		<!-- 검색영역 -->
-<%-- 		<div class="row">
-			<div class="col-md-12">
-				<form action="${hContext}/todo/do_retrieve.do" name="searchFrm" method="get" class="form-inline">
-					<input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
-					<input type="hidden"   name="id" id="id" />
-					<div class="form-group">
-						<%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>
-						<%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%> 
-						<input type="text" class="form-control input-sm" id="searchWord"
-							name="searchWord" placeholder="검색어"  value="${vo.searchWord }">
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button type="button" onclick="javascript:doRetrieve();"
-							class="btn btn-primary btn-sm">조회</button>
-						<button type="button" onclick="javascript:doInsertView();" class="btn btn-primary btn-sm">등록</button>
-					</div>
-				</form>
-			</div>
-		</div> --%>
-		<!--// 검색영역 -->
-
-        <!-- 검색영역 -->
-        <div class="row">
-            <div class="col-md-12">
-                <form action="${hContext}/todo/do_retrieve.do" class="form-inline" style="text-align: center;" 
-                        name="searchFrm" method="get">
-                    <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
-                    <input type="hidden" name="id" id="id" />
-                       
-                        <div class="btn-group mr-2 mb-2">
-                        <%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>&nbsp;&nbsp;
-                        </div>
-                     	 <div class="btn-group mr-2 mb-2">
-                        <%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%>&nbsp;&nbsp;
-                        </div>
-                        
-                        <input type="text" style="height: 12px;" class="form-control"  id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
-                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-primary" type="button" onclick="doRetrieve();">조회</button> 
-                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-danger" type="button" onclick="doInsertView();">등록</button>
-                       <%--  <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-success" type="button" disabled="disabled">사원수 ${totalCnt } 명</button> --%>
-                     </form>
-                </div>   
-            </div>
-        <!--// 검색영역 -->
-
-
-		<!-- Grid영역 -->
-		<div class="table-responsive">
-			<table class="table header-border table-hover verticle-middle" id="listTable">
-				<!-- hidden-sm hidden-xs 숨기기 -->
-				<thead >
-					<th class="text-center">작성자</th>
-					<th class="text-center">프로젝트 명</th>
-					<th class="text-center">고객사</th>
-					<th class="text-center">부서명</th>
-					<th class="text-center">수정자</th>
-					<th class="text-center">작성일</th>
-				</thead>
-				<tbody>
-					<c:choose>   
-						<c:when test="${list.size()>0 }">
-							<c:forEach var="vo" items="${list }">
-								<tr>
-									<td class="text-center hidden-sm hidden-xs"><c:out
-											value="${vo.id }" /></td>
-									<td class="text-left"><c:out value="${vo.pTitle }" /></td>
-									<td class="text-center"><c:out value="${vo.customer }" /></td>
-									<td class="text-center hidden-sm hidden-xs  "><c:out
-											value="${vo.deptNm }" /></td>
-									<td class="text-center hidden-sm hidden-xs  "><c:out
-											value="${vo.modId }" /></td>
-									<td class="text-right hidden-sm hidden-xs"><c:out
-											value="${vo.regDate }" /></td>
-									<td style="display: none;"><c:out value="${vo.id }" /></td>
-								</tr>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<tr>
-								<td class="text-center">No data found.</td>
-							</tr>
-						</c:otherwise>
-					</c:choose>
-				</tbody>
-			</table>
-		</div>
+	                            <div class="card-title">
+	                                <h4>TODO 게시판</h4><hr/>
+	                            </div>
+								<!--// div title -->
+								
+						        <!-- 검색영역 -->
+								<div>
+							        <div class="row">
+							            <div class="col-md-12">
+							                <form action="${hContext}/todo/do_retrieve.do" class="form-inline" style="text-align: center;" 
+							                    name="searchFrm" method="get">
+							                    <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
+							                    <input type="hidden" name="id" id="id" />
+							                       
+						                        <div class="btn-group mr-2 mb-2">
+						                        <%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>&nbsp;&nbsp;
+						                        </div>
+						                        
+						                     	<div class="btn-group mr-2 mb-2">
+						                        <%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%>&nbsp;&nbsp;
+						                        </div>
+						                        
+						                        <input type="text" style="height: 12px;" class="form-control"  id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
+						                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-primary" type="button" onclick="doRetrieve();">조회</button> 
+						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-danger" type="button" onclick="doInsertView();">등록</button>
+						                        <%--  <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-success" type="button" disabled="disabled">사원수 ${totalCnt } 명</button> --%>
+					                    	</form>
+						                </div>   
+						            </div>
+					            </div>
+						        <!--// 검색영역 -->
 	
-		<!--// Grid영역 -->
-	 <!-- pagenation -->
-            <nav>
-                 <ul class="pagination justify-content-center">
-                    <div class="text-center">
-			            <%=StringUtil.renderPaging(maxNum, currPageNo, rowPerPage, bottomCount, url, scriptName) %>
-			        </div>
-                 </ul>
-             </nav> 
-         <!--// pagenation -->
-	<!--// div container -->
-           </div>
-         </div>
+								<!-- 게시글 목록 -->
+								<div class="table-responsive">
+									<table class="table header-border table-hover verticle-middle" id="listTable">
+										<!-- hidden-sm hidden-xs 숨기기 -->
+										<thead class="bg-primary" style="text-align: center; color:white;">
+											<tr>
+												<th class="text-center">작성자</th>
+												<th class="text-center">프로젝트명</th>
+												<th class="text-center">고객사</th>
+												<th class="text-center">부서명</th>
+												<th class="text-center">수정자</th>
+												<th class="text-center">작성일</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:choose>   
+												<c:when test="${list.size()>0 }">
+													<c:forEach var="vo" items="${list }">
+														<tr>
+															<td class="text-center hidden-sm hidden-xs"><c:out value="${vo.id }" /></td>
+															<td class="text-left"><c:out value="${vo.pTitle }" /></td>
+															<td class="text-center"><c:out value="${vo.customer }" /></td>
+															<td class="text-center hidden-sm hidden-xs"><c:out value="${vo.deptNm }" /></td>
+															<td class="text-center hidden-sm hidden-xs"><c:out value="${vo.modId }" /></td>
+															<td class="text-center hidden-sm hidden-xs"><c:out value="${vo.regDate }" /></td>
+															<td style="display: none;"><c:out value="${vo.id }" /></td>
+														</tr>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+													<tr>
+														<td class="text-center" colspan="99">데이터를 찾을 수 없습니다.</td>
+													</tr>
+												</c:otherwise>
+											</c:choose>
+										</tbody>
+									</table>
+								</div>
+
+		 						<!-- pagenation -->
+					            <nav>
+									<ul class="pagination justify-content-center">
+										<div id="page-color-font">
+									   	    <%=StringUtil.orgRenderPaging(maxNum, currPageNo, rowPerPage, bottomCount, url, scriptName) %>
+										</div>	
+									</ul>
+								</nav>
+								<!--// pagenation -->
+					            <!-- //게시글 목록 -->
+					            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+			<!-- #/ container -->
+        </div>
         <!--**********************************
             Content body end
         ***********************************-->
@@ -299,9 +282,7 @@
         <!--**********************************
             Footer end
         ***********************************-->
-       
     </div>
-     </div>
     <!--**********************************
         Main wrapper end
     ***********************************-->
@@ -315,10 +296,8 @@
     <script src="${hContext}/views/js/gleek.js"></script>
     <script src="${hContext}/views/js/styleSwitcher.js"></script>
 	<script type="text/javascript">
-
-
 	
-        //등록으로 화면 이동.
+        //등록으로 화면 이동
 	    function doInsertView() {
 	    	console.log("doInsertView");
 	        console.log("")
@@ -335,13 +314,9 @@
             frm.pageNum.value = no;
             frm.action = url;
             frm.submit();
-
         }
 
-		
-
-    	
-			function doRetrieve() {
+		function doRetrieve() {
 			//console.log("doRetrieve");
 			var frm = document.searchFrm;
 			frm.pageNum.value = "1";
@@ -359,7 +334,7 @@
 		});
 
 	    $("#listTable>tbody").on("click","tr",function(){
-	   // $(".sung").on("click",function(){
+			// $(".sung").on("click",function(){
 	    	//console.log("sung #listTable>tbody");
             var trs = $(this);
             var tds = trs.children();
@@ -375,14 +350,6 @@
             location.href="${hContext}/todo/do_selectone.do?id="+id; */
 	    	
 		});
-  
-
-		
 	</script>
 </body>
 </html>
-
-
-
-
-

@@ -166,9 +166,9 @@ if (search != null) {
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">Apps</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">메일</a></li>
 						<li class="breadcrumb-item active"><a
-							href="javascript:doRetrieve();">메일</a></li>
+							href="javascript:doRetrieve();">받은메일함</a></li>
 					</ol>
 				</div>
 			</div>
@@ -295,7 +295,7 @@ if (search != null) {
 														</c:when>
 														<c:otherwise>
 															<tr>
-																<td class="text-center">No data found.</td>
+																<td class="text-center" colspan="99">데이터를 찾을 수 없습니다.</td>
 															</tr>
 														</c:otherwise>
 													</c:choose>
@@ -605,11 +605,15 @@ if (search != null) {
 
 									</div>
 									<!-- panel -->
-									<!-- pagenation -->
-									<div class="text-center">
-										<%=StringUtil.renderPaging(maxNum, currPageNo, rowPerPage, bottomCount, url, scriptName)%>
-									</div>
-									<!--// pagenation -->
+									<!-- pagination -->
+									<nav>
+										<ul class="pagination justify-content-center">
+											<div id="page-color-font">
+									   	    <%=StringUtil.orgRenderPaging(maxNum, currPageNo, rowPerPage, bottomCount, url, scriptName) %>
+											</div>
+										</ul>
+									</nav>
+									<!--// pagination -->
 									<!-- 
                                     <div class="row">
                                         <div class="col-7">

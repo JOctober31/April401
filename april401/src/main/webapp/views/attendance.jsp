@@ -62,18 +62,17 @@
         <!--**********************************
             Nav header start
         ***********************************-->
-	   <div class="nav-header">
-			<div class="brand-logo">
-				<a> <b class="logo-abbr"><img
-						src="${hContext}/views/images/logo.png" alt=""> </b> <span
-					class="logo-compact"><img
-						src="${hContext}/views/images/logo-compact.png" alt=""></span> <span
-					class="brand-title"> <img
-						src="${hContext}/views/images/april_logo.png" alt="">
-				</span>
-				</a>
-			</div>
-		</div>
+	    <div class="nav-header">
+            <div class="brand-logo">
+                <a>
+                    <b class="logo-abbr"><img src="${hContext}/views/images/logo.png" alt=""></b>
+                    <span class="logo-compact"><img src="${hContext}/views/images/logo-compact.png" alt=""></span>
+                    <span class="brand-title">
+                        <img src="${hContext}/views/images/april_logo.png" alt="">
+                    </span>
+                </a>
+            </div>
+        </div>
         <!--**********************************
             Nav header end
         ***********************************-->
@@ -107,7 +106,7 @@
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">마이페이지</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">개인 정보 수정</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">근태 관리</a></li>
                     </ol>
                 </div>
             </div>
@@ -162,7 +161,7 @@
                                     	</form>
                                     </div>
                                     
-                                    <div class="col-md-7">
+                                    <div class="col-md-8">
 	                                    <!-- 월별 근태 조회 -->
                                     	<form action="${aprilContext}/attend/do_get_all.do" method="get" name="search_form">
 	                                    	<table class="verticle-middle">
@@ -176,30 +175,37 @@
 		                                    	</tr>
 	                                    	</table>
                                     	</form>
+                                    	<c:choose>
+                                    	<c:when test="${attendVO.size() > 0}">
                                     	<input type="hidden" name="getYear" id="getYear" value="${attendVO.get(attendVO.size()-1).year}" />
 						    			<input type="hidden" name="getMonth" id="getMonth" value="${attendVO.get(attendVO.size()-1).month}" />
+						    			</c:when>
+						    			<c:otherwise>
+						    			</c:otherwise>
+						    			</c:choose>
 						    			<!-- //월별 근태 조회 -->
                                     
                                     <!-- table-striped -->
                                     <table class="table table-bordered verticle-middle table-hover">
 						    		    <!-- hidden-sm hidden-xs 숨기기 -->
 						    			<thead class="bg-primary" style="text-align: center; color:white;">
-						    				<th style="display:none;">순서</th>
-						    				<th style="display:none;">아이디</th>
-						    				<th class="text-center">출근일</th>
-						    				<th class="text-center">출근시간</th>
-						    				<th class="text-center">출근여부</th>
-						    				<th class="text-center">퇴근시간</th>
-						    				<th class="text-center">퇴근여부</th>
-						    				<th class="text-center">출결상태</th>
-						    				<th class="text-center">근무시간</th>
-						    				<th class="text-center">누적 근무시간</th>
+						    				<tr>
+							    				<th style="display:none;">순서</th>
+							    				<th style="display:none;">아이디</th>
+							    				<th class="text-center">출근일</th>
+							    				<th class="text-center">출근시간</th>
+							    				<th class="text-center">출근여부</th>
+							    				<th class="text-center">퇴근시간</th>
+							    				<th class="text-center">퇴근여부</th>
+							    				<th class="text-center">출결상태</th>
+							    				<th class="text-center">근무시간</th>
+							    				<th class="text-center">누적 근무시간</th>
+						    				</tr>
 						    			</thead>
 						    			<tbody>
 						    				<c:choose>
 						    					<c:when test="${attendanceList.size()>0}">
 						    						<c:forEach var="vo" items="${attendanceList}">
-						    							
 								    					<tr>
 									    					<td style="display:none;"><c:out value="${vo.seq}" /></td>
 									    					<td style="display:none;"><c:out value="${vo.id}" /></td>
@@ -353,13 +359,19 @@
 
 			var getYear = $("#getYear").val();
 			var getMonth = $("#getMonth").val();
-			
-			//현재 연도, 월을 selected
-	        //jQuery("#year > option[value="+now_year+"]").attr("selected", "true");
-	        //jQuery("#month > option[value="+now_month+"]").attr("selected", "true");
-	        jQuery("#year > option[value="+getYear+"]").attr("selected", "true");
-	        jQuery("#month > option[value="+getMonth+"]").attr("selected", "true");
 
+			if(getYear > 0 && getMonth > 0) {
+				//현재 연도, 월을 selected
+		        //jQuery("#year > option[value="+now_year+"]").attr("selected", "true");
+		        //jQuery("#month > option[value="+now_month+"]").attr("selected", "true");
+		        jQuery("#year > option[value="+getYear+"]").attr("selected", "true");
+		        jQuery("#month > option[value="+getMonth+"]").attr("selected", "true");
+			} else {
+				alert("해당 날짜에 출퇴근 기록이 없습니다.");
+				jQuery("#year > option[value="+now_year+"]").attr("selected", "true");
+		        jQuery("#month > option[value="+now_month+"]").attr("selected", "true");
+				goAttend();
+			}
 	        /* if(null !=list) {
 				for(CodeVO vo :list) {
 					sb.append("\t\t<option value='"+vo.getCodeId()+"'  ");

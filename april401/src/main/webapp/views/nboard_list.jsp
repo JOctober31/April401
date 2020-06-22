@@ -100,7 +100,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="${hContext}/views/images/favicon.png">
     <!-- Custom Stylesheet -->
     <link href="${hContext}/views/css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -171,11 +170,9 @@
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Apps</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Email</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">커뮤니티</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">전사게시판</a></li>
                     </ol>
-                    
-                    
                 </div>
             </div>
             <!-- row -->
@@ -187,100 +184,97 @@
                         <div class="card">
                             <div class="card-body">
                             <div class="card-title">
-                                    <h4>전사 게시판</h4><hr/>
-                                </div>
-        <!-- 검색영역 -->
-        <div class="row">
-            <div class="col-md-12">
-                <form action="${hContext}/nboard/do_retrieve.do" class="form-inline" style="text-align: center;" 
-                        name="searchFrm" method="get">
-                    <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
-                    <input type="hidden" name="nbNo" id="nbNo" />
-                        <button style="margin-right:0.5em; text-align:center; height: 40px; align-self: right;" class="btn mb-1 btn-light" type="button" disabled="disabled">총 글 수 ${totalCnt }개</button>
-                        <div class="form-group">
-                        <%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>&nbsp;&nbsp;
-                        <%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%>&nbsp;&nbsp;
-                        <input type="text" style="height: 12px;" class="form-control input-sm"  
-                        id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
-                        <button style="margin-right:0.5em; text-align:center; height: 40px;" 
-                                class="btn mb-1 btn-info" type="button" onclick="doRetrieve();">조회</button> 
-<!--                         <button style="margin-right:0.5em; text-align:center; height: 40px;" 
-                                class="btn mb-1 btn-light" type="button" onclick="doRetrieve();">조회</button>  -->
-                        <!-- 마지막에 풀기 -->
-                        <c:choose>
-                           <c:when test="${9 eq user.auth}">
-                              <button style="margin-right:0.5em; text-align:center; height: 40px;" 
-	                                class="btn mb-1 btn-danger" type="button" 
-	                                onclick="doInsertView();">게시글 작성</button>
-                           </c:when>
-                       </c:choose>
-                     </div>   
-                </form>
-            </div>
-        </div>
-        <!--// 검색영역 -->
-
-           <!-- 게시글 목록 -->
-         <div class="table-responsive">
-           <table class="table header-border table-hover verticle-middle" id="listTable">
-<!--            <table class="table" id="listTable"> -->
-               <thead>
-                   <tr>
-                       <th class="text-center" width="120">글번호</th>
-                       <th class="text-center" width="150">분류</th>
-                       <th class="text-center" width="800">제목</th>
-                       <th class="text-center">등록자</th>
-                       <th class="text-center">등록일</th>
-                       <th class="text-center">조회수</th>
-                   </tr>
-               </thead>
-               <tbody>
-                    <c:choose>
-                        <c:when test="${list.size()>0 }">
-                            <c:forEach var="vo" items="${list }">
-                                <tr>
-                                    <td class="text-center hidden-sm hidden-xs">
-                                            <c:out value="${vo.nbNo }" /></td>
-                                    <td class="text-center"><c:out value="${vo.nbCategory }" /></td>
-                                    <td class="text-left"><c:out value="${vo.nbTitle }" /></td>
-                                    <td class="text-center"><c:out value="${vo.regId }" /></td>
-                                    <td class="text-center hidden-sm hidden-xs  ">
-                                        <c:out value="${vo.regDate }" /></td>
-                                    <td class="text-right hidden-sm hidden-xs">
-                                        <c:out value="${vo.readCnt }" /></td>
-                                </tr>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <tr>
-                                <td class="text-center">No data found.</td>
-                            </tr>
-                        </c:otherwise>
-                    </c:choose>
-
-                </tbody>
-             </table>
-         </div>
-        <!-- pagenation -->
-            <nav>
-                 <ul class="pagination justify-content-center">
-                    <div class="text-center">
-			            <%=StringUtil.renderPaging(maxNum, currPageNo, rowPerPage, bottomCount, url, scriptName) %>
-			        </div>
-                 </ul>
-             </nav> 
-         <!--// pagenation -->
-         <!-- </div> -->
-          <!-- //게시글 목록 -->
-                                                             
+                                <h4>전사게시판</h4><hr/>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             </div>
-            <!-- #/ container -->
+                            
+					        <!-- 검색영역 -->
+                            <div>
+						        <div class="row">
+						            <div class="col-md-12">
+						                <form action="${hContext}/nboard/do_retrieve.do" class="form-inline" style="text-align: center;" 
+						                    name="searchFrm" method="get">
+						                    <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
+						                    <input type="hidden" name="nbNo" id="nbNo" />
+						                        <button style="margin-right:0.5em; text-align:center; height: 40px; align-self: right;" class="btn mb-1 btn-light" type="button" disabled="disabled">총 글 수 ${totalCnt }개</button>
+						                        <%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>&nbsp;&nbsp;
+						                        <%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%>&nbsp;&nbsp;
+						                        <input type="text" style="height: 12px;" class="form-control input-sm"  
+						                        	id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
+						                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" 
+						                        	class="btn mb-1 btn-info" type="button" onclick="doRetrieve();">조회</button> 
+												<!-- <button style="margin-right:0.5em; text-align:center; height: 40px;" 
+	                                			class="btn mb-1 btn-light" type="button" onclick="doRetrieve();">조회</button> -->
+						                        <!-- 마지막에 풀기 -->
+						                        <c:choose>
+						                           <c:when test="${9 eq user.auth}">
+						                              <button style="margin-right:0.5em; text-align:center; height: 40px;" 
+							                                class="btn mb-1 btn-danger" type="button" 
+							                                onclick="doInsertView();">게시글 작성</button>
+						                           </c:when>
+						                       </c:choose>
+							                </form>
+					                     </div>   
+						            </div>
+						        </div>
+						        <!--// 검색영역 -->
+	
+						        <!-- 게시글 목록 -->
+								<div class="table-responsive">
+									<table class="table header-border table-hover verticle-middle" id="listTable">
+									<!-- <table class="table" id="listTable"> -->
+										<thead class="bg-primary" style="text-align: center; color:white;">
+											<tr>
+						                       <th class="text-center" width="120">글번호</th>
+						                       <th class="text-center" width="150">분류</th>
+						                       <th class="text-center" width="800">제목</th>
+						                       <th class="text-center">등록자</th>
+						                       <th class="text-center">등록일</th>
+						                       <th class="text-center">조회수</th>
+						                    </tr>
+						               </thead>
+						               <tbody>
+						                    <c:choose>
+						                        <c:when test="${list.size()>0 }">
+						                            <c:forEach var="vo" items="${list }">
+						                                <tr>
+						                                    <td class="text-center hidden-sm hidden-xs"><c:out value="${vo.nbNo }" /></td>
+						                                    <td class="text-center"><c:out value="${vo.nbCategory }" /></td>
+						                                    <td class="text-left"><c:out value="${vo.nbTitle }" /></td>
+						                                    <td class="text-center"><c:out value="${vo.regId }" /></td>
+						                                    <td class="text-center hidden-sm hidden-xs"><c:out value="${vo.regDate }" /></td>
+						                                    <td class="text-right hidden-sm hidden-xs"><c:out value="${vo.readCnt }" /></td>
+						                                </tr>
+						                            </c:forEach>
+						                        </c:when>
+						                        <c:otherwise>
+						                            <tr>
+						                                <td class="text-center" colspan="99">데이터를 찾을 수 없습니다.</td>
+						                            </tr>
+						                        </c:otherwise>
+						                    </c:choose>
+										</tbody>
+									</table>
+								</div>
+						         
+								<!-- pagination -->
+								<nav>
+									<ul class="pagination justify-content-center">
+										<div id="page-color-font">
+										<%=StringUtil.renderPaging(maxNum, currPageNo, rowPerPage, bottomCount, url, scriptName) %>
+										</div>
+									</ul>
+								</nav> 
+								<!--//pagination -->
+								
+								<!-- //게시글 목록 -->
+								</div>
+							</div>
+				        </div>
+				    </div>
+				</div>
+			</div>
+			<!-- #/ container -->
         </div>
         <!--**********************************
             Content body end

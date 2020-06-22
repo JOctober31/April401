@@ -98,7 +98,7 @@ public class MemberController {
 			messageVO.setMsgMsg("비밀번호를 확인하세요.");
 		//로그인에 성공
 		} else if(30 == flag) {
-			messageVO.setMsgMsg("로그인을 성공했습니다.");
+			messageVO.setMsgMsg(user.getId()+"님 안녕하세요.\n로그인에 성공했습니다.");
 			//사용자 정보 조회
 			UserVO userInfo = (UserVO) this.userService.doSelectOne(user);
 			LOG.debug("2===================");
