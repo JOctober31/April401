@@ -193,6 +193,11 @@
  										<div>
                                     		<h4>보낸메일함</h4><hr/>
                                     	</div>
+                                    	<div class="btn-group mr-2 mb-2">
+											<button type="button" id="delete_btn" class="btn btn-light">
+												<i class="fa fa-trash font-18 align-middle mr-2"></i>삭제
+											</button>
+										</div>
 	                                    <div class="email-list m-t-15">
 											<!-- <table class="table table-striped table-bordered sung"> -->
                                     	<form action="" name="mailFrm">
@@ -201,6 +206,7 @@
 											<table id="listTable" class="table table-striped table-bordered">
 												<thead class="bg-primary" style="text-align:center; color:white;">
 													<tr>
+														<th width="3%"><input type="checkbox" onclick="event.cancelBubble=true"></th>
 														<th width="10%">수신자</th>
 														<th width="55%">제목</th>
 														<th width="10%">읽음 여부</th>
@@ -212,6 +218,9 @@
 														<c:when test="${list.size()>0 }">
 															<c:forEach var="vo" items="${list}">
 																<tr style="text-align: center;">
+																	<td width="3%">
+																		<input type="checkbox" onclick="event.cancelBubble=true" name="checkbox" value="${vo.mailId}">
+																	</td>
 																	<td width="10%">
 																		<c:choose>
 																			<c:when test="${vo.read =='9'}">

@@ -190,6 +190,14 @@
 								<div class="email-right-box">
 									<div class="toolbar" role="toolbar">
                                    		<h4>휴지통</h4><hr/>
+                                   		<div class="btn-group mr-2 mb-2">
+											<button type="button" id="resend_btn" class="btn btn-light">
+												<i class="fa fa-mail-reply font-18 align-middle mr-2"></i>완전 삭제
+											</button>
+											<button type="button" id="delete_btn" class="btn btn-light">
+												<i class="fa fa-trash font-18 align-middle mr-2"></i>복원
+											</button>
+										</div>
                                    		<%-- <div class="media mb-4 mt-1">
                                             <div class="media-body">
                                                 <h2 class="m-0 text-primary"><b>휴지통</b></h2>
