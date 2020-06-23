@@ -52,7 +52,7 @@
                     WHERE 1=1                                                               
                             --검색조건
                             <include refid="baseCondition"/>
-                    ORDER BY reg_date desc                                                  
+                    ORDER BY nb_no desc
                         )A                                                                          
                         WHERE ROWNUM  <![CDATA[ <= ]]> (#{pageSize} *(#{pageNum} - 1)+#{pageSize})
                     )B
@@ -110,25 +110,26 @@
                 TO_CHAR(reg_date,'YYYY/MM/DD HH24:MI:SS') regDate,
                 TO_CHAR(mod_date,'YYYY/MM/DD HH24:MI:SS') modDate
          FROM NOTICEBOARD
-		WHERE nb_title like '%' || #{nbTitle} || '%'
+		WHERE nb_title = #{nbTitle}
 	</select>  
           
       <select id="doSelectOne" parameterType="NBoardVO" resultType="NBoardVO">
         SELECT
-	            nb_no as nbNo,
-	            nb_category as nbCategory,
-	            nb_title as nbTitle,
-	            nb_contents as nbContents,
-	            notice_yn as noticeYn,
-	            popup_yn as popupYn,
-	            file_id as fileId,
-	            read_cnt as readCnt,
-	            reg_id as regId,
-	            mod_id as modId,
-	            TO_CHAR(reg_date,'YYYY/MM/DD HH24:MI:SS') regDate,
-	            TO_CHAR(mod_date,'YYYY/MM/DD HH24:MI:SS') modDate
-	     FROM NOTICEBOARD
-	        WHERE nb_no like '%' ||  #{nbNo} || '%'
+				t1.nb_no as nbNo,
+				t1.nb_category as nbCategory,
+				t1.nb_title as nbTitle,
+				t1.nb_contents as nbContents,
+				t1.notice_yn as noticeYn,
+				t1.popup_yn as popupYn,
+				t2.save_file_nm as fileId,
+				t1.read_cnt as readCnt,
+				t1.reg_id as regId,
+				t1.mod_id as modId,
+				TO_CHAR(t1.reg_date,'YYYY/MM/DD HH24:MI:SS') regDate,
+				TO_CHAR(t1.mod_date,'YYYY/MM/DD HH24:MI:SS') modDate
+		FROM noticeboard t1, organization t2
+		WHERE t1.reg_id = t2.id
+	    AND nb_no = #{nbNo}
     </select>
     
 

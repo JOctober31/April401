@@ -1,4 +1,5 @@
 package com.april.groupware.nboard.service;
+
 import com.april.groupware.cmn.DTO;
 
 /**

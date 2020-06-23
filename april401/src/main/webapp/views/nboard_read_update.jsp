@@ -34,7 +34,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>전사게시판_상세페이지</title>
+    <title>April Groupware</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="${hContext}/views/images/favicon.png">
     <!-- Custom Stylesheet -->
@@ -110,8 +110,8 @@
             <div class="row page-titles mx-0">
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">커뮤니티</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">전사게시판</a></li>
                     </ol>
                 </div>
             </div>
@@ -119,16 +119,14 @@
 
             <div class="container-fluid">
             <div class="bootstrap-label">
-            <div class="toolbar" role="toolbar">
-              <span style="font-size:1.7em; text-align:center; line-height:30px; height: 40px; width: 150px;" class="label label-info" >전사게시판</span>
-            </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="email-box">
+                                	<!-- 게시글 내용 영역 -->
                                     <div class="toolbar" role="toolbar">
-                                        <div class="btn-group" style="float:right;">
+                                        <%-- <div class="btn-group" style="float:right;">
 	                                      <!-- 마지막에 풀기 -->
 	                                      <c:choose>
                                             <c:when test="${9 eq user.auth}">
@@ -144,53 +142,87 @@
 	                                          <span style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success">댓글 000</span>
 	                                          <input type="button" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success"
 	                                                 value="글 목록" id="list_btn" onclick="goRetrieve();" />
+                                        </div> --%>
+                                        <div class="row">
+                              			<div class="col-lg-10"></div>
+	                                        <c:choose>
+	                                            <c:when test="${9 eq user.auth}">
+		                                		<div class="form-inline" style="margin-left:3.5em;">
+		                                		<!--  style="float:right;" -->
+	                                            	<input type="button" class="btn btn-outline-primary" onclick="goRetrieve();" value="목록으로 이동" id="list_btn" />
+	                                            	<button style="margin-left:0.5em;" class="btn btn-danger" type="button" id="update_btn" name="update_btn" >저장</button>
+													<!-- <input type="button" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" 
+	                                                     class="label label-pill label-danger"
+	                                                     value="삭제" id="delete_btn" name="delete_btn" />
+													<input type="button" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" 
+	                                                     class="label label-pill label-danger" value="수정"
+	                                                     id="update_btn" name="update_btn" /> -->
+		                                        </div>
+												</c:when>
+											</c:choose>
                                         </div>
+                                        <form name="searchFrm" id="searchFrm" method="get">
+											<input type="hidden" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success" 
+	                                                   id="nbNo" name="nbNo" value="${vo.nbNo}" readonly="readonly"/>
+											<input type="hidden" value="${vo.readCnt}" />
+                                            <%-- <span style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success">댓글  ${list.size()}</span>
+                                            <input type="button" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success"
+                                                   value="글 목록" id="list_btn" onclick="goRetrieve();" /> --%>
+										</form>
+										<hr/>
                                     </div>
-                                    <!-- 게시글 내용 영역 -->
-                                    <form>
-                                    <div class="read-content">
-                                    <div class="media mb-4 mt-1">
-                                        <!-- 카테고리 -->
-                                        <div>
-                                         <select id="category" name="category" style="font-size: 14px; color:white; background-color: #7571f9; padding: 7px; width: 150px">
-                                            <option value="">카테고리 선택</option>
-                                            <option value="중요 공지">중요 공지</option>
-                                            <option value="April 소식">April 소식</option>
-                                            <option value="IT 뉴스">IT 뉴스</option>
-                                            <option value="식단표">식단표</option>
-                                            <option value="분실물">분실물</option>
-                                         </select>
-                                         </div>
-                                         &nbsp;&nbsp;
                                     
-                                            <%-- <div class="media" style="display: flex; padding-right: 1em;">
-                                                ${vo.nbCategory }
-                                            </div> --%>
-                                                <div class="media-body" style="margin: 0; padding: 0;">
-                                                    <input type="text" class="form-control m-0 text-primary" style="font-weight: bolder;"
-                                                    value="${vo.nbTitle }" placeholder="수정할 제목을 입력하세요"
-                                                    id="nbTitle" name="nbTitle"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="media pt-3">
-                                            <img class="mr-3 rounded-circle" src="${hContext}/views/images/avatar/1.jpg">
-                                            <div class="media-body">
-                                                <h5 class="m-b-3"> 등록 : ${vo.regId } </h5>
-                                                <p class="m-b-2"> 등록일 : ${vo.regDate }</p>
-                                            </div>
-                                        </div>
+                                    <div class="read-content">
+                                    	<div class="row col-lg-12">
+                                    		<div class="col-lg-2"></div>
+	                                    	<div class="form-inline col-lg-8">
+	                                    		<div class="btn-group" style="margin-bottom:10px">
+			                                        <!-- 카테고리 -->
+													<select id="category" name="category" class="form-control input-sm" style="color:white; background-color: #7571f9; width: 150px">
+			                                            <option value="">카테고리 선택</option>
+			                                            <option value="중요 공지">중요 공지</option>
+			                                            <option value="April 소식">April 소식</option>
+			                                            <option value="IT 뉴스">IT 뉴스</option>
+			                                            <option value="식단표">식단표</option>
+			                                            <option value="분실물">분실물</option>
+													</select>
+			                                        &nbsp;
+													<%-- <div class="media" style="display: flex; padding-right: 1em;">
+		                                                ${vo.nbCategory }
+		                                            </div> --%>
+												</div>
+											</div>
+										</div>
+											<div class="row col-lg-12">
+												<div class="col-lg-2"></div>
+												<div class="col-lg-8">
+													<div style="margin-bottom:10px">
+		                                                <input type="text" class="form-control" style="font-weight: bolder;"
+		                                                id="nbTitle" name="nbTitle" value="${vo.nbTitle }" placeholder="제목을 입력하세요" />
+		                                            </div>
+		                                            <div>
+			                                            <textarea class="form-control" name="nbContents" id="nbContents" rows="15" 
+										             		placeholder="수정 내용">${vo.nbContents}</textarea>
+													</div>
+												</div>
+											</div>
+                                        
 	                                            <!-- 수정시 수정자 아이디/수정일 -->
 	                                            <%-- <p class="m-b-2" > 수정자 ${user.deptNm } ${user.position } ${user.name }</p> --%>
 	                                            <input type="hidden" id="modId" name="modId" value="${user.id }">
-                                        <hr>
-                                        <div class="form-group">
+                                        <%-- <div class="form-group">
 								           <label for="contents" class="col-sm-2 control-label">수정 내용</label>
 								           <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
 								             <textarea class="form-control" name="nbContents" id="nbContents" rows="15" 
 								             placeholder="수정 내용">${vo.nbContents}</textarea>
 								           </div>
-								         </div> 
+											<div class="col-lg-1"></div>
+	                                        <div class="col-lg-10">
+												<textarea class="form-control" name="nbContents" id="nbContents" rows="15" 
+								             placeholder="수정 내용">${vo.nbContents}</textarea>
+	                                        </div>
+                                        </div> --%>
+										</div> 
                                         <hr>
                                         <h6 class="p-t-15"><i class="fa fa-download mb-2"></i> Attachments <span>(3)</span></h6>
                                         <div class="row m-b-30">

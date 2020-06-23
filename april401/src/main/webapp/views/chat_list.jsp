@@ -174,10 +174,10 @@ if (null != search) {
 										width="80px" height="80px" alt=""> --%>
 									<c:choose>
 										<c:when test="${user.saveFileName==null || user.saveFileName.length()==0}">
-											<img class="mr-3" alt="profile" src="${hContext}/img_cmn/no_image.gif" width="100px" height="120px"/>
+											<img class="mr-3 rounded-circle" alt="profile" src="${hContext}/img_cmn/no_image.gif" width="100px" height="100px"/>
 										</c:when>
 										<c:otherwise>
-											<img class="mr-3" alt="profile" src="${hContext}/${user.saveFileName}" width="100px" height="120px"/>
+											<img class="mr-3 rounded-circle" alt="profile" src="${hContext}/${user.saveFileName}" width="100px" height="100px"/>
 										</c:otherwise>
 									</c:choose>
 									

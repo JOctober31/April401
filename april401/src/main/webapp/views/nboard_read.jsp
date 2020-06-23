@@ -125,165 +125,182 @@
 
             <div class="container-fluid">
             <div class="bootstrap-label">
-            <div class="toolbar" role="toolbar">
-              <span style="font-size:1.7em; text-align:center; line-height:30px; height: 40px; width: 150px;" class="label label-info" >전사게시판</span>
-            </div>
                 <div class="row">
                     <div class="col-lg-12">
-                    <form name="searchFrm" id="searchFrm" method="get">
                         <div class="card">
                             <div class="card-body">
                                 <div class="email-box">
-                                    <div class="toolbar" role="toolbar">
-                                        <div class="btn-group" style="float:right;">
-                                         <!-- 마지막에 풀기 -->
-                                         <c:choose>
-                                            <c:when test="${9 eq user.auth}">
-                                              <input type="button" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" 
-                                                     class="label label-pill label-danger"
-                                                     value="삭제" id="delete_btn" name="delete_btn" />
-                                              <input type="button" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" 
-                                                     class="label label-pill label-danger" value="수정"
-                                                     id="update_btn" name="update_btn" />
-                                           </c:when>
-                                         </c:choose>
-                                              <input type="text" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success" 
-                                                     id="nbNo" name="nbNo" value="글번호  ${vo.nbNo }"  readonly="readonly"/>
-                                              <label style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success"
-                                                     >조회수 ${vo.readCnt }</label>
-                                              <span style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success">댓글  ${list.size()}</span>
-                                              <input type="button" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success"
-                                                     value="글 목록" id="list_btn" onclick="goRetrieve();" />
+                                	<!-- 게시글 내용 영역 -->
+                                	<div class="toolbar" role="toolbar">
+                                		<div class="row">
+                              			<div class="col-lg-9"></div>
+	                                        <c:choose>
+	                                            <c:when test="${9 eq user.auth}">
+		                                		<div class="form-inline" style="margin-left:7.5em;">
+		                                		<!--  style="float:right;" -->
+	                                            	<input type="button" class="btn btn-outline-primary" onclick="goRetrieve();" value="목록으로 이동" id="list_btn" />
+	                                            	<button style="margin-left:0.5em;" class="btn btn-danger" type="button" id="update_btn" name="update_btn" >수정</button>
+	                                            	<button style="margin-left:0.5em;" class="btn btn-danger" type="button" id="delete_btn" name="delete_btn" >삭제</button>
+													<!-- <input type="button" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" 
+	                                                     class="label label-pill label-danger"
+	                                                     value="삭제" id="delete_btn" name="delete_btn" />
+													<input type="button" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" 
+	                                                     class="label label-pill label-danger" value="수정"
+	                                                     id="update_btn" name="update_btn" /> -->
+		                                        </div>
+												</c:when>
+												<c:otherwise>
+													<div class="form-inline" style="margin-left:18em;">
+														<input type="button" class="btn btn-outline-primary" onclick="goRetrieve();" value="목록으로 이동" id="list_btn" />
+													</div>
+												</c:otherwise>
+											</c:choose>
                                         </div>
+                                	</div>
+									<form name="searchFrm" id="searchFrm" method="get">
+										<input type="hidden" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success" 
+                                                   id="nbNo" name="nbNo" value="${vo.nbNo}" readonly="readonly"/>
+										<input type="hidden" value="${vo.readCnt}" />
+                                            <%-- <span style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success">댓글  ${list.size()}</span>
+                                            <input type="button" style="margin:0.2em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success"
+                                                   value="글 목록" id="list_btn" onclick="goRetrieve();" /> --%>
+									</form>
+                                	<hr/>
+                                	<div class="toolbar" role="toolbar">
+                                		<h4 class="m-0 text-primary" style="font-weight: bolder;">[${vo.nbCategory}]</h4><br>
+	                                    <h3>${vo.nbTitle}</h3>
+                                        <hr/>
                                     </div>
                                     
-                                    <!-- 게시글 내용 영역 -->
                                     <div class="read-content">
-                                    <div class="media mb-4 mt-1">
-                                            <div class="media" style="display: flex; padding-right: 1em;">
-                                                ${vo.nbCategory }
+                                    	<!-- <div class="media mb-4 mt-1">
+                                            <div class="media">
                                             </div>
-                                                <div class="media-body" style="margin: 0; padding: 0;">
-                                                 <%-- <input type="hidden" id="nbTitle" value="${vo.nbTitle }"/> --%>
-                                                    <h4 class="m-0 text-primary" style="font-weight: bolder;">${vo.nbTitle }</h4>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </div> -->
                                         <div class="media pt-3">
-                                            <img class="mr-3 rounded-circle" src="${hContext}/views/images/avatar/1.jpg">
+                                            <%-- <img class="mr-3 rounded-circle" src="${hContext}/views/images/avatar/1.jpg"> --%>
+                                            <c:choose>
+												<c:when test="${vo.fileId==null || vo.fileId.length()==0}">
+													<img class="mr-3 rounded-circle" alt="profile" src="${hContext}/img_cmn/no_image.gif" width="65px" height="65px"/>
+												</c:when>
+												<c:otherwise>
+													<img class="mr-3 rounded-circle" alt="profile" src="${hContext}/${vo.fileId}" width="65px" height="65px"/>
+												</c:otherwise>
+											</c:choose>
                                             <div class="media-body">
                                                 <%-- <input type="hidden" id="regId" value="${vo.regId }"/>
                                                 <input type="hidden" id="regDate" value="${vo.regDate }"/> --%>
-                                                <h5 class="m-b-3">등록자 ${vo.regId }</h5>
-                                                <p class="m-b-2">등록일 ${vo.regDate }</p>
+                                                <h5 class="m-b-3">등록자 ${vo.regId}</h5>
+                                                <p class="m-b-2">${vo.regDate}<br>조회수 ${vo.readCnt} 댓글  ${list.size()}</p>
                                             </div>
-                                            <!-- 수정시 수정자 아이디/수정일 -->
                                         </div>
-                                            <c:choose>
+                                            <!-- 수정시 수정자 아이디/수정일 -->
+                                            <%-- <c:choose>
                                                 <c:when test="${vo.modId != null}">     
                                                     <p class="m-b-2" > 수정자 ${vo.modId} 수정일 ${vo.modDate }</p>
                                                 </c:when>
-                                             </c:choose>
-                                        <hr>
-                                         <pre><c:out value="${vo.nbContents}" /></pre>
-                                         <%-- <input type="hidden" id="nbContents" value="${vo.nbContents }"/>
-                                       <h5 class="m-b-15">${vo.nbContents }</h5> --%>
-                                        <hr>
-                                      <!-- // 게시글 내용 영역 -->
-                                    </div>
-                                </div>
-                            </div>
-                                      </form>
-                        </div>
-                        
-                        
-                        <!--div 댓글 작성 -->
-                        <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body" style="padding-bottom: 1em;">
-                                <span style="margin-bottom:1em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-danger">댓글 작성</span>
-                                <div class="basic-form">
-                                    <form id="answerFrm" name="answerFrm">
-                                        <div class="form-group">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                    <img class="mr-3 circle-rounded" src="${hContext}/views/images/avatar/2.jpg" width="50" height="50" alt="Generic placeholder image">
-                                                    </td>
-                                                    <td width="1500px">
-                                                   <textarea class="form-control h-150px" rows="2" id="aw_contents" placeholder="댓글 내용을 입력하세요."></textarea>
-                                                   <input type="hidden" id="awRegId" name="awRegId" value=" ${user.id }">
-                                                   </td>
-                                                </tr>
-                                                <tr>
-                                                   <td colspan = "2" align="right" style="padding-top: 1em;">
-                                                       <button type="button" class="btn mb-1 btn-outline-info" id="aw_insert_btn">댓글 등록</button>
-                                                   </td>
-                                                </tr>
-                                            </table>
+                                             </c:choose> --%>
+                                        <div class="form-inline">
+	                                        <div class="col-lg-1"></div>
+	                                        <div class="col-lg-10">
+												<h6 class="m-b-3"><c:out value="${vo.nbContents}" /></h6>
+		                                         <%-- <input type="hidden" id="nbContents" value="${vo.nbContents }"/>
+		                                       <h5 class="m-b-15">${vo.nbContents }</h5> --%>
+	                                        </div>
                                         </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                        
-                        
-                       <!--div 댓글 읽기 -->
-                        <div class="card">
-                            <div class="card-body">
-                             <span style="margin-bottom:1em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success">댓글</span>
-                                <c:choose>
-			                        <c:when test="${list.size()>0 }">
-			                            <c:forEach var="vo" items="${list }">
-                                <div class="media media-reply">
-                                    <div class="media-body">
-                                        <div class="d-sm-flex justify-content-between mb-2">
-                                            <h6 class="mb-sm-0"><c:out value="${vo.deptNm } ${vo.position } ${vo.name }" /></h6>
-                                             <small class="text-muted ml-3"><c:out value="${vo.regDate }" /></small>
-                                        </div>
-                                        <p><c:out value="${vo.awContents }" /></p>
-                                </div>
-                            </div>
-                            </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                            <div class="media media-reply">
-                                    <div class="media-body">
-                                        <div class="d-sm-flex justify-content-between mb-2">
-                                            <h5 class="mb-sm-0"><small class="text-muted ml-3"></small></h5>
-                                        </div>
-                                        <p> 등록된 댓글이 없습니다.</p>
-                                </div>
-                            </div>
-                            </c:otherwise>
-                            </c:choose>
-                        
-                            
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <!-- #/ container -->
+                                        <!-- // 게시글 내용 영역 -->
+                                        <hr/>
+                                        
+                                        <!--div 댓글 읽기 -->
+										<div>
+											<!-- <span style="margin-bottom:1em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success">댓글</span>
+											<h4>댓글</h4> -->
+											<span class="label label-dark" style="width: 100px; text-align:center;">댓글</span>
+			                                <c:choose>
+						                        <c:when test="${list.size()>0 }">
+						                            <c:forEach var="vo" items="${list}">
+					                                <div class="media media-reply">
+					                                    <div class="media-body">
+					                                        <div class="d-sm-flex justify-content-between mb-2">
+					                                            <h6 class="mb-sm-0"><c:out value="${vo.deptNm} ${vo.position} ${vo.name}" /></h6>
+					                                             <small class="text-muted ml-3"><c:out value="${vo.regDate}" /></small>
+					                                        </div>
+					                                        <p><c:out value="${vo.awContents}" /></p>
+						                                </div>
+						                            </div>
+				                            		</c:forEach>
+				                            	</c:when>
+					                            <c:otherwise>
+				                            	<div class="media media-reply">
+				                                    <div class="media-body">
+				                                        <div class="d-sm-flex justify-content-between mb-2">
+				                                            <h5 class="mb-sm-0"><small class="text-muted ml-3"></small></h5>
+				                                        </div>
+				                                        <p>댓글이 없습니다. 댓글을 남겨주세요.</p>
+					                                </div>
+					                            </div>
+				                            	</c:otherwise>
+				                            </c:choose>
+				                            <hr/>
+				                        </div>
+				                        <!-- // div 댓글 읽기 -->
+			                        
+			                        	<!--div 댓글 작성 -->
+		                        		<div class="basic-form">
+			                        		<span class="label label-dark" style="width: 100px; text-align:center;">댓글 작성</span>
+		                                    <form id="answerFrm" name="answerFrm">
+		                                        <div class="form-group">
+		                                            <table>
+		                                                <tr>
+		                                                    <td>
+		                                                    <%-- <img class="mr-3 circle-rounded" src="${hContext}/views/images/avatar/2.jpg" width="50" height="50" alt="Generic placeholder image"> --%>
+		                                                    <c:choose>
+																<c:when test="${user.saveFileName==null || user.saveFileName.length()==0}">
+																	<img class="mr-3 rounded-circle" alt="profile" src="${hContext}/img_cmn/no_image.gif" width="50px" height="50px"/>
+																</c:when>
+																<c:otherwise>
+																	<img class="mr-3 rounded-circle" alt="profile" src="${hContext}/${user.saveFileName}" width="50px" height="50px"/>
+																</c:otherwise>
+															</c:choose>
+		                                                    </td>
+		                                                    <td width="1500px">
+		                                                   <textarea class="form-control h-150px" rows="2" id="aw_contents" placeholder="댓글 내용을 입력하세요."></textarea>
+		                                                   <input type="hidden" id="awRegId" name="awRegId" value=" ${user.id }">
+		                                                   </td>
+		                                                </tr>
+		                                                <tr>
+		                                                   <td colspan="2" align="right" style="padding-top: 1em;">
+		                                                       <button type="button" class="btn btn-primary" id="aw_insert_btn">등록</button>
+		                                                   </td>
+		                                                </tr>
+		                                            </table>
+		                                        </div>
+		                                    </form>
+                               			</div>
+                                	</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
-        
-        
-        <!--**********************************
-            Footer start
-        ***********************************-->
-        <div class="footer">
-            <%@ include file="/common/april_footer.jsp" %>
-        </div>
-        <!--**********************************
-            Footer end
-        ***********************************-->
+        <!-- #/ container -->
+    </div>
+    <!--**********************************
+        Content body end
+    ***********************************-->
+    
+    
+    <!--**********************************
+        Footer start
+    ***********************************-->
+    <div class="footer">
+        <%@ include file="/common/april_footer.jsp" %>
+    </div>
+    <!--**********************************
+        Footer end
+    ***********************************-->
     </div>
     <!--**********************************
         Main wrapper end
@@ -306,17 +323,15 @@
 
   //수정 화면으로 이동
     $("#update_btn").on("click",function(){
-            var nbNo = ${vo.nbNo };
-            var readCnt = ${vo.readCnt };
-            console.log("nbNo:"+nbNo);
-            console.log("readCnt:"+readCnt);
-             var frm = document.searchFrm;
-             frm.nbNo.value = nbNo;
-             frm.action = "${hContext}/nboard/do_selectone_update.do";
-             frm.submit();
-             
-             
-         });
+        var nbNo = ${vo.nbNo };
+        var readCnt = ${vo.readCnt };
+        console.log("nbNo:"+nbNo);
+        console.log("readCnt:"+readCnt);
+         var frm = document.searchFrm;
+         frm.nbNo.value = nbNo;
+         frm.action = "${hContext}/nboard/do_selectone_update.do";
+         frm.submit();
+     });
     
 
     // 삭제하기 - 관리자만 보여짐

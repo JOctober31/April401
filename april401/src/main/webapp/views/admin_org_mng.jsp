@@ -246,7 +246,7 @@
 
 									<div class="form-group row">
 										<div class="col-lg-8 ml-auto">
-											<input type="button"class="btn btn-outline-primary" onclick="goRetrieve();" value="목록으로 이동" id="list_btn" /> 
+											<input type="button" class="btn btn-outline-primary" onclick="goRetrieve();" value="목록으로 이동" id="list_btn" /> 
 											<input type="button" class="btn btn-primary" value="수정" id="update_btn" />
 											<input type="button" class="btn btn-primary" value="삭제" id="delete_btn" />
 										</div>

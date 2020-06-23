@@ -188,11 +188,10 @@ Logger  LOG = LoggerFactory.getLogger(this.getClass());
 		LOG.debug("1=================");
 		
 		if( 0 == board.getNbNo()) {		
-
 			throw new IllegalArgumentException("게시글 번호를 확인 하세요.");			
 		}
 		
-		NBoardVO  outVO =(NBoardVO) this.boardService.doSelectOne(board);
+		NBoardVO outVO = (NBoardVO) this.boardService.doSelectOne(board);
 		LOG.debug("1.1.======NBoardContoller=doSelectOne==========");
 		LOG.debug("1.1=outVO="+outVO);
 		LOG.debug("1.1=================");	
@@ -253,12 +252,11 @@ Logger  LOG = LoggerFactory.getLogger(this.getClass());
 			LOG.debug("1=param="+board);
 			LOG.debug("1=================");
 			
-			if( 0 == board.getNbNo()) {		
-
+			if(0 == board.getNbNo()) {		
 				throw new IllegalArgumentException("게시글 번호를 확인 하세요.");			
 			}
 			
-			NBoardVO  outVO =(NBoardVO) this.boardService.doSelectOne(board);
+			NBoardVO outVO = (NBoardVO) this.boardService.doSelectOne(board);
 			LOG.debug("1.1.==NBoardContoller=doSelectOneUpdate==============");
 			LOG.debug("1.1=outVO="+outVO);
 			LOG.debug("1.1=================");	
