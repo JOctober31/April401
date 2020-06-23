@@ -195,26 +195,40 @@
 								<!-- 검색영역 -->
 								<div>	                            
 							        <div class="row">
-							            <div class="col-md-12">
-							                <form action="${hContext}/admin/do_retrieve.do" class="form-inline" style="text-align: center;"
-							                	name="searchFrm" method="get">
+							        	<div class="col-md-4"></div>
+							            <div class="col-md-8">
+							                <form action="${hContext}/admin/do_retrieve.do" name="searchFrm" method="get">
 							                    <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum}">
 							                    <input type="hidden" name="id" id="id" />
-						                        <div class="btn-group mr-2 mb-2">
-						                        <%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>&nbsp;&nbsp;
-						                        </div>
-						                     	
-						                     	<div class="btn-group mr-2 mb-2">
-						                        <%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%>&nbsp;&nbsp;
-						                        </div>
-						                        
-						                        <input type="text" style="height: 12px;" class="form-control"  id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
-						                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
-						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-primary" type="button" onclick="doRetrieve();">검색</button> 
-						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-danger" type="button" onclick="doInsertView();">등록</button>
-						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-success" type="button" disabled="disabled">사원수 ${totalCnt } 명</button>
+							                    <div class="form-inline">
+							                        <div class="btn-group mr-2 mb-2">
+									                    <!-- PageSize -->
+								                        <%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>
+								                        &nbsp;&nbsp;
+							                     		<!-- SearchDiv -->
+								                        <%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%>
+								                        &nbsp;&nbsp;
+							                        	<!-- 검색 -->
+								                        <input type="text" style="height: 40;" class="form-control" id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
+								                        &nbsp;
+							                        </div>
+							                        
+							                        <div class="mr-2 mb-2">
+								                        <button style="height: 40px;" class="btn btn-primary" type="button" onclick="doRetrieve();">검색</button> 
+			                						</div>
+		                						</div>
 		                					</form>
-						                </div>   
+						                </div>
+						                <div class="col-md-11">
+	                						<div class="form-inline mr-2 mb-2">
+						                        <button style="height: 40px;" class="btn btn-light" type="button" disabled="disabled">사원수 ${totalCnt } 명</button>
+					                        </div>
+						                </div>
+						                <div class="col-md-1">
+	                						<div class="form-inline mr-2 mb-2">
+						                        <button style="margin-left:2.5em; height: 40px;" class="btn btn-danger" type="button" onclick="doInsertView();">등록</button>
+					                        </div>
+						                </div>
 						            </div>
 						        </div>
 		        				<!--// 검색영역 -->

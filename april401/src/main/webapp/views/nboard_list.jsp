@@ -78,7 +78,7 @@
     int maxNum =0;//총글수
     int currPageNo=1;//현재페이지 
     int rowPerPage=10;
-    int bottomCount=5;//바닥에 page
+    int bottomCount=10;//바닥에 page
     
     if(null !=search){
         currPageNo = search.getPageNum();
@@ -190,30 +190,45 @@
 					        <!-- 검색영역 -->
                             <div>
 						        <div class="row">
-						            <div class="col-md-12">
-						                <form action="${hContext}/nboard/do_retrieve.do" class="form-inline" style="text-align: center;" 
-						                    name="searchFrm" method="get">
+						        	<div class="col-md-4"></div>
+						            <div class="col-md-8">
+						                <form action="${hContext}/nboard/do_retrieve.do" name="searchFrm" method="get">
 						                    <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
 						                    <input type="hidden" name="nbNo" id="nbNo" />
-						                        <button style="margin-right:0.5em; text-align:center; height: 40px; align-self: right;" class="btn mb-1 btn-light" type="button" disabled="disabled">총 게시글 수 ${totalCnt }개</button>
-						                        <%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>&nbsp;&nbsp;
-						                        <%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%>&nbsp;&nbsp;
-						                        <input type="text" style="height: 12px;" class="form-control"  id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
-						                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
-						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" 
-						                        	class="btn mb-1 btn-info" type="button" onclick="doRetrieve();">검색</button> 
-												<!-- <button style="margin-right:0.5em; text-align:center; height: 40px;" 
-	                                			class="btn mb-1 btn-light" type="button" onclick="doRetrieve();">조회</button> -->
-						                        <!-- 마지막에 풀기 -->
+						                    	<div class="form-inline">
+						                    		<div class="btn-group mr-2 mb-2">
+									                    <!-- PageSize -->
+								                        <%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>
+								                        &nbsp;&nbsp;
+								                        <!-- SearchDiv -->
+								                        <%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%>
+								                        &nbsp;&nbsp;
+								                        <!-- 검색 -->
+								                        <input type="text" style="height: 40;" class="form-control"  id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
+						                        		&nbsp;
+						                        	</div>
+						                        	<div class="mr-2 mb-2">
+								                        <button style="text-align:center; height: 40px;" class="btn btn-primary" type="button" onclick="doRetrieve();">검색</button> 
+														<!-- <button style="margin-right:0.5em; text-align:center; height: 40px;" 
+			                                			class="btn mb-1 btn-light" type="button" onclick="doRetrieve();">조회</button> -->
+							                        </div>
+												</div>
+							                </form>
+					                     </div>
+					                     <div class="col-md-11">
+	                						<div class="form-inline mr-2 mb-2">
+					                     		<button style="height: 40px; align-self: right;" class="btn btn-light" type="button" disabled="disabled">총 게시글 수 ${totalCnt }개</button>
+					                     	</div>
+						                </div>
+						                <div class="col-md-1">
+	                						<div class="form-inline mr-2 mb-2">
 						                        <c:choose>
 						                           <c:when test="${9 eq user.auth}">
-						                              <button style="margin-right:0.5em; text-align:center; height: 40px;" 
-							                                class="btn mb-1 btn-danger" type="button" 
-							                                onclick="doInsertView();">게시글 작성</button>
+						                              <button style="margin-left:1.5em; height: 40px;" class="btn btn-danger" type="button" onclick="doInsertView();">글작성</button>
 						                           </c:when>
 						                       </c:choose>
-							                </form>
-					                     </div>   
+						                    </div>
+						                </div>
 						            </div>
 						        </div>
 						        <!--// 검색영역 -->
@@ -260,7 +275,7 @@
 								<nav>
 									<ul class="pagination justify-content-center">
 										<div id="page-color-font">
-										<%=StringUtil.renderPaging(maxNum, currPageNo, rowPerPage, bottomCount, url, scriptName) %>
+										<%=StringUtil.orgRenderPaging(maxNum, currPageNo, rowPerPage, bottomCount, url, scriptName) %>
 										</div>
 									</ul>
 								</nav> 
