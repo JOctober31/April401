@@ -26,7 +26,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>메일</title>
+    <title>April Groupware</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="${aprilContext}/views/images/favicon.png">
     <!-- Custom Stylesheet -->
@@ -108,23 +108,27 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="email-left-box">
-                                <a href="${aprilContext}/views/email_compose.jsp" onclick="exitPage();" class="btn btn-primary btn-block">메일 쓰기</a>
-                                    <div class="mail-list mt-4">
-                                    	<a href="${aprilContext}/mail/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" onclick="exitPage();" class="list-group-item border-0 text-primary p-r-0">
-                                    		<i class="fa fa-inbox font-18 align-middle mr-2"></i> 
-                                    		<b>받은 메일함</b> 
-                                    		<span class="badge badge-primary badge-sm float-right m-t-5"><c:out value="${count}"></c:out></span> 
-                                    	</a>
-                                        <a href="${aprilContext}/mail/do_retrieveSent.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" onclick="exitPage();" class="list-group-item border-0 p-r-0">
-                                        	<i class="fa fa-paper-plane font-18 align-middle mr-2"></i>보낸 메일함
-                                        </a>  
-                                        <!-- 
+                            	<div class="email-left-box">
+									<a href="${aprilContext}/views/email_compose.jsp" class="btn btn-primary btn-block">메일 쓰기</a>
+									<div class="mail-list mt-4">
+										<a href="${aprilContext}/mail/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" 
+											class="list-group-item border-0 p-r-0">
+											&nbsp;<i class="fa fa-inbox font-18 align-middle mr-2"></i>받은메일함
+	                                    			<span class="badge badge-primary badge-sm float-right m-t-5"><c:out value="${count}"></c:out></span>
+										</a>
+										<a href="${aprilContext}/mail/do_retrieveSent.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}"
+											class="list-group-item border-0 p-r-0">
+											<i class="fa fa-paper-plane font-18 align-middle mr-2"></i>보낸메일함
+										</a> 
+										<!-- 
                                         <a href="#" class="list-group-item border-0 p-r-0"><i class="mdi mdi-file-document-box font-18 align-middle mr-2"></i>Draft</a>
                                          -->
-                                        <a href="${aprilContext}/mail/do_retrieveTrash.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" onclick="exitPage();" class="list-group-item border-0 p-r-0"><i class="fa fa-trash font-18 align-middle mr-2"></i>휴지통</a>
-                                    </div>
-                                    <!-- 
+										<a href="${aprilContext}/mail/do_retrieveTrash.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" 
+											class="list-group-item border-0 p-r-0">
+											&nbsp;<i class="fa fa-trash font-18 align-middle mr-2"></i>휴지통
+										</a>
+									</div>
+									<!-- 
                                     <h5 class="mt-5 m-b-10">카테고리</h5>
                                     <div class="list-group mail-list">
                                     	<a href="#" class="list-group-item border-0"><span class="fa fa-briefcase f-s-14 mr-2"></span>Work</a>  
@@ -133,7 +137,8 @@
                                     	<a href="#" class="list-group-item border-0"><span class="fa fa-tags f-s-14 mr-2"></span>Social</a>
                                     </div>
                                      -->
-                                </div>
+								</div>
+                            
                                 <div class="email-right-box">
                                     <div class="toolbar" role="toolbar">
                                     	<div class="btn-group m-b-20">

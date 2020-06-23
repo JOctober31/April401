@@ -30,7 +30,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <title>April Groupware</title>
     
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="${aprilContext}/views/images/favicon.png">
@@ -123,7 +123,7 @@
                         <div class="card">
                             <div class="card-body">
                             	<div class="card-title">
-                                    <h4>개인 정보 수정</h4>
+                                    <h4>개인 정보 수정</h4><hr/>
                                 </div>
                                 <div class="form-validation">
                                     <form action="${aprilContext}/org/do_update.do" name="org_form" id="org_form" method="post" enctype="multipart/form-data">
@@ -192,21 +192,21 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="hiredate">입사일 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="hiredate">입사일 <span class="text-danger" >*</span>
                                             </label>
                                             <div class="col-lg-6">
                                                 <input type="text" class="form-control" id="hiredate" name="hiredate" placeholder="${orgUpdateVO.hiredate}" readonly="readonly">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="deptNm">부서명 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="deptNm">부서명 <span class="text-danger" >*</span>
                                             </label>
                                             <div class="col-lg-6">
                                                 <input type="text" class="form-control" id="deptNm" name="deptNm" placeholder="${orgUpdateVO.deptNm}" readonly="readonly">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="position">직급 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="position">직급 <span class="text-danger" >*</span>
                                             </label>
                                             <div class="col-lg-6">
                                                 <input type="text" class="form-control" id="position" name="position" placeholder="${orgUpdateVO.position}" readonly="readonly">
@@ -220,14 +220,14 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="birth">생년월일 <span class=""></span>
+                                            <label class="col-lg-4 col-form-label" for="birth">생년월일 <span class="text-danger" >*</span>
                                             </label>
                                             <div class="col-lg-6">
                                                 <input type="text" class="form-control" id="birth" name="birth" placeholder="${orgUpdateVO.birth}" readonly="readonly">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="mobile">휴대폰 번호 <span class="text-danger"></span>
+                                            <label class="col-lg-4 col-form-label" for="mobile">휴대폰 번호 <span class="text-danger" >*</span>
                                             </label>
                                             <div class="col-lg-6">
                                                 <input type="text" class="form-control" id="mobile" name="mobile" placeholder="${orgUpdateVO.mobile}">
@@ -423,8 +423,8 @@
                                         </div> -->
                                     <div class="form-group row">
                                         <div class="col-lg-8 ml-auto">
-                                            <button type="submit" name="update_btn" id="update_btn" class="btn btn-primary">저장</button>
                                             <button type="button" name="cancel_btn" id="cancel_btn" class="btn btn-outline-primary">취소</button>
+                                            <button type="submit" name="update_btn" id="update_btn" class="btn btn-primary">저장</button>
                                         </div>
                                     </div>
                                     </form>

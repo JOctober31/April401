@@ -54,7 +54,4 @@ public class DTO {
 		return "DTO [num=" + num + ", totalCnt=" + totalCnt + "]";
 	}
 	
-	
-	
-	
 }

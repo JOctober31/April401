@@ -48,7 +48,6 @@ Logger  LOG = LoggerFactory.getLogger(this.getClass());
 			search.setPageSize(15);
 		}
 		
-		
 		search.setSearchDiv(StringUtil.nvl(search.getSearchDiv()));
 		search.setSearchWord(StringUtil.nvl(search.getSearchWord().trim()));
 		

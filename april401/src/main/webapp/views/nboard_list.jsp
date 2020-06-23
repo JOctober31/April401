@@ -95,7 +95,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <title>April Groupware</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="${hContext}/views/images/favicon.png">
     <!-- Custom Stylesheet -->
@@ -178,23 +178,23 @@
             <!-- row -->
 
             <div class="container-fluid">
-            <div class="bootstrap-label">
-               <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                            <div class="card-title">
-                                <h4>전사게시판</h4><hr/>
-                            </div>
-                            
-					        <!-- 검색영역 -->
-                            <div>
-						        <div class="row">
-						        	<div class="col-md-4"></div>
-						            <div class="col-md-8">
-						                <form action="${hContext}/nboard/do_retrieve.do" name="searchFrm" method="get">
-						                    <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
-						                    <input type="hidden" name="nbNo" id="nbNo" />
+	            <div class="bootstrap-label">
+	               <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card">
+	                            <div class="card-body">
+	                            <div class="card-title">
+	                                <h4>전사게시판</h4><hr/>
+	                            </div>
+	                            
+						        <!-- 검색영역 -->
+	                            <div>
+							        <div class="row">
+							        	<div class="col-md-4"></div>
+							            <div class="col-md-8">
+							                <form action="${hContext}/nboard/do_retrieve.do" name="searchFrm" method="get">
+							                    <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
+							                    <input type="hidden" name="nbNo" id="nbNo" />
 						                    	<div class="form-inline">
 						                    		<div class="btn-group mr-2 mb-2">
 									                    <!-- PageSize -->
@@ -214,13 +214,13 @@
 							                        </div>
 												</div>
 							                </form>
-					                     </div>
-					                     <div class="col-md-11">
+										</div>
+										<div class="col-md-11">
 	                						<div class="form-inline mr-2 mb-2">
-					                     		<button style="height: 40px; align-self: right;" class="btn btn-light" type="button" disabled="disabled">총 게시글 수 ${totalCnt }개</button>
+					                     		<button style="height: 40px; align-self: right;" class="btn btn-light" type="button" disabled="disabled">게시글 수 ${totalCnt }개</button>
 					                     	</div>
-						                </div>
-						                <div class="col-md-1">
+										</div>
+										<div class="col-md-1">
 	                						<div class="form-inline mr-2 mb-2">
 						                        <c:choose>
 						                           <c:when test="${9 eq user.auth}">

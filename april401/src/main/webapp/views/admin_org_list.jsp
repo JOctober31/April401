@@ -60,10 +60,10 @@
     //paging
     String url = H_PATH+"/admin/do_retrieve.do";
     String scriptName = "doSeachPage";
-    int maxNum =0;//총글수
+    int maxNum=0;//총글수
     int currPageNo=1;//현재페이지 
     int rowPerPage=10;
-    int bottomCount=5;//바닥에 page
+    int bottomCount=10;//바닥에 page
     
     if(null !=search){
         currPageNo = search.getPageNum();

@@ -25,7 +25,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/common/common.jsp"%>
 
-<c:set var="aprilContext" value="${pageContext.request.contextPath }"></c:set>
+<c:set var="aprilContext" value="${pageContext.request.contextPath}"></c:set>
 <%
 //페이지 사이즈
 String pageSize = "10";
@@ -77,10 +77,9 @@ if (search != null) {
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>메일</title>
+<title>April Groupware</title>
 <!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="${aprilContext}/views/images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="${aprilContext}/views/images/favicon.png">
 <!-- Custom Stylesheet -->
 <link href="${aprilContext}/views/css/style.css" rel="stylesheet">
 
@@ -184,9 +183,11 @@ if (search != null) {
 										<a href="${aprilContext}/mail/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" 
 											class="list-group-item border-0 text-primary p-r-0">
 											&nbsp;<i class="fa fa-inbox font-18 align-middle mr-2"></i>받은메일함
-											<span class="badge badge-primary badge-sm float-right m-t-5">
-												<c:out value="${count}"></c:out>
-											</span>
+											<c:choose>
+	                                    		<c:when test="${totalCnt > 0}">
+	                                    			<span class="badge badge-primary badge-sm float-right m-t-5"><c:out value="${count}"></c:out></span>
+	                                    		</c:when>
+	                                    	</c:choose>
 										</a>
 										<a href="${aprilContext}/mail/do_retrieveSent.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}"
 											class="list-group-item border-0 p-r-0">
@@ -215,7 +216,7 @@ if (search != null) {
 										<div>
                                     		<h4>받은메일함</h4><hr/>
                                     	</div>
-										<div class="btn-group">
+										<div class="btn-group mr-2 mb-2">
 											<button type="button" id="resend_btn" class="btn btn-light">
 												<i class="fa fa-mail-reply font-18 align-middle mr-2"></i>답장
 											</button>

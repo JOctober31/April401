@@ -104,125 +104,118 @@
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">관리자 페이지</a></li>
-						<li class="breadcrumb-item active"><a href="javascript:void(0)">조직 데이터 등록</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">관리자페이지</a></li>
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">인사 정보 등록</a></li>
 					</ol>
 				</div>
 			</div>
 			<!-- row -->
 
 			<div class="container-fluid">
-
-
 				<!-- 조직데이터 등록 수정 삭제 -->
 				<div class="row justify-content-center">
-
 					<div class="col-lg-12">
-
 						<div class="card">
-
 							<div class="card-body">
-								<h4 class="card-title">조직 데이터 등록</h4>
+								<h4 class="card-title">인사 정보 등록</h4><hr/>
 								<div class="form-validation">
 									<%-- <form class="form-horizontal"action="${hContext}/admin/do_insert.do" name="mngFrm"
 										id="mngFrm" method="post"> --%>
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">아이디 <span
-												class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<input type="text" class="form-control" id="id" name="id" placeholder="아이디 입력하세요">
-											</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">아이디 <span
+											class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control" id="id" name="id" placeholder="아이디 입력하세요">
 										</div>
+									</div>
 
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">패스워드 <span class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<input type="password" class="form-control" id="password" name="password" placeholder="패스워드 입력하세요">
-											</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">패스워드 <span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="password" class="form-control" id="password" name="password" placeholder="패스워드 입력하세요">
 										</div>
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">패스워드 확인 <span class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<input type="password" class="form-control" id="password_check" name="password_check" placeholder="패스워드 확인하세요">
-											</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">패스워드 확인 <span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="password" class="form-control" id="password_check" name="password_check" placeholder="패스워드 확인하세요">
 										</div>
-											
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">이름 <span
-												class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력하세요">
-											</div>
-										</div>	
-											
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">부서명 <span
-												class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<select class="form-control" id="dept_nm" name="dept_nm">
-													<option value="">부서 선택</option>
-													<option value="인사">인사</option>
-													<option value="영업">영업</option>
-													<option value="개발">개발</option>
-													<option value="운영">운영</option>
-												</select>
-											</div>
+									</div>
+										
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">이름 <span
+											class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력하세요">
 										</div>
+									</div>	
+										
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">부서명 <span
+											class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<select class="form-control" id="dept_nm" name="dept_nm">
+												<option value="">부서 선택</option>
+												<option value="인사">인사</option>
+												<option value="영업">영업</option>
+												<option value="개발">개발</option>
+												<option value="운영">운영</option>
+											</select>
+										</div>
+									</div>
 
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">권한 <span
-												class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<select class="form-control" id="auth" name="auth">
-													<option value="">권한 선택</option>
-													<option value="1">사용자</option>
-													<option value="9">결재자</option>
-												</select>
-											</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">권한 <span
+											class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<select class="form-control" id="auth" name="auth">
+												<option value="">권한 선택</option>
+												<option value="1">사용자</option>
+												<option value="9">결재자</option>
+											</select>
 										</div>
+									</div>
 
-
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">직급 <span
-												class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<select class="form-control" id="position" name="position">
-													<option value="">직급선택</option>
-													<option value="사원">사원</option>
-													<option value="과장">과장</option>
-													<option value="차장">차장</option>
-													<option value="부장">부장</option>
-													<option value="이사">이사</option>
-													<option value="대표이사">대표이사</option>
-												</select>
-											</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">직급 <span
+											class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<select class="form-control" id="position" name="position">
+												<option value="">직급선택</option>
+												<option value="사원">사원</option>
+												<option value="과장">과장</option>
+												<option value="차장">차장</option>
+												<option value="부장">부장</option>
+												<option value="이사">이사</option>
+												<option value="대표이사">대표이사</option>
+											</select>
 										</div>
+									</div>
 
-
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label" for="val-currency">입사일<span
-												class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<input type="text" class="form-control" id="hire_date"
-													name="hire_date" placeholder="ex) 20200508">
-											</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label" for="val-currency">입사일<span
+											class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control" id="hire_date"
+												name="hire_date" placeholder="ex) 20200508">
 										</div>
-
-										<div class="form-group row">
-											<div class="col-lg-8 ml-auto">
-												<input type="button" class="btn btn-primary" value="등록" id="insert_btn" />
-												<input type="button"class="btn btn-danger" onclick="goRetrieve();" value="목록" id="list_btn" /> 
-											</div>
+									</div>
+									<%-- </form> --%>
+									<hr/>
+									<div class="form-group row">
+										<div class="col-lg-8 ml-auto">
+											<input type="button"class="btn btn-outline-primary" onclick="goRetrieve();" value="목록으로 이동" id="list_btn" /> 
+											<input type="button" class="btn btn-primary" value="저장" id="insert_btn" />
 										</div>
-								<!-- </form> -->
+									</div>
 								</div>
 							</div>
 						</div>

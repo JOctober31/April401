@@ -125,26 +125,38 @@
 	
 	<!-- getAll : 상세 목록 조회 -->
 	<select id="getAll" parameterType="AttendanceVO" resultType="AttendanceVO">
-		SELECT seq,
-			id,													
-		    TO_CHAR(attend_time, 'HH24:MI:SS') AS attendTime, 											
-		    TO_CHAR(lv_ffc_time, 'HH24:MI:SS') AS leaveTime,
-            DECODE(attend_yn,0,'출근 전',1,'완료') AS attendYN,
-            DECODE(lv_ffc_yn,0,'퇴근 전',1,'완료') AS leaveYN,
-            DECODE(state,0,'정상',1,'지각',2,'조퇴') AS state,
-		    work_time || '시간' AS workTime,   											
-		    reg_id		AS regId,
-            TO_CHAR(reg_date,'YYYY/MM/DD') AS regDate,
-		    mod_id		AS modId,      											
-		    CASE TO_CHAR(mod_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
-                                                THEN TO_CHAR(SYSDATE,'HH24:MI') 
-			ELSE TO_CHAR(mod_date,'YYYY/MM/DD') END AS modDate,
-            SUM(work_time) OVER(PARTITION BY id ORDER BY seq) || '시간' AS workTimeSum
-		FROM attendance
-		WHERE id = #{id}
-		AND TO_DATE(#{searchDate}, 'YYYY/MM/DD') <![CDATA[<=]]> reg_date
-		AND reg_date <![CDATA[<=]]> LAST_DAY(TO_DATE(#{searchDate}, 'YYYY/MM/DD'))
+		SELECT T1.*,T2.* 
+			FROM(
+			SELECT seq,
+				id,													
+			    TO_CHAR(attend_time, 'HH24:MI:SS') AS attendTime, 											
+			    TO_CHAR(lv_ffc_time, 'HH24:MI:SS') AS leaveTime,
+	            DECODE(attend_yn,0,'출근 전',1,'완료') AS attendYN,
+	            DECODE(lv_ffc_yn,0,'퇴근 전',1,'완료') AS leaveYN,
+	            DECODE(state,0,'정상',1,'지각',2,'조퇴') AS state,
+			    work_time || '시간' AS workTime,   											
+			    reg_id		AS regId,
+	            TO_CHAR(reg_date,'YYYY/MM/DD') AS regDate,
+			    mod_id		AS modId,      											
+			    CASE TO_CHAR(mod_date,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD') 
+	                                                THEN TO_CHAR(SYSDATE,'HH24:MI') 
+				ELSE TO_CHAR(mod_date,'YYYY/MM/DD') END AS modDate,
+	            SUM(work_time) OVER(PARTITION BY id ORDER BY seq) || '시간' AS workTimeSum
+			FROM attendance
+			WHERE id = #{id}
+			AND TO_DATE(#{searchDate}, 'YYYY/MM/DD') <![CDATA[<=]]> reg_date
+			AND reg_date <![CDATA[<=]]> LAST_DAY(TO_DATE(#{searchDate}, 'YYYY/MM/DD'))
+		)T1
+		NATURAL JOIN
+		(
+		    SELECT COUNT(*) totalCnt
+		    FROM attendance
+		    WHERE id = #{id}
+			AND TO_DATE(#{searchDate}, 'YYYY/MM/DD') <![CDATA[<=]]> reg_date
+			AND reg_date <![CDATA[<=]]> LAST_DAY(TO_DATE(#{searchDate}, 'YYYY/MM/DD'))
+		)T2
 	</select>
+	
 		<!-- SELECT seq,
 			id,													
 		    TO_CHAR(attend_time, 'HH24:MI:SS') AS attendTime, 											
@@ -162,7 +174,7 @@
             SUM(work_time) OVER(PARTITION BY id ORDER BY seq) AS workTimeSum
 		FROM attendance
 		WHERE id = #{id} -->
-	<select id="getAllSearchDate" parameterType="AttendanceVO" resultType="AttendanceVO">
+	<!-- <select id="getAllSearchDate" parameterType="AttendanceVO" resultType="AttendanceVO">
 		SELECT seq,
 			id,													
 		    TO_CHAR(attend_time, 'HH24:MI:SS') AS attendTime, 											
@@ -182,6 +194,6 @@
 		WHERE id = #{id}
 		AND TO_DATE(#{searchDate}, 'YYYY/MM/DD') <![CDATA[<=]]> reg_date
 		AND reg_date <![CDATA[<=]]> LAST_DAY(TO_DATE(#{searchDate}, 'YYYY/MM/DD'))
-	</select>
+	</select> -->
 	
 </mapper>

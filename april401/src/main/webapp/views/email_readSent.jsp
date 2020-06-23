@@ -19,15 +19,13 @@
 <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/common/common.jsp"%>
-<c:set  var="aprilContext" value="${pageContext.request.contextPath }"></c:set> 
-<c:set  var="aprilContext" value="${pageContext.request.contextPath }"></c:set> 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>메일</title>
+    <title>April Groupware</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="${aprilContext}/views/images/favicon.png">
     <!-- Custom Stylesheet -->
@@ -110,13 +108,19 @@
                                 <div class="email-left-box">
                                 <a href="${aprilContext}/views/email_compose.jsp" class="btn btn-primary btn-block">메일 쓰기</a>
                                     <div class="mail-list mt-4">
-                                    	<a href="${aprilContext}/mail/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" class="list-group-item border-0 p-r-0"><i class="fa fa-inbox font-18 align-middle mr-2"></i> <b>받은 메일함</b> <span class="badge badge-primary badge-sm float-right m-t-5"><c:out value="${count}"></c:out></span> </a>
-                                        <a href="${aprilContext}/mail/do_retrieveSent.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" class="list-group-item border-0 text-primary p-r-0"><i class="fa fa-paper-plane font-18 align-middle mr-2"></i>보낸 메일함</a>  
+                                    	<a href="${aprilContext}/mail/do_retrieve.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" class="list-group-item border-0 p-r-0">
+	                                    	&nbsp;<i class="fa fa-inbox font-18 align-middle mr-2"></i>받은메일함
+	                                    			<span class="badge badge-primary badge-sm float-right m-t-5"><c:out value="${count}"></c:out></span>
+                                    	</a>
+                                        <a href="${aprilContext}/mail/do_retrieveSent.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" class="list-group-item border-0 text-primary p-r-0">
+                                        	<i class="fa fa-paper-plane font-18 align-middle mr-2"></i>보낸메일함
+                                        </a>  
                                         <!-- 
                                         <a href="#" class="list-group-item border-0 p-r-0"><i class="mdi mdi-file-document-box font-18 align-middle mr-2"></i>Draft</a>
                                          -->
-                                         
-                                        <a href="${aprilContext}/mail/do_retrieveTrash.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" class="list-group-item border-0 p-r-0"><i class="fa fa-trash font-18 align-middle mr-2"></i>휴지통</a>
+                                        <a href="${aprilContext}/mail/do_retrieveTrash.do?pageNum=1&pageSize=10&searchDiv=&searchWord=${user.id}" class="list-group-item border-0 p-r-0">
+                                        	&nbsp;<i class="fa fa-trash font-18 align-middle mr-2"></i>휴지통
+                                        </a>
                                     </div>
                                     <!-- 
                                     <h5 class="mt-5 m-b-10">카테고리</h5>
@@ -131,11 +135,11 @@
                                 <div class="email-right-box">
                                     <div class="toolbar" role="toolbar">
                                     	<div role="toolbar" class="toolbar">
-                                    		<div class="media mb-4 mt-1">
+                                    		<!-- <div class="media mb-4 mt-1">
 	                                            <div class="media-body">
 	                                                <h2 class="m-0 text-primary"><b>보낸 메일함</b></h2>
 	                                            </div>
-                                        	</div>
+                                        	</div> -->
 	                                        <!-- <div class="btn-group">
 	                                        	<button type="button" id="reSend_btn" class="btn btn-light"><i class="fa fa-mail-reply font-18 align-middle mr-2"></i>답장</button>
 	                                        	<button type="button" id="delete_btn" class="btn btn-light"><i class="fa fa-trash font-18 align-middle mr-2"></i>삭제</button>
@@ -152,8 +156,11 @@
                                         	<input type="hidden" id="contents" name="contents" value="${vo.contents}">
                                         	<input type="hidden" id="title" name="title" value="${vo.title}">
                                         	<div class="media mb-4 mt-1">
-	                                            <div class="media-body"><span class="float-right"><c:out value="${vo.recDate}"></c:out></span>
+	                                            <div class="media-body">
 	                                                <h2 class="m-0 text-primary"><c:out value="${vo.title}" /></h2>
+		                                            <span class="float-right">
+			                                            <c:out value="${vo.recDate}"></c:out>
+		                                            </span>
 	                                            </div>
                                         	</div>
                                             <div class="form-group">

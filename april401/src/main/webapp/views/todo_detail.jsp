@@ -33,7 +33,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <title>April Groupware</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="${hContext}/views/images/favicon.png">
     <!-- Custom Stylesheet -->
@@ -121,62 +121,75 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
+                            	<h4 class="card-title">TODO 관리</h4><hr/>
                                 <div class="form-validation">
                                     <form class="form-valide" action="${hContext}/todo/do_retrieve.do"  name="mngFrm" method="post">
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="id">아이디 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="id" name="id"  value="${todovo.id }" readonly="readonly" placeholder="아이디">
+                                                <input type="text" class="form-control" id="id" name="id" value="${todovo.id}" readonly="readonly" placeholder="아이디">
                                             </div>
                                         </div>
                                            <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for=deptNm>부서 명 <span class="text-danger" >*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="deptNm" name="deptNm" value="${todovo.deptNm }" readonly="readonly" placeholder="부서 명을 입력하세요" >
+                                                <input type="text" class="form-control" id="deptNm" name="deptNm" readonly="readonly" placeholder="${todovo.deptNm}" >
                                             </div>
                                         </div>
                                          <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for=pTitle>프로젝트 명 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                 <input type="text" class="form-control" id="pTitle" name="pTitle"  value="${todovo.pTitle }" placeholder="프로젝트 명을 입력하세요">
+                                                 <input type="text" class="form-control" id="pTitle" name="pTitle" placeholder="${todovo.pTitle}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="pType">프로젝트 타입 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                 <input type="text" class="form-control" id="pType" name="pType"  value="${todovo.pType }" placeholder="프로젝트 타입을 입력하세요">
+                                                 <input type="text" class="form-control" id="pType" name="pType" placeholder="${todovo.pType}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="taskContents">업무 내용 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="taskContents" name="taskContents"  value="${todovo.taskContents }" placeholder="업무 내용을 입력하세요">
+                                            <textarea class="form-control" id="taskContents" name="taskContents" placeholder="${todovo.taskContents}"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="customer">고객사<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="customer" name="customer" value="${todovo.customer }" placeholder="고객사를 입력하세요">
+                                                <input type="text" class="form-control" id="customer" name="customer" placeholder="${todovo.customer}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="area">지역<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="area" name="area" value="${todovo.area }" placeholder="지역을 입력하세요">
+                                                <%-- <input type="text" class="form-control" id="area" name="area" value="${todovo.area}" placeholder="지역을 입력하세요"> --%>
+	                                            <select class="form-control" id="area" name="area">
+													<option value="">지역 선택</option>
+													<option value="서울" <c:if test="${todovo.area == '서울'}"> selected="selected"</c:if>>서울</option>
+													<option value="부산" <c:if test="${todovo.area == '부산'}"> selected="selected"</c:if>>부산</option>
+													<option value="경기" <c:if test="${todovo.area == '경기'}"> selected="selected"</c:if>>경기</option>
+													<option value="제주" <c:if test="${todovo.area == '제주'}"> selected="selected"</c:if>>제주</option>
+												</select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="workingForm">근무형태<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="workingForm" name="workingForm" value="${todovo.workingForm }" placeholder="근무형태를 입력하세요">
+                                                <%-- <input type="text" class="form-control" id="workingForm" name="workingForm" value="${todovo.workingForm }" placeholder="근무형태를 입력하세요"> --%>
+                                                <select class="form-control" id="workingForm" name="workingForm">
+													<option value="">지역 선택</option>
+													<option value="내근" <c:if test="${todovo.workingForm == '내근'}"> selected="selected"</c:if>>내근</option>
+													<option value="외근" <c:if test="${todovo.workingForm == '외근'}"> selected="selected"</c:if>>외근</option>
+												</select>
                                             </div>
                                         </div>
                                          <div class="form-group row">
@@ -186,15 +199,15 @@
                                                 <input type=hidden class="form-control" id="modId" name="modId" value="${user.id }" placeholder="수정자를 입력하세요">
                                             </div>
                                         </div>
-                                        <div class="row text-right">
-										    <label for="title" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label"></label>
-										    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-										    	<input  type="button" class="btn btn-primary btn-sm" onclick="goRetrieve();"  value="목록" id="list_btn" />
-												<input  type="button" class="btn btn-primary btn-sm" value="수정" id="update_btn" />
-												<input  type="button" class="btn btn-primary btn-sm" value="삭제" id="delete_btn" />
-											</div>
-										</div>
                                     </form>
+                                    <hr/>
+                                    <div class="form-group row">
+										<div class="col-lg-8 ml-auto">
+											<input type="button"class="btn btn-outline-primary" onclick="goRetrieve();" value="목록으로 이동" id="list_btn" /> 
+											<input type="submit" class="btn btn-primary" value="수정" id="update_btn" />
+											<input type="submit" class="btn btn-primary" value="삭제" id="delete_btn" />
+										</div>
+									</div>
                                 </div>
                             </div>
                         </div>
@@ -233,8 +246,6 @@
 
     <script src="${hContext}/views/plugins/validation/jquery.validate.min.js"></script>
     <script src="${hContext}/views/plugins/validation/jquery.validate-init.js"></script>
-
-
 
     <script type="text/javascript">
     

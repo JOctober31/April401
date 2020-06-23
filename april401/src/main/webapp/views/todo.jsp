@@ -28,7 +28,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <title>April Groupware</title>
     <!-- Favicon icon -->
     <link rel="icon" type="${hContext}/views/image/png" sizes="16x16" href="${hContext}/views/images/favicon.png">
     <!-- Custom Stylesheet -->
@@ -116,6 +116,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
+                            	<h4 class="card-title">TODO 등록</h4><hr/>
                                 <div class="form-validation">
                                     <form class="form-valide" action="${hContext}/todo/do_insert.do" name="mngFrm" id="mngFrm" method="post">
                                         <div class="form-group row">
@@ -187,23 +188,21 @@
                                             <label class="col-lg-4 col-form-label" for="val-skill">근무형태 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <select class="form-control" id="workingForm" name="workingForm" value="${vo.workingForm }">
+                                                <select class="form-control" id="workingForm" name="workingForm" value="${vo.workingForm}">
                                                     <option value="">근무 선택</option>
                                                     <option value="내근">내근</option>
                                                     <option value="외근">외근</option>
-                                                    <option value="휴가">휴가</option>
-                                                    <option value="병가">병가</option>
                                                 </select>
                                             </div>
                                         </div>
-   								</form>                                        
-                                       <div class="row text-centert">
-                                       <label for="pTitle" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label"></label>
-									   <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-										   <input  type="submit" class="btn btn-primary btn-sm" value="등록" id="insert_btn" />
-										   <input  type="button" class="btn btn-primary btn-sm" onclick="goRetrieve();"  value="취소" id="list_btn" />
-									   </div>
-									 </div>
+   									</form>
+   									<hr/>
+ 									<div class="form-group row">
+										<div class="col-lg-8 ml-auto">
+											<input type="button"class="btn btn-outline-primary" onclick="goRetrieve();" value="목록으로 이동" id="list_btn" /> 
+											<input type="submit" class="btn btn-primary" value="저장" id="insert_btn" />
+										</div>
+									</div>
                                 </div>
                             </div>
                         </div>

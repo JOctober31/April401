@@ -24,18 +24,17 @@
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>April Groupware</title>
-<!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="images/favicon.png">
-<!-- Custom Stylesheet -->
-<link href="${hContext}/views/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
-<link href="${hContext}/views/css/style.css" rel="stylesheet">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>April Groupware</title>
+	<!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="${hContext}/views/images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="${hContext}/views/css/style.css" rel="stylesheet">
+	<link href="${hContext}/views/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-   <!--  font style -->
+    <!--  font style -->
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
 	<style type="text/css">
@@ -125,137 +124,133 @@
 			<div class="row page-titles mx-0">
 				<div class="col p-md-0">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">관리자 페이지</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">관리자페이지</a></li>
 						<li class="breadcrumb-item active"><a
-							href="javascript:void(0)">조직 데이터 수정</a></li>
+							href="javascript:void(0)">인사 정보 수정</a></li>
 					</ol>
 				</div>
 			</div>
 			<!-- row -->
 
 			<div class="container-fluid">
-
-
 				<!-- 조직데이터 등록 수정 삭제 -->
 				<div class="row justify-content-center">
-
 					<div class="col-lg-12">
-
 						<div class="card">
 							<div class="card-body">
-								<h4 class="card-title">조직 데이터 관리</h4>
+								<h4 class="card-title">인사 정보 수정</h4><hr/>
 								<div class="form-validation">
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">아이디 <span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control" id="id" name="id" value="${vo.id }" readonly="readonly" />
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">패스워드 <span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="password" class="form-control" id="password" name="password" placeholder="패스워드 입력하세요">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">패스워드 확인 <span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="password" class="form-control" id="password_check" name="password_check" placeholder="패스워드를 재입력하세요">
+										</div>
+									</div>
 									
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">아이디 <span class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<input type="text" class="form-control" id="id" name="id" value="${vo.id }" readonly="readonly" />
-											</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">이름 <span
+											class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control" id="name" name="name" placeholder="${vo.name}">
 										</div>
+									</div>	
 
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">패스워드 <span class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<input type="password" class="form-control" id="password" name="password" placeholder="패스워드 입력하세요">
-											</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">부서명 <span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<%-- <select class="form-control" id="dept_nm" name="dept_nm">
+												<option value="">부서 선택</option>
+												<option value="인사">인사</option>
+												<option value="영업">영업</option>
+												<option value="개발">개발</option>
+												<option value="운영">운영</option>
+											</select> --%>
+											<select class="form-control" id="dept_nm" name="dept_nm">
+												<option value="">부서 선택</option>
+												<option value="인사" <c:if test="${vo.deptNm == '인사'}"> selected="selected"</c:if>>인사</option>
+												<option value="영업" <c:if test="${vo.deptNm == '영업'}"> selected="selected"</c:if>>영업</option>
+												<option value="개발" <c:if test="${vo.deptNm == '개발'}"> selected="selected"</c:if>>개발</option>
+												<option value="운영" <c:if test="${vo.deptNm == '운영'}"> selected="selected"</c:if>>운영</option>
+											</select>
 										</div>
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">패스워드 확인 <span class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<input type="password" class="form-control" id="password_check" name="password_check" placeholder="패스워드를 재입력하세요">
-											</div>
-										</div>
-										
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">이름 <span
-												class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<input type="text" class="form-control" id="name" name="name" placeholder="${vo.name}">
-											</div>
-										</div>	
+									</div>
 
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">부서명 <span class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<%-- <select class="form-control" id="dept_nm" name="dept_nm">
-													<option value="">부서 선택</option>
-													<option value="인사">인사</option>
-													<option value="영업">영업</option>
-													<option value="개발">개발</option>
-													<option value="운영">운영</option>
-												</select> --%>
-												<select class="form-control" id="dept_nm" name="dept_nm">
-													<option value="">부서 선택</option>
-													<option value="인사" <c:if test="${vo.deptNm == '인사'}"> selected="selected"</c:if>>인사</option>
-													<option value="영업" <c:if test="${vo.deptNm == '영업'}"> selected="selected"</c:if>>영업</option>
-													<option value="개발" <c:if test="${vo.deptNm == '개발'}"> selected="selected"</c:if>>개발</option>
-													<option value="운영" <c:if test="${vo.deptNm == '운영'}"> selected="selected"</c:if>>운영</option>
-												</select>
-											</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">권한 <span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<%-- <select class="form-control" id="auth" name="auth">
+												<option value="">권한 선택</option>
+												<option value="1">사용자</option>
+												<option value="9">결재자</option>
+											</select> --%>
+											<select class="form-control" id="auth" name="auth">
+												<option value="">권한 선택</option>
+												<option value="1" <c:if test="${vo.auth == '1'}"> selected="selected"</c:if>>사용자</option>
+												<option value="9" <c:if test="${vo.auth == '9'}"> selected="selected"</c:if>>결재자</option>
+											</select>
 										</div>
+									</div>
 
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">권한 <span class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<%-- <select class="form-control" id="auth" name="auth">
-													<option value="">권한 선택</option>
-													<option value="1">사용자</option>
-													<option value="9">결재자</option>
-												</select> --%>
-												<select class="form-control" id="auth" name="auth">
-													<option value="">권한 선택</option>
-													<option value="1" <c:if test="${vo.auth == '1'}"> selected="selected"</c:if>>사용자</option>
-													<option value="9" <c:if test="${vo.auth == '9'}"> selected="selected"</c:if>>결재자</option>
-												</select>
-											</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label">직급 <span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<%-- <select class="form-control" id="position" name="position">
+												<option value="">직급선택</option>
+												<option value="사원">사원</option>
+												<option value="과장">과장</option>
+												<option value="차장">차장</option>
+												<option value="부장">부장</option>
+												<option value="이사">이사</option>
+												<option value="대표이사">대표이사</option>
+											</select> --%>
+											<select class="form-control" id="position" name="position">
+												<option value="">직급 선택</option>
+												<option value="사원" <c:if test="${vo.position == '사원'}"> selected="selected"</c:if>>사원</option>
+												<option value="과장" <c:if test="${vo.position == '과장'}"> selected="selected"</c:if>>과장</option>
+												<option value="차장" <c:if test="${vo.position == '차장'}"> selected="selected"</c:if>>차장</option>
+												<option value="부장" <c:if test="${vo.position == '부장'}"> selected="selected"</c:if>>부장</option>
+												<option value="이사" <c:if test="${vo.position == '이사'}"> selected="selected"</c:if>>이사</option>
+												<option value="대표이사" <c:if test="${vo.position == '대표이사'}"> selected="selected"</c:if>>대표이사</option>
+											</select>
 										</div>
+									</div>
 
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label">직급 <span class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<%-- <select class="form-control" id="position" name="position">
-													<option value="">직급선택</option>
-													<option value="사원">사원</option>
-													<option value="과장">과장</option>
-													<option value="차장">차장</option>
-													<option value="부장">부장</option>
-													<option value="이사">이사</option>
-													<option value="대표이사">대표이사</option>
-												</select> --%>
-												<select class="form-control" id="position" name="position">
-													<option value="">직급 선택</option>
-													<option value="사원" <c:if test="${vo.position == '사원'}"> selected="selected"</c:if>>사원</option>
-													<option value="과장" <c:if test="${vo.position == '과장'}"> selected="selected"</c:if>>과장</option>
-													<option value="차장" <c:if test="${vo.position == '차장'}"> selected="selected"</c:if>>차장</option>
-													<option value="부장" <c:if test="${vo.position == '부장'}"> selected="selected"</c:if>>부장</option>
-													<option value="이사" <c:if test="${vo.position == '이사'}"> selected="selected"</c:if>>이사</option>
-													<option value="대표이사" <c:if test="${vo.position == '대표이사'}"> selected="selected"</c:if>>대표이사</option>
-												</select>
-											</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label" for="val-currency">입사일<span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control" id="hire_date" name="hire_date" placeholder="${vo.hiredate}">
 										</div>
+									</div>
+									<hr/>
 
-										<div class="form-group row">
-											<label class="col-lg-4 col-form-label" for="val-currency">입사일<span class="text-danger">*</span>
-											</label>
-											<div class="col-lg-6">
-												<input type="text" class="form-control" id="hire_date" name="hire_date" placeholder="${vo.hiredate}">
-											</div>
+									<div class="form-group row">
+										<div class="col-lg-8 ml-auto">
+											<input type="button"class="btn btn-outline-primary" onclick="goRetrieve();" value="목록으로 이동" id="list_btn" /> 
+											<input type="button" class="btn btn-primary" value="수정" id="update_btn" />
+											<input type="button" class="btn btn-primary" value="삭제" id="delete_btn" />
 										</div>
-
-										<div class="form-group row">
-											<div class="col-lg-8 ml-auto">
-												<input type="button" class="btn btn-primary" value="수정" id="update_btn" />
-												<input type="button" class="btn btn-primary" value="삭제" id="delete_btn" />
-												<input type="button"class="btn btn-danger" onclick="goRetrieve();" value="목록" id="list_btn" /> 
-											</div>
-										</div>
+									</div>
 								</div>
 							</div>
 						</div>

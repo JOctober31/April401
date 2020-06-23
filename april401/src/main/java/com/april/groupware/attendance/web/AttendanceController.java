@@ -433,6 +433,19 @@ public class AttendanceController {
 		
 		model.addAttribute("attendanceList", outList);
 		
+		//총건수
+		int totalCnt = 0;
+		
+		if(outList != null && outList.size() > 0) {
+			totalCnt = outList.get(0).getTotalCnt();
+		}
+		
+		LOG.debug("====================");
+		LOG.debug("=doSelectOne totalCnt= : "+totalCnt);
+		LOG.debug("====================");
+
+		model.addAttribute("totalCnt", totalCnt);
+		
 		//Json(Gson)
 		Gson gson = new Gson();
 		String json = gson.toJson(outVO);
@@ -499,6 +512,18 @@ public class AttendanceController {
 			LOG.debug("====================");
 			
 			model.addAttribute("attendanceList", outList);
+			
+			//총건수
+			int totalCnt = 0;
+			if(outList != null && outList.size() > 0) {
+				totalCnt = outList.get(0).getTotalCnt();
+			}
+			
+			LOG.debug("====================");
+			LOG.debug("=doSelectOne totalCnt="+totalCnt);
+			LOG.debug("====================");
+
+			model.addAttribute("totalCnt", totalCnt);
 			
 			//Json(Gson)
 			Gson gson = new Gson();

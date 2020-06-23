@@ -27,7 +27,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <title>April Groupware</title>
     
     <!-- Favicon icon -->
     <link rel="icon" type="${aprilContext}/views/image/png" sizes="16x16" href="${aprilContext}/views/images/favicon.png">
@@ -118,7 +118,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h4>근태 관리</h4>
+                                    <h4>근태 관리</h4><hr/>
                                 </div>
                                 <div class="row">
                                     <div class="text-center col-lg-3 mt-1">
@@ -162,72 +162,83 @@
                                     </div>
                                     
                                     <div class="col-md-8">
-	                                    <!-- 월별 근태 조회 -->
-                                    	<form action="${aprilContext}/attend/do_get_all.do" method="get" name="search_form">
-	                                    	<table class="verticle-middle">
-		                                    	<tr>
-		                                    		<td><select name="year" id="year" class="form-control"></select>&nbsp;</td>
-		                                    		<td>년&nbsp;&nbsp;</td>
-		                                    		<td><select name="month" id="month" class="form-control"></select>&nbsp;</td>
-		                                    		<td>월&nbsp;&nbsp;</td>
-		                                    		<!-- <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-primary" type="button" onclick="doRetrieve();">조회</button> -->
-		                                    		<td><button type="submit" name="search_btn" id="search_btn" style="margin-bottom:20px;" class="btn btn-primary">조회</button></td>
-		                                    	</tr>
-	                                    	</table>
-                                    	</form>
+                                    	<div>
                                     	<c:choose>
-                                    	<c:when test="${attendVO.size() > 0}">
-                                    	<input type="hidden" name="getYear" id="getYear" value="${attendVO.get(attendVO.size()-1).year}" />
-						    			<input type="hidden" name="getMonth" id="getMonth" value="${attendVO.get(attendVO.size()-1).month}" />
-						    			</c:when>
-						    			<c:otherwise>
-						    			</c:otherwise>
+		                                   	<c:when test="${attendVO.size() > 0}">
+		                                   	<input type="hidden" name="getYear" id="getYear" value="${attendVO.get(attendVO.size()-1).year}" />
+							    			<input type="hidden" name="getMonth" id="getMonth" value="${attendVO.get(attendVO.size()-1).month}" />
+							    			</c:when>
+							    			<c:otherwise>
+							    			</c:otherwise>
 						    			</c:choose>
-						    			<!-- //월별 근태 조회 -->
-                                    
-                                    <!-- table-striped -->
-                                    <table class="table table-bordered verticle-middle table-hover">
-						    		    <!-- hidden-sm hidden-xs 숨기기 -->
-						    			<thead class="bg-primary" style="text-align: center; color:white;">
-						    				<tr>
-							    				<th style="display:none;">순서</th>
-							    				<th style="display:none;">아이디</th>
-							    				<th class="text-center">출근일</th>
-							    				<th class="text-center">출근시간</th>
-							    				<th class="text-center">출근여부</th>
-							    				<th class="text-center">퇴근시간</th>
-							    				<th class="text-center">퇴근여부</th>
-							    				<th class="text-center">출결상태</th>
-							    				<th class="text-center">근무시간</th>
-							    				<th class="text-center">누적 근무시간</th>
-						    				</tr>
-						    			</thead>
-						    			<tbody>
-						    				<c:choose>
-						    					<c:when test="${attendanceList.size()>0}">
-						    						<c:forEach var="vo" items="${attendanceList}">
-								    					<tr>
-									    					<td style="display:none;"><c:out value="${vo.seq}" /></td>
-									    					<td style="display:none;"><c:out value="${vo.id}" /></td>
-									    					<td class="text-center"><c:out value="${vo.regDate}" /></td>
-									    					<td class="text-center"><c:out value="${vo.attendTime}" /></td>
-									    					<td class="text-center"><c:out value="${vo.attendYN}" /></td>
-									    					<td class="text-center"><c:out value="${vo.leaveTime}" /></td>
-									    					<td class="text-center"><c:out value="${vo.leaveYN}" /></td>
-									    					<td class="text-center"><c:out value="${vo.state}" /></td>
-									    					<td class="text-center"><c:out value="${vo.workTime}" /></td>
-									    					<td class="text-center"><c:out value="${vo.workTimeSum}" /></td>
-								    					</tr>
-							    					</c:forEach>
-						    					</c:when>
-						    					<c:otherwise>
-						    						<tr>
-						    							<td class="text-center" colspan="99">데이터를 찾을 수 없습니다.</td>
-						    						</tr>
-						    					</c:otherwise>
-						    				</c:choose>
-						    			</tbody>
-						    		</table>
+						    			<div class="row verticle-middle">
+	                                    	<div class="col-md-4"></div>
+	                                    		<div class="col-md-4">
+			                                    <!-- 월별 근태 조회 -->
+		                                    	<form action="${aprilContext}/attend/do_get_all.do" method="get" name="search_form">
+			                                    	<table class="verticle-middle">
+				                                    	<tr>
+				                                    		<td><select name="year" id="year" class="form-control"></select>&nbsp;</td>
+				                                    		<td>년&nbsp;&nbsp;</td>
+				                                    		<td><select name="month" id="month" class="form-control"></select>&nbsp;</td>
+				                                    		<td>월&nbsp;&nbsp;</td>
+				                                    		<!-- <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-primary" type="button" onclick="doRetrieve();">조회</button> -->
+				                                    		<td><button type="submit" name="search_btn" id="search_btn" style="margin-bottom:20px;" class="btn btn-primary">조회</button></td>
+				                                    	</tr>
+			                                    	</table>
+		                                    	</form>
+								    			<!-- //월별 근태 조회 -->
+								    			</div>
+	                                    	</div>
+							    			<div class="form-inline mr-2 mb-2">
+						                        <button style="height: 40px;" class="btn btn-light" type="button" disabled="disabled">이번 달 출근 ${totalCnt}일 </button>
+					                        </div>
+                                    	</div>
+                                    	<div>
+		                                    <!-- table-striped -->
+		                                    <table class="table table-bordered verticle-middle table-hover">
+								    		    <!-- hidden-sm hidden-xs 숨기기 -->
+								    			<thead class="bg-primary" style="text-align: center; color:white;">
+								    				<tr>
+									    				<th style="display:none;">순서</th>
+									    				<th style="display:none;">아이디</th>
+									    				<th class="text-center">출근일</th>
+									    				<th class="text-center">출근시간</th>
+									    				<th class="text-center">출근여부</th>
+									    				<th class="text-center">퇴근시간</th>
+									    				<th class="text-center">퇴근여부</th>
+									    				<th class="text-center">출결상태</th>
+									    				<th class="text-center">근무시간</th>
+									    				<th class="text-center">누적 근무시간</th>
+								    				</tr>
+								    			</thead>
+								    			<tbody>
+								    				<c:choose>
+								    					<c:when test="${attendanceList.size()>0}">
+								    						<c:forEach var="vo" items="${attendanceList}">
+										    					<tr>
+											    					<td style="display:none;"><c:out value="${vo.seq}" /></td>
+											    					<td style="display:none;"><c:out value="${vo.id}" /></td>
+											    					<td class="text-center"><c:out value="${vo.regDate}" /></td>
+											    					<td class="text-center"><c:out value="${vo.attendTime}" /></td>
+											    					<td class="text-center"><c:out value="${vo.attendYN}" /></td>
+											    					<td class="text-center"><c:out value="${vo.leaveTime}" /></td>
+											    					<td class="text-center"><c:out value="${vo.leaveYN}" /></td>
+											    					<td class="text-center"><c:out value="${vo.state}" /></td>
+											    					<td class="text-center"><c:out value="${vo.workTime}" /></td>
+											    					<td class="text-center"><c:out value="${vo.workTimeSum}" /></td>
+										    					</tr>
+									    					</c:forEach>
+								    					</c:when>
+								    					<c:otherwise>
+								    						<tr>
+								    							<td class="text-center" colspan="99">데이터를 찾을 수 없습니다.</td>
+								    						</tr>
+								    					</c:otherwise>
+								    				</c:choose>
+								    			</tbody>
+								    		</table>
+							    		</div>
 						    		</div>
 						    		<!-- // -->
                                     

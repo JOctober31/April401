@@ -69,7 +69,7 @@
     int maxNum =0;//총글수
     int currPageNo=1;//현재페이지 
     int rowPerPage=10;
-    int bottomCount=5;//바닫에 page
+    int bottomCount=10;//바닫에 page
     
     if(null !=search){
     	currPageNo = search.getPageNum();
@@ -77,10 +77,6 @@
     	maxNum     = totalCnt;
     }
     //--paging
-    
-    	
-
-
 %>
  
 <!DOCTYPE html>
@@ -90,7 +86,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <title>April Groupware</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="${hContext}/views/images/favicon.png">
     <!-- Custom Stylesheet -->
@@ -173,43 +169,55 @@
             <!-- row -->
 
             <div class="container-fluid">
-            <div class="bootstrap-label">
-               <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-	                            <div class="card-title">
-	                                <h4>TODO게시판</h4><hr/>
-	                            </div>
-								<!--// div title -->
-								
-						        <!-- 검색영역 -->
-								<div>
-							        <div class="row">
-							            <div class="col-md-12">
-							                <form action="${hContext}/todo/do_retrieve.do" class="form-inline" style="text-align: center;" 
-							                    name="searchFrm" method="get">
-							                    <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
-							                    <input type="hidden" name="id" id="id" />
-							                       
-						                        <div class="btn-group mr-2 mb-2">
-						                        <%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>&nbsp;&nbsp;
-						                        </div>
-						                        
-						                     	<div class="btn-group mr-2 mb-2">
-						                        <%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%>&nbsp;&nbsp;
-						                        </div>
-						                        
-						                        <input type="text" style="height: 12px;" class="form-control"  id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
-						                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
-						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-primary" type="button" onclick="doRetrieve();">조회</button> 
-						                        <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-danger" type="button" onclick="doInsertView();">등록</button>
-						                        <%--  <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-success" type="button" disabled="disabled">사원수 ${totalCnt } 명</button> --%>
-					                    	</form>
-						                </div>   
+	            <div class="bootstrap-label">
+	               <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="card">
+	                            <div class="card-body">
+		                            <div class="card-title">
+		                                <h4>TODO게시판</h4><hr/>
+		                            </div>
+									
+							        <!-- 검색영역 -->
+									<div>
+								        <div class="row">
+								            <div class="col-md-4"></div>
+							            	<div class="col-md-8">
+								                <form action="${hContext}/todo/do_retrieve.do" name="searchFrm" method="get">
+								                    <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
+								                    <input type="hidden" name="id" id="id" />
+								                    <div class="form-inline">   
+								                    	<!-- PageSize -->
+								                        <div class="btn-group mr-2 mb-2">
+									                        <%=StringUtil.makeSelectBox(pageSizeList, "pageSize", pageSize, false)%>
+									                        &nbsp;&nbsp;
+									                        <!-- SearchDiv -->
+									                        <%=StringUtil.makeSelectBox(searchList, "searchDiv", searchDiv, true)%>
+									                        &nbsp;&nbsp;
+									                        <!-- 검색 -->
+									                        <input type="text" style="height: 40;" class="form-control" id="searchWord" name="searchWord" placeholder="검색어" value="${vo.searchWord }">
+									                        &nbsp;
+								                        </div>
+								                        <div class="mr-2 mb-2">
+									                        <button style="height: 40px;" class="btn btn-primary" type="button" onclick="doRetrieve();">검색</button> 
+								                        </div>
+								                    </div>
+						                    	</form>
+							                    </div>
+												<div class="col-md-11">
+													<div class="form-inline mr-2 mb-2">
+						                     		<button style="height: 40px; align-self: right;" class="btn btn-light" type="button" disabled="disabled">게시글 수 ${totalCnt }개</button>
+						                     	</div>
+											</div>
+											<div class="col-md-1">
+	                							<div class="form-inline mr-2 mb-2">
+							                        <button style="margin-left:2.5em; height: 40px;" class="btn btn-danger" type="button" onclick="doInsertView();">등록</button>
+							                        <%--  <button style="margin-right:0.5em; text-align:center; height: 40px;" class="btn btn-success" type="button" disabled="disabled">사원수 ${totalCnt } 명</button> --%>
+							                    </div>
+							                </div>   
+							            </div>
 						            </div>
-					            </div>
-						        <!--// 검색영역 -->
+							        <!--// 검색영역 -->
 	
 								<!-- 게시글 목록 -->
 								<div class="table-responsive">
