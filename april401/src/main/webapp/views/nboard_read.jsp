@@ -210,7 +210,16 @@
                                         </div>
                                         <!-- // 게시글 내용 영역 -->
                                         <hr/>
-                                        
+                                        <h6 class="p-t-15"><i class="fa fa-download mb-2"></i> Attachments <span>(1)</span></h6>
+                                        <div class="row m-b-30">
+                                            <div class="col-auto"><a href="#" class="text-muted">지갑.png</a>
+                                            </div>
+                                            <!-- <div class="col-auto"><a href="#" class="text-muted">My-File.docx</a>
+                                            </div>
+                                            <div class="col-auto"><a href="#" class="text-muted">My-Resume.pdf</a>
+                                            </div> -->
+                                        </div>
+                                        <hr/>
                                         <!--div 댓글 읽기 -->
 										<div>
 											<!-- <span style="margin-bottom:1em; height: 30px; width: 100px; text-align:center;" class="label label-pill label-success">댓글</span>

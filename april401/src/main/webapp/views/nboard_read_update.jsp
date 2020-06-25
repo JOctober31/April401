@@ -209,7 +209,7 @@
                                         
 	                                            <!-- 수정시 수정자 아이디/수정일 -->
 	                                            <%-- <p class="m-b-2" > 수정자 ${user.deptNm } ${user.position } ${user.name }</p> --%>
-	                                            <input type="hidden" id="modId" name="modId" value="${user.id }">
+	                                            <input type="hidden" id="modId" name="modIdR" value="${user.id }">
                                         <%-- <div class="form-group">
 								           <label for="contents" class="col-sm-2 control-label">수정 내용</label>
 								           <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
@@ -224,14 +224,14 @@
                                         </div> --%>
 										</div> 
                                         <hr>
-                                        <h6 class="p-t-15"><i class="fa fa-download mb-2"></i> Attachments <span>(3)</span></h6>
+                                        <h6 class="p-t-15"><i class="fa fa-download mb-2"></i> Attachments <span>(1)</span></h6>
                                         <div class="row m-b-30">
-                                            <div class="col-auto"><a href="#" class="text-muted">My-Photo.png</a>
+                                            <div class="col-auto"><a href="#" class="text-muted">지갑.png</a>
                                             </div>
-                                            <div class="col-auto"><a href="#" class="text-muted">My-File.docx</a>
+                                            <!-- <div class="col-auto"><a href="#" class="text-muted">My-File.docx</a>
                                             </div>
                                             <div class="col-auto"><a href="#" class="text-muted">My-Resume.pdf</a>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
