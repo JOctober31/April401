@@ -9,5 +9,7 @@ public class gitTestFile1 {
 	
 	String str4 = "test4";
 	
+	String str5 = "test5";
+	
 
 }
