@@ -1,4 +1,4 @@
-package com.april.groupware;
+package com.april.groupware.gittest;
 
 public class gitTestFile1 {
 	
